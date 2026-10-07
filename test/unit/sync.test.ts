@@ -2,7 +2,13 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { HttpError } from '../../src/crawler/errors.js';
 import { Database } from '../../src/storage/database.js';
 import { saveProducts } from '../../src/storage/products.js';
-import { explainSupabaseError, syncToSupabase } from '../../src/sync/supabase.js';
+import {
+  checkSupabase,
+  explainSupabaseError,
+  keyProblem,
+  schemaSql,
+  syncToSupabase,
+} from '../../src/sync/supabase.js';
 import { createFakeFetch } from '../helpers/fake-fetch.js';
 import { makeProduct } from '../helpers/products.js';
 
@@ -82,8 +88,75 @@ describe('explainSupabaseError', () => {
       ).message,
     ).toMatch(/tables do not exist/);
     expect(explainSupabaseError(error(401, { message: 'Invalid API key' })).message).toBe(
-      'the key was rejected',
+      'Supabase rejected the key (Invalid API key)',
     );
     expect(explainSupabaseError(error(409, { code: '23503' })).hints.join()).toContain('--full');
+  });
+
+  it('explains tables the API may not use (Supabase stopped granting them in 2026)', () => {
+    const diagnosis = explainSupabaseError(
+      error(403, { code: '42501', message: 'permission denied for table products' }),
+    );
+    expect(diagnosis.message).toBe(
+      'your key has no access to the swiss-grocery tables (permission denied for table products)',
+    );
+    expect(diagnosis.hints.join(' ')).toContain('swiss-grocery sync --print-schema');
+  });
+
+  it('passes on other Supabase errors with their code and hint', () => {
+    expect(
+      explainSupabaseError(error(400, { code: 'PGRST100', message: 'bad filter', hint: 'fix it' })),
+    ).toMatchObject({
+      message: 'Supabase answered HTTP 400: bad filter (PGRST100)',
+      hints: ['fix it'],
+    });
+  });
+});
+
+describe('keyProblem', () => {
+  const jwt = (role: string) =>
+    `x.${Buffer.from(JSON.stringify({ role })).toString('base64url')}.sig`;
+  it('spots keys that cannot write before anything is sent', () => {
+    expect(keyProblem('sb_publishable_abc')?.message).toMatch(/publishable key/);
+    expect(keyProblem(jwt('anon'))?.message).toMatch(/anon key/);
+    expect(keyProblem(jwt('service_role'))).toBeNull();
+    expect(keyProblem('sb_secret_abc')).toBeNull();
+  });
+});
+
+describe('checkSupabase', () => {
+  it('reports missing grants, not bot protection, for a JSON 403 from Supabase (behind Cloudflare)', async () => {
+    const fake = createFakeFetch(() => ({
+      status: 403,
+      headers: { server: 'cloudflare', 'cf-ray': '1-ZRH', 'content-type': 'application/json' },
+      body: { code: '42501', hint: null, message: 'permission denied for table products' },
+    }));
+    const diagnosis = await checkSupabase(config, fake.fetch);
+    expect(diagnosis.ok).toBe(false);
+    expect(diagnosis.message).toContain('no access to the swiss-grocery tables');
+    expect(fake.calls).toHaveLength(1);
+  });
+
+  it('never sends a key that cannot write', async () => {
+    const fake = remote();
+    const diagnosis = await checkSupabase({ ...config, key: 'sb_publishable_x' }, fake.fetch);
+    expect(diagnosis.ok).toBe(false);
+    expect(fake.calls).toHaveLength(0);
+  });
+
+  it('connects when the tables are there', async () => {
+    expect(await checkSupabase(config, remote().fetch)).toMatchObject({ ok: true });
+  });
+});
+
+describe('schemaSql', () => {
+  it('prints every migration in order, including the grants Supabase no longer adds itself', () => {
+    const sql = schemaSql();
+    const created = sql.indexOf('create table if not exists public.products');
+    const granted = sql.search(
+      /grant select, insert, update, delete\s+on table public\.products, public\.prices, public\.price_history\s+to service_role;/,
+    );
+    expect(created).toBeGreaterThan(-1);
+    expect(granted).toBeGreaterThan(created);
   });
 });

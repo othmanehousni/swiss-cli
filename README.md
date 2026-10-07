@@ -358,9 +358,15 @@ paste the schema and press *Run*. Print the schema with:
 $ swiss-grocery sync --print-schema
 ```
 
-(The same file is in [`supabase/migrations/`](supabase/migrations). It is safe to run
-twice. It enables Row Level Security without public policies, so only your secret key can
-read or write; uncomment the policies at the end of the file to allow public reads.)
+The schema creates the tables and gives your secret key access to them: since 2026,
+Supabase no longer lets its API use new tables automatically, so this permission (a
+`grant`) is part of the schema. It is safe to run again at any time and keeps your
+data, so if you created the tables with an older version, simply run it once more.
+
+(The same SQL is in [`supabase/migrations/`](supabase/migrations), for `supabase db push`.
+Row Level Security stays on without public policies, so only your secret key can read or
+write; to let a public website read the data, uncomment the block marked "Optional" in
+the last migration.)
 
 **2. Add your keys.** Create a file named `.env` in the folder where you run
 `swiss-grocery` (see [`.env.example`](.env.example)):
@@ -412,6 +418,15 @@ deliberately does not try to get around such protections.
 **"Unexpected response from …: … has an unexpected format".** The store changed its
 website. Please [open an issue](https://github.com/othmanehousni/swiss-cli/issues) with
 the message so the store's provider can be updated.
+
+**Supabase: "your key has no access to the swiss-grocery tables (permission denied for
+table products)".** Your tables were created without the permission Supabase stopped
+adding by itself in 2026. Run the schema again (`swiss-grocery sync --print-schema`, then
+SQL Editor → Run). It keeps your data.
+
+**Supabase: "Supabase rejected the key".** Copy the **secret** key (`sb_secret_…`) again from
+*Project Settings → API Keys*, and check that `SUPABASE_URL` is the same project. The
+publishable key (`sb_publishable_…`) cannot write data.
 
 **Behind a company proxy?** Set `HTTPS_PROXY=http://proxy:port`.
 

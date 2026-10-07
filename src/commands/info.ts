@@ -304,6 +304,7 @@ export function registerInfoCommands(program: Command): void {
           );
         } else {
           const check = await checkSupabase(supabase);
+          if (!check.ok) healthy = false;
           out.print(
             `  ${check.ok ? out.c.green('✔') : out.c.red('✖')} Supabase ${supabase.url}: ${check.message}`,
           );

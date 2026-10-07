@@ -1,6 +1,7 @@
 import type { Command } from 'commander';
 import {
   explainSupabaseError,
+  keyProblem,
   schemaSql,
   supabaseConfig,
   syncToSupabase,
@@ -52,6 +53,8 @@ export function registerSyncCommand(program: Command): void {
             'Step-by-step setup: swiss-grocery sync --help',
           ]);
         }
+        const problem = keyProblem(config.key);
+        if (problem) throw new UserError(`Sync failed: ${problem.message}.`, problem.hints);
         const progress = new ProgressLine(app.out);
         progress.update('Preparing…');
         try {

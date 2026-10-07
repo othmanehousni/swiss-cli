@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { userAgent } from '../config.js';
 import { HttpError, NetworkError } from '../crawler/errors.js';
 import { type FetchLike, HttpClient } from '../crawler/http.js';
@@ -10,10 +10,7 @@ import type { Database } from '../storage/database.js';
  * is a shared copy, e.g. for a website or a team.
  */
 
-export const SCHEMA_FILE = new URL(
-  '../../supabase/migrations/20261007000000_init.sql',
-  import.meta.url,
-);
+const MIGRATIONS = new URL('../../supabase/migrations/', import.meta.url);
 const BATCH_SIZE = 1000;
 
 export interface SupabaseConfig {
@@ -28,8 +25,13 @@ export function supabaseConfig(): SupabaseConfig | null {
   return url && key ? { url, key } : null;
 }
 
+/** The whole schema: every migration, oldest first. Each one is safe to run again. */
 export function schemaSql(): string {
-  return readFileSync(SCHEMA_FILE, 'utf-8');
+  const files = readdirSync(MIGRATIONS)
+    .filter((name) => name.endsWith('.sql'))
+    .sort();
+  const parts = files.map((name) => readFileSync(new URL(name, MIGRATIONS), 'utf-8').trimEnd());
+  return `${parts.join('\n\n')}\n`;
 }
 
 function authHeaders(config: SupabaseConfig): Record<string, string> {
@@ -55,16 +57,65 @@ export interface Diagnosis {
   hints: string[];
 }
 
+/** The `role` claim of a legacy JWT key ("anon" or "service_role"), if the key is one. */
+function jwtRole(key: string): string | null {
+  const payload = key.split('.')[1];
+  if (!payload) return null;
+  try {
+    const { role } = JSON.parse(Buffer.from(payload, 'base64url').toString('utf-8')) as {
+      role?: unknown;
+    };
+    return typeof role === 'string' ? role : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Catches the usual mix-up: a public key, which cannot write, instead of the secret key. */
+export function keyProblem(key: string): Diagnosis | null {
+  const kind = key.startsWith('sb_publishable_')
+    ? 'a publishable key (sb_publishable_…)'
+    : jwtRole(key) === 'anon'
+      ? 'the anon key'
+      : null;
+  if (!kind) return null;
+  return {
+    ok: false,
+    message: `your Supabase key is ${kind}, which cannot write data`,
+    hints: [
+      'Use the secret key instead: Project Settings -> API Keys -> Secret keys (it starts with sb_secret_).',
+    ],
+  };
+}
+
+/** The fields of a PostgREST / Supabase error body: {"code", "message", "hint"}. */
+function postgrestError(body: string): { code: string; message: string; hint: string } {
+  try {
+    const parsed = JSON.parse(body) as Record<string, unknown> | null;
+    const text = (value: unknown) => (typeof value === 'string' ? value : '');
+    return { code: text(parsed?.code), message: text(parsed?.message), hint: text(parsed?.hint) };
+  } catch {
+    return { code: '', message: '', hint: '' };
+  }
+}
+
+const SCHEMA_HINTS = [
+  'Print the SQL with: swiss-grocery sync --print-schema',
+  'Run it in Supabase: SQL Editor -> New query -> paste -> Run (safe to run again, it keeps your data).',
+];
+
 export function explainSupabaseError(error: unknown): Diagnosis {
   if (error instanceof HttpError) {
-    let code = '';
-    let detail = '';
-    try {
-      const body = JSON.parse(error.bodySnippet) as { code?: string; message?: string };
-      code = body.code ?? '';
-      detail = body.message ?? '';
-    } catch {
-      // not JSON
+    const { code, message: detail, hint } = postgrestError(error.bodySnippet);
+    if (code === '42501') {
+      return {
+        ok: false,
+        message: `your key has no access to the swiss-grocery tables (${detail || 'permission denied'})`,
+        hints: [
+          'Supabase stopped giving its API access to new tables automatically in 2026; the schema now includes the missing permissions.',
+          ...SCHEMA_HINTS,
+        ],
+      };
     }
     if (
       code === 'PGRST205' ||
@@ -74,19 +125,25 @@ export function explainSupabaseError(error: unknown): Diagnosis {
       return {
         ok: false,
         message: 'the swiss-grocery tables do not exist in this project yet',
+        hints: SCHEMA_HINTS,
+      };
+    }
+    if (code === 'PGRST106') {
+      return {
+        ok: false,
+        message: 'the Supabase Data API does not offer the public schema',
         hints: [
-          'Create them once: Supabase dashboard -> SQL Editor -> New query -> paste and run the schema.',
-          'Print the schema with: swiss-grocery sync --print-schema',
+          'Supabase dashboard -> Project Settings -> Data API: turn it on and add "public" to the exposed schemas.',
         ],
       };
     }
     if (error.status === 401 || error.status === 403) {
       return {
         ok: false,
-        message: 'the key was rejected',
+        message: `Supabase rejected the key${detail ? ` (${detail})` : ''}`,
         hints: [
-          'Use the secret key (sb_secret_…) or the legacy service_role key: Project Settings -> API Keys.',
-          'The publishable/anon key cannot write data.',
+          'Copy the secret key again: Project Settings -> API Keys -> Secret keys (it starts with sb_secret_).',
+          'Check that SUPABASE_URL is the project the key belongs to.',
         ],
       };
     }
@@ -99,8 +156,8 @@ export function explainSupabaseError(error: unknown): Diagnosis {
     }
     return {
       ok: false,
-      message: `Supabase answered HTTP ${error.status}${detail ? `: ${detail}` : ''}`,
-      hints: [],
+      message: `Supabase answered HTTP ${error.status}${detail ? `: ${detail}` : ''}${code ? ` (${code})` : ''}`,
+      hints: hint ? [hint] : [],
     };
   }
   if (error instanceof NetworkError) {
@@ -114,6 +171,8 @@ export function explainSupabaseError(error: unknown): Diagnosis {
 }
 
 export async function checkSupabase(config: SupabaseConfig, fetch?: FetchLike): Promise<Diagnosis> {
+  const problem = keyProblem(config.key);
+  if (problem) return problem;
   try {
     await client(fetch).request(`${config.url}/rest/v1/products?select=id&limit=1`, {
       headers: authHeaders(config),

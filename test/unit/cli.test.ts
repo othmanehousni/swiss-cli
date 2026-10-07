@@ -19,13 +19,17 @@ let dir: string;
 let dbPath: string;
 let emptyDbPath: string;
 
-function cli(db: string, ...args: string[]) {
+function run(env: Record<string, string>, db: string, args: string[]) {
   const result = spawnSync(
     process.execPath,
     ['--import', 'tsx', 'src/cli.ts', '--db', db, '--no-color', ...args],
-    { cwd: ROOT, encoding: 'utf-8', timeout: 30_000 },
+    { cwd: ROOT, encoding: 'utf-8', timeout: 30_000, env: { ...process.env, ...env } },
   );
   return { code: result.status, stdout: result.stdout, stderr: result.stderr };
+}
+
+function cli(db: string, ...args: string[]) {
+  return run({}, db, args);
 }
 
 function occurrences(text: string, part: string): number {
@@ -135,6 +139,24 @@ describe('swiss-grocery (command line)', { timeout: 30_000 }, () => {
     const { code, stderr } = cli(dbPath, 'fetch', 'aldi', '--all', '--category', 'food');
     expect(code).toBe(2);
     expect(occurrences(stderr, 'Use either --all or --category, not both.')).toBe(1);
+  });
+
+  it('prints a Supabase schema that includes the grants', () => {
+    const { code, stdout } = cli(dbPath, 'sync', '--print-schema');
+    expect(code).toBe(0);
+    expect(stdout).toContain('create table if not exists public.products');
+    expect(stdout).toContain('to service_role;');
+  });
+
+  it('refuses a publishable Supabase key before sending anything', () => {
+    const env = {
+      SUPABASE_URL: 'https://example.invalid',
+      SUPABASE_SECRET_KEY: 'sb_publishable_test',
+    };
+    const { code, stderr } = run(env, dbPath, ['sync']);
+    expect(code).toBe(2);
+    expect(occurrences(stderr, 'your Supabase key is a publishable key')).toBe(1);
+    expect(stderr).toContain('sb_secret_');
   });
 
   it('guides a new user when the database is still empty', () => {

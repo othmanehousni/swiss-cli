@@ -1,7 +1,8 @@
 -- swiss-grocery: schema for the Supabase (Postgres) copy of your local database.
 --
 -- How to apply (once):
---   Supabase dashboard -> SQL Editor -> New query -> paste this file -> Run.
+--   Supabase dashboard -> SQL Editor -> New query -> paste the output of
+--   `swiss-grocery sync --print-schema` (every file in this folder, in order) -> Run.
 --   Or with the Supabase CLI: supabase db push
 --
 -- Then fill it from your computer with:  swiss-grocery sync
@@ -77,10 +78,8 @@ create or replace view public.current_prices with (security_invoker = true) as
   where p.removed_at is null;
 
 -- Row Level Security: with no policies, only your secret key (used by `sync`) can
--- read or write. To let a public website read the data, uncomment these:
+-- read or write. The grants the API needs, and an optional public read access,
+-- are in the next migration (20261007120000_grant_api_access.sql).
 alter table public.products enable row level security;
 alter table public.prices enable row level security;
 alter table public.price_history enable row level security;
--- create policy "Public read" on public.products for select to anon using (true);
--- create policy "Public read" on public.prices for select to anon using (true);
--- create policy "Public read" on public.price_history for select to anon using (true);
