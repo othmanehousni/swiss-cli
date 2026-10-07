@@ -13,17 +13,19 @@ import { normalizeEach, parseEnvelope, uniqueStrings, zurichDateToIso } from './
  * Migros — the JSON APIs behind migros.ch.
  *
  * EXPERIMENTAL: migros.ch blocks the cloud network this tool is built on, so this
- * provider cannot be tested from there. The category search is the one the
- * migros.ch website itself calls (seen in a browser in October 2026); it replaced
- * the onesearch category search that Migros removed. The other endpoints and the
- * product fields follow migros-api-wrapper (MIT, github.com/aliyss/migros-api-wrapper).
+ * provider cannot be tested from there. The category list and the category search
+ * are the requests the migros.ch website itself makes (seen in a browser in
+ * October 2026); they replaced the onesearch storemap and category search, which
+ * now answer 404. The product fields follow migros-api-wrapper (MIT,
+ * github.com/aliyss/migros-api-wrapper).
  *
- * Flow: guest token -> category tree (storemap) -> product uids per category,
- * 100 at a time -> product cards (name, price), 100 per request -> product detail (optional).
+ * Flow: guest token -> top-level categories, then their subcategories (each
+ * category search lists them) -> product uids per category, 100 at a time ->
+ * product cards (name, price), 100 per request -> product detail (optional).
  */
 const BASE = 'https://www.migros.ch';
 const GUEST_TOKEN = `${BASE}/authentication/public/v1/api/guest?authorizationNotRequired=true`;
-const STOREMAP = `${BASE}/onesearch-oc-seaapi/public/v2/storemap`;
+const CATEGORIES = `${BASE}/shopping-list/public/v1/categories`;
 const PRODUCT_CARDS = `${BASE}/product-display/public/v4/product-cards`;
 const PRODUCT_DETAIL = `${BASE}/product-display/public/v2/product-detail`;
 /** The website asks for 100 products per page and per product-cards request. */
@@ -236,22 +238,50 @@ export function normalizeMigrosProduct(raw: RawProduct): NormalizedProduct | nul
   };
 }
 
-interface RawCategoryNode {
-  id?: string | number | null;
-  name?: string | null;
-  children?: RawCategoryNode[] | null;
-  categories?: RawCategoryNode[] | null;
+/** Top-level categories, named in every language: {"id": 7494732, "name": {"de": "…", "en": "…"}}. */
+const TopCategories = z.array(
+  z.object({
+    id: z.union([z.number(), z.string()]),
+    name: z.union([z.string(), z.record(z.string(), z.string())]),
+  }),
+);
+
+/** The subcategories a category search lists next to its products. */
+const SearchSubcategories = z.object({
+  categories: z
+    .array(z.object({ id: z.union([z.number(), z.string()]), name: z.string() }))
+    .nullish(),
+});
+
+function localName(name: string | Record<string, string>, lang: string): string | null {
+  if (typeof name === 'string') return nonEmpty(name);
+  return nonEmpty(name[lang]) ?? nonEmpty(name.de) ?? nonEmpty(Object.values(name)[0]);
 }
 
-function toNodes(nodes: unknown): TreeNode[] {
-  if (!Array.isArray(nodes)) return [];
-  return nodes.flatMap((n) => {
-    const node = n as RawCategoryNode;
-    if (node?.id == null || !node.name) return [];
-    return [
-      { id: String(node.id), name: node.name, children: toNodes(node.children ?? node.categories) },
-    ];
-  });
+/** One page of a category search, as the website asks for it. */
+function searchCategory(
+  ctx: ProviderContext,
+  categoryId: string,
+  from: number,
+  limit: number,
+): Promise<unknown> {
+  return call(ctx, (headers) =>
+    ctx.http.postJson(
+      categorySearchUrl(categoryId),
+      {
+        regionId: region(),
+        language: ctx.lang,
+        sortFields: [],
+        sortOrder: 'asc',
+        from,
+        limit,
+        filters: {},
+        searchAlgorithm: 'DEFAULT',
+        enabledSponsoredProducts: false,
+      },
+      { headers },
+    ),
+  );
 }
 
 async function productCards(ctx: ProviderContext, uids: number[]): Promise<unknown[]> {
@@ -286,15 +316,24 @@ export const migros: Provider = {
   },
 
   async categories(ctx): Promise<Category[]> {
-    const url = `${STOREMAP}?language=${ctx.lang.toUpperCase()}&regionId=national&storeMapScope=DEFAULT`;
-    const body = await call(ctx, (headers) => ctx.http.getJson(url, { headers }));
-    const root = parseEnvelope(
-      z.object({ categories: z.array(z.unknown()) }),
-      body,
-      url,
-      'Migros category tree',
-    );
-    return flattenTree('migros', toNodes(root.categories));
+    const body = await call(ctx, (headers) => ctx.http.getJson(CATEGORIES, { headers }));
+    const top = parseEnvelope(TopCategories, body, CATEGORIES, 'Migros categories');
+    const nodes: TreeNode[] = [];
+    for (const category of top) {
+      const id = String(category.id);
+      const name = localName(category.name, ctx.lang);
+      if (!name) continue;
+      // A search for one product also lists the category's subcategories.
+      const search = parseEnvelope(
+        SearchSubcategories,
+        await searchCategory(ctx, id, 0, 1),
+        categorySearchUrl(id),
+        'Migros category search',
+      );
+      const children = (search.categories ?? []).map((c) => ({ id: String(c.id), name: c.name }));
+      nodes.push({ id, name, children });
+    }
+    return flattenTree('migros', nodes);
   },
 
   sources(categories, categoryIds) {
@@ -310,24 +349,9 @@ export const migros: Provider = {
 
   async fetchPage(ctx, source, cursor) {
     const offset = typeof cursor === 'number' ? cursor : 0;
-    const url = categorySearchUrl(source.params.categoryId ?? '');
-    const body = await call(ctx, (headers) =>
-      ctx.http.postJson(
-        url,
-        {
-          regionId: region(),
-          language: ctx.lang,
-          sortFields: [],
-          sortOrder: 'asc',
-          from: offset,
-          limit: PAGE_SIZE,
-          filters: {},
-          searchAlgorithm: 'DEFAULT',
-          enabledSponsoredProducts: false,
-        },
-        { headers },
-      ),
-    );
+    const categoryId = source.params.categoryId ?? '';
+    const url = categorySearchUrl(categoryId);
+    const body = await searchCategory(ctx, categoryId, offset, PAGE_SIZE);
     const { uids, received, total } = parseCategorySearch(body, url);
     const cards = uids.length > 0 ? await productCards(ctx, uids) : [];
     const normalized = normalizeEach(cards, RawProduct, normalizeMigrosProduct, ctx.debug);

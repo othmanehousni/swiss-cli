@@ -72,12 +72,13 @@ store publishes, so coverage differs:
 
 *Times measured in October 2026 at the default polite speed.*
 
-**About Migros:** in 2026 Migros replaced the product listing of its website API, so
-the first version of the Migros support stopped working (`HTTP 404`). It now uses the
-same requests the migros.ch website makes for a category page: the category search
-(100 products per page), then the product cards (100 per request). migros.ch blocks
-the cloud network this tool is developed on, so this could not be tested live yet:
-check it from your connection with `swiss-grocery doctor migros`.
+**About Migros:** in 2026 Migros replaced the category list and the product listing of
+its website API, so the first version of the Migros support stopped working
+(`HTTP 404`). It now makes the same requests the migros.ch website makes for a category
+page: the category list, the category search (100 products per page) and the product
+cards (100 per request). migros.ch blocks the cloud network this tool is developed on,
+so this could not be tested live yet: check it from your connection with
+`swiss-grocery doctor migros`.
 
 Run `swiss-grocery stores` to see this list with what you have already downloaded.
 

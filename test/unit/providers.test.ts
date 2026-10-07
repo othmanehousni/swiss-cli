@@ -281,6 +281,40 @@ describe('Migros (synthetic responses shaped like the website requests)', () => 
     expect(page.next).toBeNull();
   });
 
+  it('builds the category tree from the category list and the category search', async () => {
+    const { ctx, fake } = fakeContext((url): FakeResponse => {
+      if (url.endsWith('/shopping-list/public/v1/categories'))
+        return {
+          body: [
+            { id: 7494732, name: { de: 'Früchte & Gemüse', en: 'Fruits & vegetables' } },
+            { id: 7494734, name: { de: 'Snacks & Süsswaren', en: 'Snacks & sweets' } },
+          ],
+        };
+      if (url.includes('/category/7494734/search'))
+        return {
+          body: {
+            categories: [{ id: 7494781, name: 'Guetzli', slug: 'biscuits' }],
+            filters: [{ count: 14, id: 'promotion', label: 'Aktionen', type: 'SINGLE' }],
+            productIds: [100002880],
+          },
+        };
+      return { body: { categories: [], filters: [], productIds: [] } };
+    });
+    const categories = await migros.categories(ctx);
+    expect(categories.map((c) => [c.id, c.parentId, c.path.join(' > ')])).toEqual([
+      ['7494732', null, 'Früchte & Gemüse'],
+      ['7494734', null, 'Snacks & Süsswaren'],
+      ['7494781', '7494734', 'Snacks & Süsswaren > Guetzli'],
+    ]);
+    const search = fake.requests().find((c) => c.url.includes('/category/7494734/search'));
+    expect(JSON.parse(search?.body ?? '{}')).toMatchObject({ from: 0, limit: 1, language: 'de' });
+    // A full crawl reads the top-level categories; their searches include everything below.
+    expect(migros.sources(categories, null).map((s) => s.params.categoryId)).toEqual([
+      '7494732',
+      '7494734',
+    ]);
+  });
+
   it('asks the category search for 100 products at a time, without sponsored ones', async () => {
     const { ctx, fake } = fakeContext(
       (url): FakeResponse =>
