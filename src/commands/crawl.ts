@@ -232,7 +232,7 @@ async function runCrawl(app: App, request: CrawlRequest): Promise<boolean> {
 const FETCH_EXAMPLES = `
 Examples:
   $ swiss-grocery fetch aldi                    everything Aldi Suisse publishes (~1 minute)
-  $ swiss-grocery fetch coop --all              the whole Coop catalog
+  $ swiss-grocery fetch migros --all            the whole Migros catalog
   $ swiss-grocery fetch coop --category food    only groceries
   $ swiss-grocery fetch lidl denner             several stores, one after the other
   $ swiss-grocery fetch all                     every store
@@ -252,7 +252,7 @@ Examples:
   $ swiss-grocery update --details     also fetch details for products that are new
 
 What an update does:
-  • Re-reads the store's listings (cheap: one request per 20–200 products).
+  • Re-reads the store's listings (cheap: one request per 50–200 products).
   • Records price changes and promotions in the price history.
   • Adds new products and marks products that disappeared as "no longer listed".
   • Fetches product details only for new products, and only with --details.`;

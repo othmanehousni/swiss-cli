@@ -141,12 +141,13 @@ describe('swiss-grocery (command line)', { timeout: 30_000 }, () => {
     expect(occurrences(stderr, 'Use either --all or --category, not both.')).toBe(1);
   });
 
-  it('lists Migros as not working, with the reason', () => {
+  it('lists each store with its status', () => {
     const { code, stdout } = cli(dbPath, 'stores', '--json');
     expect(code).toBe(0);
-    const migros = JSON.parse(stdout).find((s: { id: string }) => s.id === 'migros');
-    expect(migros).toMatchObject({ status: 'not working' });
-    expect(migros.problem).toMatch(/Migros removed the product listing/);
+    const status = Object.fromEntries(
+      JSON.parse(stdout).map((s: { id: string; status: string }) => [s.id, s.status]),
+    );
+    expect(status).toMatchObject({ aldi: 'ready', coop: 'ready', migros: 'experimental' });
   });
 
   it('prints a Supabase schema that includes the grants', () => {

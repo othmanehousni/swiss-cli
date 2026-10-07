@@ -68,18 +68,16 @@ store publishes, so coverage differs:
 | **Aldi Suisse** | Full regular assortment and current special buys | ~2,300 products | ~40 s | ready |
 | **Denner** | Current promotions and the wine shop (no full grocery list online) | ~800 products | ~5 s | ready |
 | **Lidl Suisse** | Current weekly offers and online-shop items (no permanent food list online) | ~750 products | ~10 s | ready |
-| **Migros** | Full assortment | — | — | **not working** (see below) |
+| **Migros** | Full assortment | — | — | experimental (see below) |
 
 *Times measured in October 2026 at the default polite speed.*
 
-**About Migros:** the Migros support does not work at the moment. It reads the
-category product listing of migros.ch's website API, which Migros removed in 2026: from
-a home connection it now answers `HTTP 404`. The open-source
-[migros-api-wrapper](https://github.com/aliyss/migros-api-wrapper) dropped the same
-listing in December 2025, and no replacement is publicly known yet. migros.ch also
-blocks the cloud network this tool is developed on, which makes finding one harder.
-`swiss-grocery fetch all` skips Migros until this is fixed; `swiss-grocery doctor migros`
-shows its current state.
+**About Migros:** in 2026 Migros replaced the product listing of its website API, so
+the first version of the Migros support stopped working (`HTTP 404`). It now uses the
+same requests the migros.ch website makes for a category page: the category search
+(100 products per page), then the product cards (100 per request). migros.ch blocks
+the cloud network this tool is developed on, so this could not be tested live yet:
+check it from your connection with `swiss-grocery doctor migros`.
 
 Run `swiss-grocery stores` to see this list with what you have already downloaded.
 
@@ -140,7 +138,7 @@ show what it does, with examples.
 
 ```console
 $ swiss-grocery fetch coop                      # everything Coop publishes
-$ swiss-grocery fetch aldi --all                # the whole catalog (--all is the default)
+$ swiss-grocery fetch migros --all              # the whole catalog (--all is the default)
 $ swiss-grocery fetch coop --category food      # only groceries
 $ swiss-grocery fetch coop --category Milch     # one category (accents optional)
 $ swiss-grocery fetch aldi --limit 100          # a quick sample to try things out
@@ -159,7 +157,7 @@ $ swiss-grocery update               # every store you have downloaded
 $ swiss-grocery update coop          # one store
 ```
 
-An update re-reads the stores' listings (one request per 20–200 products), records price
+An update re-reads the stores' listings (one request per 50–200 products), records price
 changes and promotions, adds new products and marks the ones that disappeared as
 "no longer listed". It is much cheaper than the first download.
 
@@ -289,7 +287,7 @@ Options for every command: `--lang de|fr|it` (product language), `--db <file>`,
 ```
 
 **The crawl.** For each store, `swiss-grocery` reads the category tree, pages through
-each category (20–200 products per request) and stores every product with its price.
+each category (50–200 products per request) and stores every product with its price.
 Product details are a separate, optional step. Systematic enumeration, not thousands of
 parallel requests: each store gets at most 1–2 requests per second.
 

@@ -1,11 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { UnexpectedResponseError } from '../../src/crawler/errors.js';
 import { aldi } from '../../src/providers/aldi.js';
 import { resolveCategories } from '../../src/providers/categories.js';
 import { coop } from '../../src/providers/coop.js';
 import { denner } from '../../src/providers/denner.js';
 import { lidl } from '../../src/providers/lidl.js';
-import { migros } from '../../src/providers/migros.js';
+import { migros, parseCategorySearch } from '../../src/providers/migros.js';
 import { fakeContext, fixture } from '../helpers/context.js';
 import type { FakeResponse } from '../helpers/fake-fetch.js';
 
@@ -221,7 +220,7 @@ describe('Denner (real API fixtures)', () => {
   });
 });
 
-describe('Migros (synthetic responses shaped like the documented API)', () => {
+describe('Migros (synthetic responses shaped like the website requests)', () => {
   it('gets a guest token, lists ids and hydrates product cards', async () => {
     let tokenCalls = 0;
     const { ctx, fake } = fakeContext((url) => {
@@ -229,7 +228,7 @@ describe('Migros (synthetic responses shaped like the documented API)', () => {
         tokenCalls++;
         return { headers: { leshopch: `token-${tokenCalls}` }, body: {} };
       }
-      if (url.includes('/search/category'))
+      if (url.endsWith('/products/category/7494731/search'))
         return { body: { productIds: [101, 102], numberOfProducts: 2 } };
       return {
         body: [
@@ -282,16 +281,54 @@ describe('Migros (synthetic responses shaped like the documented API)', () => {
     expect(page.next).toBeNull();
   });
 
-  it('explains that Migros removed its category listing when it answers 404', async () => {
+  it('asks the category search for 100 products at a time, without sponsored ones', async () => {
+    const { ctx, fake } = fakeContext(
+      (url): FakeResponse =>
+        url.includes('/search')
+          ? {
+              body: {
+                products: [{ uid: 201 }, { uid: 202 }, { uid: 999, sponsored: true }],
+                total: 250,
+              },
+            }
+          : { body: [] },
+    );
+    const page = await migros.fetchPage(
+      ctx,
+      { key: 'k', label: 'l', params: { categoryId: '7494781' } },
+      100,
+    );
+    const search = fake.requests().find((c) => c.url.includes('/search'));
+    expect(search?.url).toBe(
+      'https://www.migros.ch/product-display/public/web/v1/products/category/7494781/search',
+    );
+    expect(JSON.parse(search?.body ?? '{}')).toMatchObject({
+      from: 100,
+      limit: 100,
+      enabledSponsoredProducts: false,
+    });
+    const cards = fake.requests().find((c) => c.url.includes('product-cards'));
+    expect(JSON.parse(cards?.body ?? '{}').productFilter.uids).toEqual([201, 202]);
+    expect(page).toMatchObject({ total: 250, next: 103 });
+  });
+
+  it('stops after a short page when the search gives no total', async () => {
     const { ctx } = fakeContext(
       (url): FakeResponse =>
-        url.includes('/guest')
-          ? { headers: { leshopch: 'token' }, body: {} }
-          : { status: 404, headers: { 'content-type': 'application/json' }, body: {} },
+        url.includes('/search') ? { body: { productIds: [1, 2, 3] } } : { body: [] },
     );
-    const page = migros.fetchPage(ctx, { key: 'k', label: 'l', params: { categoryId: '1' } }, null);
-    await expect(page).rejects.toBeInstanceOf(UnexpectedResponseError);
-    await expect(page).rejects.toThrow(/no longer offers the category product listing/);
+    const page = await migros.fetchPage(
+      ctx,
+      { key: 'k', label: 'l', params: { categoryId: '1' } },
+      null,
+    );
+    expect(page).toMatchObject({ total: null, next: null });
+  });
+
+  it('names the fields of a search answer it does not recognise', () => {
+    expect(() =>
+      parseCategorySearch({ facets: [], paging: {} }, 'https://www.migros.ch/x'),
+    ).toThrow(/no list of products this tool recognises \(fields: facets, paging\)/);
   });
 });
 

@@ -12,24 +12,27 @@ import { normalizeEach, parseEnvelope, uniqueStrings, zurichDateToIso } from './
 /**
  * Migros — the JSON APIs behind migros.ch.
  *
- * NOT WORKING (October 2026): the category product listing below answers HTTP 404
- * from home connections. Migros dropped its category search in 2026 (the
- * open-source migros-api-wrapper removed it in December 2025, and other clients
- * report "no category browse endpoint exists"). migros.ch blocks the cloud
- * network this tool is built on, so a replacement could not be worked out yet.
- * Endpoints and fields follow migros-api-wrapper (MIT, github.com/aliyss/migros-api-wrapper).
+ * EXPERIMENTAL: migros.ch blocks the cloud network this tool is built on, so this
+ * provider cannot be tested from there. The category search is the one the
+ * migros.ch website itself calls (seen in a browser in October 2026); it replaced
+ * the onesearch category search that Migros removed. The other endpoints and the
+ * product fields follow migros-api-wrapper (MIT, github.com/aliyss/migros-api-wrapper).
  *
- * Flow: guest token -> category tree (storemap) -> product ids per category
- * -> product cards (name, price) in batches -> product detail (optional).
+ * Flow: guest token -> category tree (storemap) -> product uids per category,
+ * 100 at a time -> product cards (name, price), 100 per request -> product detail (optional).
  */
 const BASE = 'https://www.migros.ch';
 const GUEST_TOKEN = `${BASE}/authentication/public/v1/api/guest?authorizationNotRequired=true`;
 const STOREMAP = `${BASE}/onesearch-oc-seaapi/public/v2/storemap`;
-const CATEGORY_SEARCH = `${BASE}/onesearch-oc-seaapi/public/v5/search/category`;
 const PRODUCT_CARDS = `${BASE}/product-display/public/v4/product-cards`;
 const PRODUCT_DETAIL = `${BASE}/product-display/public/v2/product-detail`;
-const PAGE_SIZE = 60;
-const CARDS_PER_REQUEST = 30;
+/** The website asks for 100 products per page and per product-cards request. */
+const PAGE_SIZE = 100;
+const CARDS_PER_REQUEST = 100;
+
+function categorySearchUrl(categoryId: string): string {
+  return `${BASE}/product-display/public/web/v1/products/category/${encodeURIComponent(categoryId)}/search`;
+}
 
 /** Price region: "national" or a cooperative such as "gmz" (Zürich) or "gmaa" (Aare). */
 function region(): string {
@@ -134,6 +137,57 @@ function asList(value: unknown): unknown[] {
   return [];
 }
 
+/** A product uid in the search answer: a number, or an object such as {"uid": 100002880}. */
+function uidOf(entry: unknown): number | null {
+  if (typeof entry === 'number') return Number.isSafeInteger(entry) && entry > 0 ? entry : null;
+  if (typeof entry === 'string') return /^\d+$/.test(entry) ? Number(entry) : null;
+  if (!entry || typeof entry !== 'object') return null;
+  const item = entry as Record<string, unknown>;
+  for (const key of ['uid', 'productUid', 'productId', 'id']) {
+    const uid = uidOf(item[key]);
+    if (uid != null) return uid;
+  }
+  return null;
+}
+
+const LIST_FIELDS = ['productIds', 'uids', 'products', 'results', 'items', 'hits'];
+const TOTAL_FIELDS = ['numberOfProducts', 'total', 'totalCount', 'totalHits', 'totalResults'];
+
+/**
+ * Reads one page of the category search: the product uids and, if given, the
+ * total. Accepts a list of numbers or of objects, under the usual field names.
+ * Anything else is reported with its field names, so a change is easy to fix.
+ */
+export function parseCategorySearch(
+  body: unknown,
+  url: string,
+): { uids: number[]; received: number; total: number | null } {
+  const root = (body && typeof body === 'object' ? body : {}) as Record<string, unknown>;
+  const scopes = [root, root.data].filter(
+    (scope): scope is Record<string, unknown> => !!scope && typeof scope === 'object',
+  );
+  for (const scope of scopes) {
+    const field = LIST_FIELDS.find((name) => Array.isArray(scope[name]));
+    if (!field) continue;
+    const entries = scope[field] as unknown[];
+    // Sponsored products belong to other categories; the search is asked to leave them out.
+    const listed = entries.filter(
+      (e) => !(e && typeof e === 'object' && (e as { sponsored?: unknown }).sponsored === true),
+    );
+    const uids = [...new Set(listed.map(uidOf).filter((uid): uid is number => uid != null))];
+    if (listed.length > 0 && uids.length === 0) break;
+    const total = TOTAL_FIELDS.map((name) => scope[name] ?? root[name]).find(
+      (value): value is number => typeof value === 'number',
+    );
+    return { uids, received: entries.length, total: total ?? null };
+  }
+  const fields = Object.keys(root).join(', ') || 'none';
+  throw new UnexpectedResponseError(
+    url,
+    `the Migros category search has no list of products this tool recognises (fields: ${fields})`,
+  );
+}
+
 export function normalizeMigrosProduct(raw: RawProduct): NormalizedProduct | null {
   const id = raw.migrosId != null ? String(raw.migrosId) : raw.uid != null ? String(raw.uid) : null;
   const name = nonEmpty(raw.name) ?? nonEmpty(raw.title);
@@ -224,9 +278,8 @@ export const migros: Provider = {
     id: 'migros',
     name: 'Migros',
     website: 'https://www.migros.ch',
-    coverage: 'Full assortment with prices as shown on migros.ch.',
-    unavailable:
-      'Migros removed the product listing this tool reads from its website (2026), so the Migros support needs an update.',
+    coverage:
+      'Full assortment with prices as shown on migros.ch (experimental: not tested live yet, see doctor).',
     rotating: false,
     verified: false,
     requestsPerSecond: 1,
@@ -257,44 +310,35 @@ export const migros: Provider = {
 
   async fetchPage(ctx, source, cursor) {
     const offset = typeof cursor === 'number' ? cursor : 0;
+    const url = categorySearchUrl(source.params.categoryId ?? '');
     const body = await call(ctx, (headers) =>
       ctx.http.postJson(
-        CATEGORY_SEARCH,
+        url,
         {
-          from: offset,
-          categoryId: Number(source.params.categoryId),
+          regionId: region(),
           language: ctx.lang,
-          regionId: 'national',
-          productIds: [],
           sortFields: [],
           sortOrder: 'asc',
-          requestSponsoredProducts: false,
+          from: offset,
+          limit: PAGE_SIZE,
           filters: {},
+          searchAlgorithm: 'DEFAULT',
+          enabledSponsoredProducts: false,
         },
         { headers },
       ),
-    ).catch((error: unknown) => {
-      if (error instanceof HttpError && error.status === 404) {
-        throw new UnexpectedResponseError(
-          CATEGORY_SEARCH,
-          'Migros no longer offers the category product listing this tool reads (HTTP 404 for /onesearch-oc-seaapi/public/v5/search/category)',
-        );
-      }
-      throw error;
-    });
-    const search = parseEnvelope(
-      z.object({ productIds: z.array(z.number()), numberOfProducts: z.number().nullish() }),
-      body,
-      CATEGORY_SEARCH,
-      'Migros category search',
     );
-    // The search may return one page of ids or all of them; handle both.
-    const allAtOnce = search.productIds.length > PAGE_SIZE * 2;
-    const ids = allAtOnce ? search.productIds.slice(offset, offset + PAGE_SIZE) : search.productIds;
-    const total = allAtOnce ? search.productIds.length : (search.numberOfProducts ?? null);
-    const cards = ids.length > 0 ? await productCards(ctx, ids) : [];
+    const { uids, received, total } = parseCategorySearch(body, url);
+    const cards = uids.length > 0 ? await productCards(ctx, uids) : [];
     const normalized = normalizeEach(cards, RawProduct, normalizeMigrosProduct, ctx.debug);
-    return { ...normalized, total, next: nextOffset(offset, ids.length, total) };
+    // Without a total, a short page is the last one.
+    const next =
+      total != null
+        ? nextOffset(offset, received, total)
+        : received < PAGE_SIZE
+          ? null
+          : offset + received;
+    return { ...normalized, total, next };
   },
 
   async fetchDetails(ctx, request): Promise<ProductDetails | null> {

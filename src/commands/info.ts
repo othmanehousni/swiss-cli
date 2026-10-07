@@ -94,11 +94,13 @@ export function registerInfoCommands(program: Command): void {
             '  "experimental": the store blocked the network this tool was built on, so it is untested.',
           ),
         );
-        out.print(
-          out.c.dim(
-            '  "not working": the store changed its website; `fetch all` skips it until it is fixed.',
-          ),
-        );
+        if (rows.some(({ provider }) => provider.info.unavailable)) {
+          out.print(
+            out.c.dim(
+              '  "not working": the store changed its website; `fetch all` skips it until it is fixed.',
+            ),
+          );
+        }
         out.print(
           out.c.dim('  Check any store from your own connection with: swiss-grocery doctor'),
         );
