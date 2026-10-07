@@ -1,0 +1,791 @@
+{
+ "data": {
+  "pimcoreId": 1157527,
+  "remoteId": "1027166",
+  "variantId": "1027166",
+  "sapId": "1027166",
+  "legacyNavisionId": "051464",
+  "productType": "wine",
+  "_tracking": {
+   "coupon": "",
+   "discount": 0,
+   "item_id": "1027166",
+   "item_name": "Col del Sol Extra Dry Prosecco Superiore Valdobbiadene DOCG",
+   "item_brand": "Venetien",
+   "item_category": "Italien",
+   "item_category2": "Schaumwein / ",
+   "item_category3": "4.39 - 465 / 4 Stars",
+   "item_category4": " à 6 x 75 cl",
+   "item_category5": "Lieferbar / 6–8 °C",
+   "item_variant": "75 cl",
+   "unit_base_measure_ml": "750"
+  },
+  "title": "Col del Sol Extra Dry Prosecco Superiore Valdobbiadene DOCG",
+  "description": "Italien, Venetien, 75 cl",
+  "additionalDesription": null,
+  "categories": [
+   {
+    "id": 1144372,
+    "fullPath": "/Getränke",
+    "title": "Getränke"
+   },
+   {
+    "id": 1144373,
+    "fullPath": "/Getränke/Wein-Champagner",
+    "title": "Wein/Champagner"
+   },
+   {
+    "id": 5479472,
+    "fullPath": "/Getränke/Wein-Champagner/Schaumwein",
+    "title": "Schaumwein"
+   },
+   {
+    "id": 5479482,
+    "fullPath": "/Getränke/Wein-Champagner/Schaumwein/Italien",
+    "title": "Italien"
+   },
+   {
+    "id": 5479499,
+    "fullPath": "/Getränke/Wein-Champagner/Schaumwein/Italien/Venetien_134",
+    "title": "Venetien"
+   }
+  ],
+  "crossLinks": {
+   "createTasteProfileURL": null
+  },
+  "rating": {
+   "stars": 4.5,
+   "value": 4.3935,
+   "total": 465
+  },
+  "availability": {
+   "forSale": true,
+   "stockStatus": {
+    "code": 0
+   },
+   "trafficLight": "green",
+   "text": "Lieferbar",
+   "onlineAvailability": {
+    "id": "",
+    "text": ""
+   },
+   "buyingChannel": [
+    "online",
+    "all"
+   ],
+   "regionCode": "",
+   "regionText": ""
+  },
+  "images": [
+   {
+    "type": "front",
+    "cdnUrl": "https://denner.imgix.net/assets/29c6cf5d-c552-41f3-8796-aca85ddf2271/web/051464_23_02_21.png"
+   },
+   {
+    "type": "back",
+    "cdnUrl": "https://denner.imgix.net/assets/25ace507-616d-4fd2-865c-ee8e015319cf/web/051464_23_02_21_BACK.png"
+   },
+   {
+    "type": "package",
+    "cdnUrl": "https://denner.imgix.net/assets/602dacf1-f3d7-4cf0-837b-56945516299a/web/051464_23_02_22_KARTON_06.png"
+   },
+   {
+    "type": "package+item",
+    "cdnUrl": "https://denner.imgix.net/assets/f2257d88-935f-4211-ad2b-0ad5e2bfb7ab/web/051464_23_02_21.tif_PACK_ITEM.png"
+   }
+  ],
+  "wine": {
+   "titleDetailPage": "Col del Sol Extra Dry Prosecco Superiore Valdobbiadene DOCG",
+   "year": null,
+   "alcohol": null,
+   "originSliderBackground": null,
+   "character": "Helles Zitronengelb. Duftet verführerisch nach grünen Äpfeln und Zitrusfrüchten. Im Gaumen feine Perlage, wirkt unheimlich frisch-fruchtig. Anhaltende Aromatik.",
+   "extraDiscountBadge": {
+    "label": "",
+    "value": ""
+   },
+   "boxInfo": " à 6 x 75 cl",
+   "productSize": [],
+   "country": {
+    "id": 1146189,
+    "name": "Italien",
+    "shortDescription": "Italiens Weine sind ein Sinnbild für «Dolce Vita»: Wie kaum eine andere Weinbaunation bringt das Land vielfältige Weine mit ganz unterschiedlichen, verführerischen Charakteren hervor. In jeder einzelnen der 20 Regionen Italiens wird Weinbau betrieben, vom Südtirol im Norden bis nach Apulien am Absatz des berühmten Stiefels.",
+    "productGridLink": {
+     "url": "/de/weinshop/wein-sortiment?wine_type=Schaumwein&country_name=Italien"
+    },
+    "relatedContentLink": {
+     "url": "/de/weinshop/weinwissen/laender-und-regionen/italien"
+    },
+    "image": "<picture >\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinwissen/laender%20und%20regionen/laender/2035/image-thumb__2035__areabrick-icon-text-teaser-icon/italien_schatten.44428c83.webp 1x, https://www.denner.ch/CMS/30_weinwelt/weinwissen/laender%20und%20regionen/laender/2035/image-thumb__2035__areabrick-icon-text-teaser-icon/italien_schatten@2x.44428c83.webp 2x\" width=\"120\" height=\"120\" type=\"image/webp\" />\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinwissen/laender%20und%20regionen/laender/2035/image-thumb__2035__areabrick-icon-text-teaser-icon/italien_schatten.44428c83.png 1x, https://www.denner.ch/CMS/30_weinwelt/weinwissen/laender%20und%20regionen/laender/2035/image-thumb__2035__areabrick-icon-text-teaser-icon/italien_schatten@2x.44428c83.png 2x\" width=\"120\" height=\"120\" type=\"image/png\" />\n\t<img src=\"https://www.denner.ch/CMS/30_weinwelt/weinwissen/laender%20und%20regionen/laender/2035/image-thumb__2035__areabrick-icon-text-teaser-icon/italien_schatten.44428c83.png\" width=\"120\" height=\"120\" alt=\"\" loading=\"lazy\" srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinwissen/laender%20und%20regionen/laender/2035/image-thumb__2035__areabrick-icon-text-teaser-icon/italien_schatten.44428c83.png 1x, https://www.denner.ch/CMS/30_weinwelt/weinwissen/laender%20und%20regionen/laender/2035/image-thumb__2035__areabrick-icon-text-teaser-icon/italien_schatten@2x.44428c83.png 2x\" />\n</picture>\n"
+   },
+   "region": {
+    "id": 5479498,
+    "name": "Venetien",
+    "shortDescription": null,
+    "link": {
+     "url": null,
+     "text": null,
+     "target": null,
+     "title": null
+    },
+    "productGridLink": {
+     "url": "/de/weinshop/wein-sortiment?wine_type=Schaumwein&region_name=Venetien"
+    },
+    "relatedContentLink": {
+     "url": null
+    },
+    "image": null
+   },
+   "type": {
+    "id": 5479471,
+    "name": "Schaumwein",
+    "productGridLink": {
+     "url": "/de/weinshop/wein-sortiment?wine_type=Schaumwein"
+    }
+   },
+   "grapes": [
+    {
+     "id": 1146372,
+     "name": "Glera",
+     "shortDescription": null,
+     "relatedContentLink": {
+      "url": null
+     },
+     "image": null
+    }
+   ],
+   "temperature": "6–8 °C",
+   "storage": "1 Jahr ab Kauf",
+   "canister": {
+    "name": "bottle",
+    "nameDisplay": "",
+    "contentDisplay": "",
+    "iconDisplay": ""
+   },
+   "scores": {
+    "acid": {
+     "score": 0,
+     "info": "Erinnert der Wein eher an saures Zitronenwasser oder an ungesüsste Getränke?"
+    },
+    "sweetness": {
+     "score": 1,
+     "info": "Ist der Wein eher klebrig süsslich oder trinkt er sich mit fruchtig saurem Nachhall?"
+    },
+    "intensity": {
+     "score": 1,
+     "info": "Hat der Wein ein intensives Geruchsbouquet oder muss ich das Glas mehrmals schwenken, bis ich etwas wahrnehme?"
+    },
+    "barriqueAging": {
+     "score": -2,
+     "info": "Duftet der Wein intensiv nach süsser Vanille, dann lagerte er ziemlich sicher im Holzfass. Oder überwiegen fruchtige Aromen?"
+    },
+    "tannins": {
+     "score": -2,
+     "info": "Ist der Wein angenehm harmonisch oder erinnert mich der hohe Tannine Gehalt eher an ein Stück Holz, auf das ich beisse?"
+    }
+   },
+   "foodMatches": [
+    {
+     "id": 1146201,
+     "score": "4",
+     "name": "Salzwasserfisch",
+     "productGridLink": {
+      "url": "/de/weinshop/wein-sortiment?food_matches=1146201"
+     },
+     "image": {
+      "thumbnailName": "img-bar-teaser",
+      "htmlTag": "<picture >\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3375/image-thumb__3375__img-bar-teaser/weinberater-zutaten-salzwasserfisch~-~media--df42eb16--query.8606c672.webp 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3375/image-thumb__3375__img-bar-teaser/weinberater-zutaten-salzwasserfisch~-~media--df42eb16--query@2x.8606c672.webp 2x\" media=\"(min-width: 768px)\" width=\"282\" height=\"202\" type=\"image/webp\" />\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3375/image-thumb__3375__img-bar-teaser/weinberater-zutaten-salzwasserfisch~-~media--df42eb16--query.8606c672.jpg 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3375/image-thumb__3375__img-bar-teaser/weinberater-zutaten-salzwasserfisch~-~media--df42eb16--query@2x.8606c672.jpg 2x\" media=\"(min-width: 768px)\" width=\"282\" height=\"202\" type=\"image/jpeg\" />\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3375/image-thumb__3375__img-bar-teaser/weinberater-zutaten-salzwasserfisch.2f00e99a.webp 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3375/image-thumb__3375__img-bar-teaser/weinberater-zutaten-salzwasserfisch@2x.2f00e99a.webp 2x\" width=\"265\" height=\"189\" type=\"image/webp\" />\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3375/image-thumb__3375__img-bar-teaser/weinberater-zutaten-salzwasserfisch.2f00e99a.jpg 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3375/image-thumb__3375__img-bar-teaser/weinberater-zutaten-salzwasserfisch@2x.2f00e99a.jpg 2x\" width=\"265\" height=\"189\" type=\"image/jpeg\" />\n\t<img src=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3375/image-thumb__3375__img-bar-teaser/weinberater-zutaten-salzwasserfisch.2f00e99a.jpg\" width=\"265\" height=\"189\" alt=\"\" loading=\"lazy\" srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3375/image-thumb__3375__img-bar-teaser/weinberater-zutaten-salzwasserfisch.2f00e99a.jpg 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3375/image-thumb__3375__img-bar-teaser/weinberater-zutaten-salzwasserfisch@2x.2f00e99a.jpg 2x\" />\n</picture>\n"
+     }
+    },
+    {
+     "id": 1146233,
+     "score": "4",
+     "name": "Meeresfrüchte",
+     "productGridLink": {
+      "url": "/de/weinshop/wein-sortiment?food_matches=1146233"
+     },
+     "image": {
+      "thumbnailName": "img-bar-teaser",
+      "htmlTag": "<picture >\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3372/image-thumb__3372__img-bar-teaser/weinberater-zutaten-meeresfruechte~-~media--df42eb16--query.8e39e623.webp 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3372/image-thumb__3372__img-bar-teaser/weinberater-zutaten-meeresfruechte~-~media--df42eb16--query@2x.8e39e623.webp 2x\" media=\"(min-width: 768px)\" width=\"282\" height=\"202\" type=\"image/webp\" />\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3372/image-thumb__3372__img-bar-teaser/weinberater-zutaten-meeresfruechte~-~media--df42eb16--query.8e39e623.jpg 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3372/image-thumb__3372__img-bar-teaser/weinberater-zutaten-meeresfruechte~-~media--df42eb16--query@2x.8e39e623.jpg 2x\" media=\"(min-width: 768px)\" width=\"282\" height=\"202\" type=\"image/jpeg\" />\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3372/image-thumb__3372__img-bar-teaser/weinberater-zutaten-meeresfruechte.af4d5720.webp 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3372/image-thumb__3372__img-bar-teaser/weinberater-zutaten-meeresfruechte@2x.af4d5720.webp 2x\" width=\"265\" height=\"189\" type=\"image/webp\" />\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3372/image-thumb__3372__img-bar-teaser/weinberater-zutaten-meeresfruechte.af4d5720.jpg 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3372/image-thumb__3372__img-bar-teaser/weinberater-zutaten-meeresfruechte@2x.af4d5720.jpg 2x\" width=\"265\" height=\"189\" type=\"image/jpeg\" />\n\t<img src=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3372/image-thumb__3372__img-bar-teaser/weinberater-zutaten-meeresfruechte.af4d5720.jpg\" width=\"265\" height=\"189\" alt=\"\" loading=\"lazy\" srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3372/image-thumb__3372__img-bar-teaser/weinberater-zutaten-meeresfruechte.af4d5720.jpg 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Zutaten/3372/image-thumb__3372__img-bar-teaser/weinberater-zutaten-meeresfruechte@2x.af4d5720.jpg 2x\" />\n</picture>\n"
+     }
+    },
+    {
+     "id": 1146203,
+     "score": "4",
+     "name": "Antipasti",
+     "productGridLink": {
+      "url": "/de/weinshop/wein-sortiment?food_matches=1146203"
+     },
+     "image": {
+      "thumbnailName": "img-bar-teaser",
+      "htmlTag": "<picture >\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3364/image-thumb__3364__img-bar-teaser/weinberater-foodbild-antipasti~-~media--df42eb16--query.a5da9bfe.webp 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3364/image-thumb__3364__img-bar-teaser/weinberater-foodbild-antipasti~-~media--df42eb16--query@2x.a5da9bfe.webp 2x\" media=\"(min-width: 768px)\" width=\"282\" height=\"202\" type=\"image/webp\" />\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3364/image-thumb__3364__img-bar-teaser/weinberater-foodbild-antipasti~-~media--df42eb16--query.a5da9bfe.jpg 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3364/image-thumb__3364__img-bar-teaser/weinberater-foodbild-antipasti~-~media--df42eb16--query@2x.a5da9bfe.jpg 2x\" media=\"(min-width: 768px)\" width=\"282\" height=\"202\" type=\"image/jpeg\" />\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3364/image-thumb__3364__img-bar-teaser/weinberater-foodbild-antipasti.93514285.webp 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3364/image-thumb__3364__img-bar-teaser/weinberater-foodbild-antipasti@2x.93514285.webp 2x\" width=\"265\" height=\"189\" type=\"image/webp\" />\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3364/image-thumb__3364__img-bar-teaser/weinberater-foodbild-antipasti.93514285.jpg 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3364/image-thumb__3364__img-bar-teaser/weinberater-foodbild-antipasti@2x.93514285.jpg 2x\" width=\"265\" height=\"189\" type=\"image/jpeg\" />\n\t<img src=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3364/image-thumb__3364__img-bar-teaser/weinberater-foodbild-antipasti.93514285.jpg\" width=\"265\" height=\"189\" alt=\"\" loading=\"lazy\" srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3364/image-thumb__3364__img-bar-teaser/weinberater-foodbild-antipasti.93514285.jpg 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3364/image-thumb__3364__img-bar-teaser/weinberater-foodbild-antipasti@2x.93514285.jpg 2x\" />\n</picture>\n"
+     }
+    },
+    {
+     "id": 1146213,
+     "score": "4",
+     "name": "Moules et frites",
+     "productGridLink": {
+      "url": "/de/weinshop/wein-sortiment?food_matches=1146213"
+     },
+     "image": {
+      "thumbnailName": "img-bar-teaser",
+      "htmlTag": "<picture >\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3343/image-thumb__3343__img-bar-teaser/weinberater-foodbild-moules-frites~-~media--df42eb16--query.3401f7ca.webp 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3343/image-thumb__3343__img-bar-teaser/weinberater-foodbild-moules-frites~-~media--df42eb16--query@2x.3401f7ca.webp 2x\" media=\"(min-width: 768px)\" width=\"282\" height=\"202\" type=\"image/webp\" />\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3343/image-thumb__3343__img-bar-teaser/weinberater-foodbild-moules-frites~-~media--df42eb16--query.3401f7ca.jpg 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3343/image-thumb__3343__img-bar-teaser/weinberater-foodbild-moules-frites~-~media--df42eb16--query@2x.3401f7ca.jpg 2x\" media=\"(min-width: 768px)\" width=\"282\" height=\"202\" type=\"image/jpeg\" />\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3343/image-thumb__3343__img-bar-teaser/weinberater-foodbild-moules-frites.d246539c.webp 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3343/image-thumb__3343__img-bar-teaser/weinberater-foodbild-moules-frites@2x.d246539c.webp 2x\" width=\"265\" height=\"189\" type=\"image/webp\" />\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3343/image-thumb__3343__img-bar-teaser/weinberater-foodbild-moules-frites.d246539c.jpg 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3343/image-thumb__3343__img-bar-teaser/weinberater-foodbild-moules-frites@2x.d246539c.jpg 2x\" width=\"265\" height=\"189\" type=\"image/jpeg\" />\n\t<img src=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3343/image-thumb__3343__img-bar-teaser/weinberater-foodbild-moules-frites.d246539c.jpg\" width=\"265\" height=\"189\" alt=\"\" loading=\"lazy\" srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3343/image-thumb__3343__img-bar-teaser/weinberater-foodbild-moules-frites.d246539c.jpg 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3343/image-thumb__3343__img-bar-teaser/weinberater-foodbild-moules-frites@2x.d246539c.jpg 2x\" />\n</picture>\n"
+     }
+    },
+    {
+     "id": 1146220,
+     "score": "4",
+     "name": "thailändische Speisen",
+     "productGridLink": {
+      "url": "/de/weinshop/wein-sortiment?food_matches=1146220"
+     },
+     "image": {
+      "thumbnailName": "img-bar-teaser",
+      "htmlTag": "<picture >\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3360/image-thumb__3360__img-bar-teaser/weinberater-foodbild-thai-speisen~-~media--df42eb16--query.6a99e689.webp 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3360/image-thumb__3360__img-bar-teaser/weinberater-foodbild-thai-speisen~-~media--df42eb16--query@2x.6a99e689.webp 2x\" media=\"(min-width: 768px)\" width=\"282\" height=\"202\" type=\"image/webp\" />\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3360/image-thumb__3360__img-bar-teaser/weinberater-foodbild-thai-speisen~-~media--df42eb16--query.6a99e689.jpg 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3360/image-thumb__3360__img-bar-teaser/weinberater-foodbild-thai-speisen~-~media--df42eb16--query@2x.6a99e689.jpg 2x\" media=\"(min-width: 768px)\" width=\"282\" height=\"202\" type=\"image/jpeg\" />\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3360/image-thumb__3360__img-bar-teaser/weinberater-foodbild-thai-speisen.55201645.webp 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3360/image-thumb__3360__img-bar-teaser/weinberater-foodbild-thai-speisen@2x.55201645.webp 2x\" width=\"265\" height=\"189\" type=\"image/webp\" />\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3360/image-thumb__3360__img-bar-teaser/weinberater-foodbild-thai-speisen.55201645.jpg 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3360/image-thumb__3360__img-bar-teaser/weinberater-foodbild-thai-speisen@2x.55201645.jpg 2x\" width=\"265\" height=\"189\" type=\"image/jpeg\" />\n\t<img src=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3360/image-thumb__3360__img-bar-teaser/weinberater-foodbild-thai-speisen.55201645.jpg\" width=\"265\" height=\"189\" alt=\"\" loading=\"lazy\" srcset=\"https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3360/image-thumb__3360__img-bar-teaser/weinberater-foodbild-thai-speisen.55201645.jpg 1x, https://www.denner.ch/CMS/30_weinwelt/weinberater/passt_zu-Bilder/Gerichte/3360/image-thumb__3360__img-bar-teaser/weinberater-foodbild-thai-speisen@2x.55201645.jpg 2x\" />\n</picture>\n"
+     }
+    }
+   ],
+   "medals": [
+    {
+     "expert": {
+      "name": "Weinseller",
+      "inSearch": true,
+      "remoteId": "8c555be3-6d48-4e4f-a872-4188371000c0"
+     },
+     "year": 2027,
+     "wineYear": null,
+     "valuationPriority": 825,
+     "valuationType": "points",
+     "diploma": null,
+     "valuationText": "16.5 Punkte",
+     "text": "16.5 Punkte Weinseller"
+    },
+    {
+     "expert": {
+      "name": "AWC Vienna",
+      "inSearch": true,
+      "remoteId": "90067ef5-91af-4852-a2ca-5a2c544a7970"
+     },
+     "year": 2026,
+     "wineYear": null,
+     "valuationPriority": 899,
+     "valuationType": "diploma",
+     "diploma": [
+      "1155985"
+     ],
+     "valuationText": "Gold",
+     "text": "Gold AWC Vienna"
+    },
+    {
+     "expert": {
+      "name": "Berliner Wein Trophy",
+      "inSearch": true,
+      "remoteId": "347d99ad-9ad5-424b-a293-2a219c3091d9"
+     },
+     "year": 2026,
+     "wineYear": null,
+     "valuationPriority": 897,
+     "valuationType": "diploma",
+     "diploma": [
+      "1146589"
+     ],
+     "valuationText": "Gold",
+     "text": "Gold Berliner Wein Trophy"
+    },
+    {
+     "expert": {
+      "name": "Expovina",
+      "inSearch": true,
+      "remoteId": "eba162da-a71f-4945-a0a1-3bc60ebe55c1"
+     },
+     "year": 2026,
+     "wineYear": null,
+     "valuationPriority": 894,
+     "valuationType": "diploma",
+     "diploma": [
+      "1146431"
+     ],
+     "valuationText": "Silberdiplom",
+     "text": "Silberdiplom Expovina"
+    }
+   ],
+   "onlineSpecials": {
+    "title": "",
+    "subtitle": "",
+    "specials": []
+   }
+  },
+  "ecoLabels": [],
+  "boxLabels": [],
+  "dots": [],
+  "stopper": {
+   "type": "",
+   "text": "",
+   "markupText": ""
+  },
+  "design": null,
+  "isAssortmentPromotion": false,
+  "gridItemLink": null,
+  "publication": {
+   "id": null,
+   "name": null,
+   "validityFrom": null,
+   "validityTo": null
+  },
+  "sort": null,
+  "isWeb": false,
+  "opa": {
+   "expired": false,
+   "expiredText": "",
+   "expiredRedirect": "",
+   "promotion": {
+    "promotionLabel": "",
+    "promotionFrom": "",
+    "promotionTo": "",
+    "special": false
+   }
+  },
+  "co2": {
+   "emission": 8.15,
+   "emissionUnitAbbr": "kg",
+   "climateSupportAmount": -0.22,
+   "climateSupportCurrency": "CHF",
+   "snippet": {
+    "title": "CO₂-Facts für dieses Produkt",
+    "centerTitle": false,
+    "text": "<ul><li>CO₂-Emission: 8.15 kg</li><li>Klimabeitrag: CHF-0.22</li><li>Abgabe für Material, Produktion und Transport</li></ul><p>Bei Ihrer Bestellung wird der exakte Klimaschutzbeitrag berechnet. Mit Ihrem Klimabeitrag unterstützen Sie aktiv Klimaschutzprojekte der Migros-Gruppe. Erfahren Sie mehr über unser Engagement fürs Klima auf unserer Nachhaltigkeits-Plattform «Alles auf Zukunft».</p>",
+    "cta": {
+     "text": "Mehr erfahren",
+     "url": "https://www.allesaufzukunft.ch/stories/co2-wineshop",
+     "target": "_blank"
+    },
+    "image": "<picture >\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/3432/image-thumb__3432__areabrick-text-with-image/Bild_CO2~-~media--92aa2fb2--query.6e0016b8.webp 1x, https://www.denner.ch/CMS/30_weinwelt/3432/image-thumb__3432__areabrick-text-with-image/Bild_CO2~-~media--92aa2fb2--query@2x.6e0016b8.webp 2x\" media=\"(max-width: 767px)\" width=\"320\" height=\"240\" type=\"image/webp\" />\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/3432/image-thumb__3432__areabrick-text-with-image/Bild_CO2~-~media--92aa2fb2--query.6e0016b8.jpg 1x, https://www.denner.ch/CMS/30_weinwelt/3432/image-thumb__3432__areabrick-text-with-image/Bild_CO2~-~media--92aa2fb2--query@2x.6e0016b8.jpg 2x\" media=\"(max-width: 767px)\" width=\"320\" height=\"240\" type=\"image/jpeg\" />\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/3432/image-thumb__3432__areabrick-text-with-image/Bild_CO2.c5e04bdf.webp 1x, https://www.denner.ch/CMS/30_weinwelt/3432/image-thumb__3432__areabrick-text-with-image/Bild_CO2@2x.c5e04bdf.webp 2x\" width=\"640\" height=\"480\" type=\"image/webp\" />\n\t<source srcset=\"https://www.denner.ch/CMS/30_weinwelt/3432/image-thumb__3432__areabrick-text-with-image/Bild_CO2.c5e04bdf.jpg 1x, https://www.denner.ch/CMS/30_weinwelt/3432/image-thumb__3432__areabrick-text-with-image/Bild_CO2@2x.c5e04bdf.jpg 2x\" width=\"640\" height=\"480\" type=\"image/jpeg\" />\n\t<img src=\"https://www.denner.ch/CMS/30_weinwelt/3432/image-thumb__3432__areabrick-text-with-image/Bild_CO2.c5e04bdf.jpg\" width=\"640\" height=\"480\" alt=\"\" loading=\"lazy\" srcset=\"https://www.denner.ch/CMS/30_weinwelt/3432/image-thumb__3432__areabrick-text-with-image/Bild_CO2.c5e04bdf.jpg 1x, https://www.denner.ch/CMS/30_weinwelt/3432/image-thumb__3432__areabrick-text-with-image/Bild_CO2@2x.c5e04bdf.jpg 2x\" />\n</picture>\n"
+   }
+  },
+  "sales": {
+   "amount": 6,
+   "compared": false,
+   "priceInfo": "",
+   "priceOverride": "",
+   "unitPriceInfo": "",
+   "showSinglePrice": true,
+   "priceSingleUnit": {
+    "raw": 14.95,
+    "formatted": "14.95",
+    "minQuantity": 1,
+    "insteadPrice": {
+     "raw": null,
+     "formatted": "",
+     "text": ""
+    },
+    "percentage": {
+     "raw": null,
+     "formatted": ""
+    },
+    "netPrice": {
+     "raw": 13.83,
+     "formatted": "13.83",
+     "text": "13.83"
+    }
+   },
+   "price": {
+    "raw": 89.7,
+    "formatted": "89.70",
+    "minQuantity": 6,
+    "insteadPrice": {
+     "raw": null,
+     "formatted": "",
+     "text": ""
+    },
+    "percentage": {
+     "raw": null,
+     "formatted": ""
+    },
+    "netPrice": {
+     "raw": 82.98,
+     "formatted": "82.98",
+     "text": "82.98"
+    }
+   },
+   "validityDisclaimer": null,
+   "footNote": ""
+  },
+  "isBio": false,
+  "isVegan": false,
+  "legal": {
+   "warning": "",
+   "text": "",
+   "promotionPermitted": true
+  },
+  "variant": null
+ },
+ "theme": "wine",
+ "doc": {
+  "path": "/",
+  "id": 5
+ },
+ "breadcrumbs": [
+  {
+   "label": "Home",
+   "url": "/de"
+  },
+  {
+   "label": "Weinshop",
+   "url": "https://www.denner.ch/de/weinshop",
+   "target": null
+  },
+  {
+   "label": "Wein/Champagner",
+   "url": "https://www.denner.ch/de/weinshop/wein-sortiment",
+   "target": null
+  },
+  {
+   "label": "Schaumwein",
+   "url": "https://www.denner.ch/de/weinshop/wein-sortiment?wine_type=Schaumwein",
+   "target": null
+  },
+  {
+   "label": "Italien",
+   "url": "https://www.denner.ch/de/weinshop/wein-sortiment?wine_type=Schaumwein&country_name=Italien",
+   "target": null
+  },
+  {
+   "label": "Venetien",
+   "url": "https://www.denner.ch/de/weinshop/wein-sortiment?wine_type=Schaumwein&region_name=Venetien",
+   "target": null
+  },
+  {
+   "label": "Col del Sol Extra Dry Prosecco Superiore Valdobbiadene DOCG",
+   "url": "https://www.denner.ch/de/weinshop/col-del-sol-extra-dry-prosecco-superiore-valdobbiadene-docg~p1027166",
+   "target": null
+  }
+ ],
+ "langLinks": [
+  {
+   "name": "DE",
+   "href": "https://www.denner.ch/de/weinshop/col-del-sol-extra-dry-prosecco-superiore-valdobbiadene-docg~p1027166"
+  },
+  {
+   "name": "FR",
+   "href": "https://www.denner.ch/fr/shop-des-vins/col-del-sol-extra-dry-prosecco-superiore-valdobbiadene-docg~p1027166"
+  },
+  {
+   "name": "IT",
+   "href": "https://www.denner.ch/it/shop-vini/col-del-sol-extra-dry-prosecco-superiore-valdobbiadene-docg~p1027166"
+  }
+ ],
+ "overlay": "",
+ "prediggoPageId": "",
+ "prediggoBlockId": "",
+ "showSpecialBanner": false,
+ "seo": {
+  "title": "Col del Sol Extra Dry Prosecco Superiore Valdobbiadene DOCG | Denner",
+  "description": "Col del Sol Extra Dry Prosecco Superiore Valdobbiadene DOCG ✔ fairer Preis ✔ Online & in ihrer Nähe ✔ von Experten ausgewählt - im Denner Weinsortiment. ▷ Jetzt bestellen!",
+  "canonical": "https://www.denner.ch/de/weinshop/col-del-sol-extra-dry-prosecco-superiore-valdobbiadene-docg~p1027166",
+  "hrefLangs": [
+   {
+    "hreflang": "de-CH",
+    "href": "https://www.denner.ch/de/weinshop/col-del-sol-extra-dry-prosecco-superiore-valdobbiadene-docg~p1027166"
+   },
+   {
+    "hreflang": "fr-CH",
+    "href": "https://www.denner.ch/fr/shop-des-vins/col-del-sol-extra-dry-prosecco-superiore-valdobbiadene-docg~p1027166"
+   },
+   {
+    "hreflang": "it-CH",
+    "href": "https://www.denner.ch/it/shop-vini/col-del-sol-extra-dry-prosecco-superiore-valdobbiadene-docg~p1027166"
+   }
+  ],
+  "robots": "index, follow"
+ },
+ "jsonLd": {
+  "content": {
+   "@context": "https://schema.org",
+   "@type": "Product",
+   "brand": {
+    "@type": "Brand",
+    "name": "Denner"
+   },
+   "sku": "1027166",
+   "mpn": "1027166",
+   "name": "Col del Sol Extra Dry Prosecco Superiore Valdobbiadene DOCG",
+   "image": [
+    "https://denner.imgix.net/assets/29c6cf5d-c552-41f3-8796-aca85ddf2271/web/051464_23_02_21.png",
+    "https://denner.imgix.net/assets/25ace507-616d-4fd2-865c-ee8e015319cf/web/051464_23_02_21_BACK.png",
+    "https://denner.imgix.net/assets/602dacf1-f3d7-4cf0-837b-56945516299a/web/051464_23_02_22_KARTON_06.png",
+    "https://denner.imgix.net/assets/f2257d88-935f-4211-ad2b-0ad5e2bfb7ab/web/051464_23_02_21.tif_PACK_ITEM.png"
+   ],
+   "description": "Italien, Venetien, 75 cl",
+   "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 4.3935,
+    "reviewCount": 465
+   },
+   "review": [
+    {
+     "@type": "Review",
+     "author": {
+      "@type": "Person",
+      "name": "Pierino A."
+     },
+     "datePublished": "2026-09-24",
+     "name": "Sehr gut",
+     "reviewBody": "Empfehlenswert ",
+     "reviewRating": {
+      "@type": "Rating",
+      "bestRating": 5,
+      "ratingValue": 5,
+      "worstRating": 1
+     }
+    },
+    {
+     "@type": "Review",
+     "author": {
+      "@type": "Person",
+      "name": "Ernst L."
+     },
+     "datePublished": "2026-07-07",
+     "name": "Passt immer ",
+     "reviewBody": "Erfrischend, gute Qualität, passt zum Apero und jedem Anlass. Sehr empfehlenswert ",
+     "reviewRating": {
+      "@type": "Rating",
+      "bestRating": 5,
+      "ratingValue": 5,
+      "worstRating": 1
+     }
+    },
+    {
+     "@type": "Review",
+     "author": {
+      "@type": "Person",
+      "name": "Lucia C."
+     },
+     "datePublished": "2026-06-16",
+     "name": "So lecker und süffig",
+     "reviewBody": "Duftet nach Zitrusfrüchten, sehr fruchtiger Geschmack und nicht zu süss. Sehr gute Qualität und preislich absolut im Rahmen. Preis/ Leistungsverhältnis top. Für gesellige Sommerabende mit Freunden.",
+     "reviewRating": {
+      "@type": "Rating",
+      "bestRating": 5,
+      "ratingValue": 5,
+      "worstRating": 1
+     }
+    },
+    {
+     "@type": "Review",
+     "author": {
+      "@type": "Person",
+      "name": "Pet G."
+     },
+     "datePublished": "2026-03-25",
+     "name": "Mi piace molto",
+     "reviewBody": "Ottimo prosecco, cin cin 🥂",
+     "reviewRating": {
+      "@type": "Rating",
+      "bestRating": 5,
+      "ratingValue": 5,
+      "worstRating": 1
+     }
+    },
+    {
+     "@type": "Review",
+     "author": {
+      "@type": "Person",
+      "name": "Rosaria V."
+     },
+     "datePublished": "2026-03-23",
+     "name": "Col del Sol ",
+     "reviewBody": "Un prosecco buonissimo  , che ci accompagna con amici e anche a me sempre , le bollicine sono stile di vita . Provatelo 👍🏻👍🏻🥂🥂🥂",
+     "reviewRating": {
+      "@type": "Rating",
+      "bestRating": 5,
+      "ratingValue": 5,
+      "worstRating": 1
+     }
+    }
+   ],
+   "additionalProperty": [
+    {
+     "@type": "PropertyValue",
+     "name": "Country",
+     "value": "Italien"
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "Region",
+     "value": "Venetien"
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "Grape variety",
+     "value": "Glera"
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "Wine type",
+     "value": "Schaumwein"
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "Serving temperature",
+     "value": "6–8 °C"
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "Drinking window",
+     "value": "1 Jahr ab Kauf"
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "Character",
+     "value": "Helles Zitronengelb. Duftet verführerisch nach grünen Äpfeln und Zitrusfrüchten. Im Gaumen feine Perlage, wirkt unheimlich frisch-fruchtig. Anhaltende Aromatik."
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "Food pairing",
+     "value": "Salzwasserfisch, Meeresfrüchte, Antipasti, Moules et frites, thailändische Speisen"
+    }
+   ],
+   "award": [
+    "16.5 Punkte Weinseller",
+    "Gold AWC Vienna",
+    "Gold Berliner Wein Trophy",
+    "Silberdiplom Expovina"
+   ],
+   "offers": {
+    "@type": "Offer",
+    "url": "https://www.denner.ch/de/weinshop/col-del-sol-extra-dry-prosecco-superiore-valdobbiadene-docg~p1027166?locale=de",
+    "priceCurrency": "CHF",
+    "price": 89.7,
+    "itemCondition": "https://schema.org/NewCondition",
+    "availability": "https://schema.org/InStock",
+    "priceValidUntil": "2027-10-07",
+    "shippingDetails": {
+     "@type": "OfferShippingDetails",
+     "deliveryTime": {
+      "@type": "ShippingDeliveryTime",
+      "businessDays": {
+       "@type": "OpeningHoursSpecification",
+       "dayOfWeek": [
+        "https://schema.org/Monday",
+        "https://schema.org/Tuesday",
+        "https://schema.org/Wednesday",
+        "https://schema.org/Thursday",
+        "https://schema.org/Friday"
+       ]
+      },
+      "cutoffTime": "14:00:00Z",
+      "handlingTime": {
+       "@type": "QuantitativeValue",
+       "minValue": 1,
+       "maxValue": 2,
+       "unitCode": "d"
+      },
+      "transitTime": {
+       "@type": "QuantitativeValue",
+       "minValue": 1,
+       "maxValue": 10,
+       "unitCode": "d"
+      }
+     },
+     "shippingRate": {
+      "@type": "MonetaryAmount",
+      "currency": "CHF",
+      "value": "9.90"
+     },
+     "shippingDestination": {
+      "@type": "DefinedRegion",
+      "addressCountry": [
+       "CH",
+       "LI"
+      ]
+     }
+    },
+    "hasMerchantReturnPolicy": {
+     "@type": "MerchantReturnPolicy",
+     "applicableCountry": [
+      "CH",
+      "LI"
+     ],
+     "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+     "merchantReturnDays": 7,
+     "returnMethod": "https://schema.org/ReturnInStore",
+     "returnFees": "https://schema.org/FreeReturn"
+    },
+    "seller": {
+     "@type": "Organization",
+     "name": "Denner"
+    }
+   }
+  },
+  "breadcrumb": {
+   "@context": "http://schema.org",
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "item": {
+      "@id": "https://www.denner.ch/de",
+      "name": "Home"
+     }
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "item": {
+      "@id": "https://www.denner.ch/de/weinshop",
+      "name": "Weinshop"
+     }
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "item": {
+      "@id": "https://www.denner.ch/de/weinshop/wein-sortiment",
+      "name": "Wein/Champagner"
+     }
+    },
+    {
+     "@type": "ListItem",
+     "position": 4,
+     "item": {
+      "@id": "https://www.denner.ch/de/weinshop/wein-sortiment?wine_type=Schaumwein",
+      "name": "Schaumwein"
+     }
+    },
+    {
+     "@type": "ListItem",
+     "position": 5,
+     "item": {
+      "@id": "https://www.denner.ch/de/weinshop/wein-sortiment?wine_type=Schaumwein&country_name=Italien",
+      "name": "Italien"
+     }
+    },
+    {
+     "@type": "ListItem",
+     "position": 6,
+     "item": {
+      "@id": "https://www.denner.ch/de/weinshop/wein-sortiment?wine_type=Schaumwein&region_name=Venetien",
+      "name": "Venetien"
+     }
+    },
+    {
+     "@type": "ListItem",
+     "position": 7,
+     "item": {
+      "@id": "https://www.denner.ch/de/weinshop/col-del-sol-extra-dry-prosecco-superiore-valdobbiadene-docg~p1027166",
+      "name": "Col del Sol Extra Dry Prosecco Superiore Valdobbiadene DOCG"
+     }
+    }
+   ]
+  }
+ },
+ "openGraph": {
+  "og:title": "Col del Sol Extra Dry Prosecco Superiore Valdobbiadene DOCG | Denner",
+  "og:description": "Italien, Venetien, 75 cl",
+  "og:image": "https://denner.imgix.net/assets/29c6cf5d-c552-41f3-8796-aca85ddf2271/web/051464_23_02_21.png?w=1200&h=630&fit=fill&fill=solid&bg=ffffff&pad=30&auto=format&auto=compress",
+  "og:url": "https://www.denner.ch/de/weinshop/col-del-sol-extra-dry-prosecco-superiore-valdobbiadene-docg~p1027166",
+  "og:type": "website"
+ }
+}

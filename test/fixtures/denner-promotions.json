@@ -1,0 +1,971 @@
+{
+ "status": "OK",
+ "pageId": 12,
+ "blocks": {
+  "searches": [
+   {
+    "blockId": 0,
+    "blockName": "Weekend highlights",
+    "stats": {
+     "totalResults": 0,
+     "currentPage": 1,
+     "totalPages": 0,
+     "resultsInPage": 0
+    },
+    "slots": [],
+    "facets": []
+   },
+   {
+    "blockId": 0,
+    "blockName": "Weekstart highlights",
+    "stats": {
+     "totalResults": 1,
+     "currentPage": 1,
+     "totalPages": 1,
+     "resultsInPage": 1
+    },
+    "slots": [
+     {
+      "position": 1,
+      "item": {
+       "sku": "b16e004a-470c-4a86-b79e-67c94ec76b07",
+       "price": 1.49,
+       "itemType": "PRODUCT",
+       "trackingCode": "ZDNhMWIxNTMtM2E2Yi00YjM4LThjYWUtMzBlOThhMjFlYzYxfGQzYTFiMTUzLTNhNmItNGIzOC04Y2FlLTMwZTk4YTIxZWM2MXxTcGVjaWFsIE9mZmVycyAmIGFzc29ydG1lbnR8V2Vla2x5IHNwZWNpYWx8YjE2ZTAwNGEtNDcwYy00YTg2LWI3OWUtNjdjOTRlYzc2YjA3fGl0ZW1UeXBlOlBST0RVQ1RfL19wcm9tb19jdXJyZW50X3dlZWs6dHJ1ZV8vX3dlZWtlbmRfaGlnaGxpZ2h0OmZhbHNlfFBST0RVQ1R8MHxGQUNFVF9OQVZJR0FUSU9OfG51bGx8bnVsbHxudWxsfG51bGx8bnVsbHxudWxsfG51bGx8bWFzdGVyX3NjZW5hcmlvfG51bGx8MTc5MTM3MzM2MDMxMXxkZV9DSHxDT01QVVRFUg",
+       "attributeInfo": [
+        {
+         "attributeName": "promotion_permitted",
+         "attributeLabel": "promotion_permitted",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "1",
+           "label": "1"
+          }
+         ]
+        },
+        {
+         "attributeName": "imageUrl",
+         "attributeLabel": "imageUrl",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "https://denner.imgix.net/assets/85b4a821-f7a4-48bc-80ca-9094fb072c53/web/801089_25_04_16_OFFEN.png",
+           "label": "https://denner.imgix.net/assets/85b4a821-f7a4-48bc-80ca-9094fb072c53/web/801089_25_04_16_OFFEN.png"
+          }
+         ]
+        },
+        {
+         "attributeName": "content_size_text",
+         "attributeLabel": "Inhalt",
+         "attributeType": "ID",
+         "vals": [
+          {
+           "value": "1 unit.kg",
+           "label": "1 unit.kg"
+          }
+         ]
+        },
+        {
+         "attributeName": "discount_text",
+         "attributeLabel": "discount_text",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "23%",
+           "label": "23%"
+          }
+         ]
+        },
+        {
+         "attributeName": "insteadPriceText",
+         "attributeLabel": "insteadPriceText",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "statt 1.95",
+           "label": "statt 1.95"
+          }
+         ]
+        },
+        {
+         "attributeName": "itemUrl",
+         "attributeLabel": "itemUrl",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "/de/aktionen/satsumas~p1006226?variant=b16e004a-470c-4a86-b79e-67c94ec76b07",
+           "label": "/de/aktionen/satsumas~p1006226?variant=b16e004a-470c-4a86-b79e-67c94ec76b07"
+          }
+         ]
+        },
+        {
+         "attributeName": "name",
+         "attributeLabel": "name",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "Satsumas",
+           "label": "Satsumas"
+          }
+         ]
+        },
+        {
+         "attributeName": "nameSubline",
+         "attributeLabel": "nameSubline",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "Spanien, 1 kg",
+           "label": "Spanien, 1 kg"
+          }
+         ]
+        },
+        {
+         "attributeName": "pimcoreId",
+         "attributeLabel": "pimcoreId",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "6302630",
+           "label": "6302630"
+          }
+         ]
+        },
+        {
+         "attributeName": "priceFormatted",
+         "attributeLabel": "priceFormatted",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "1.49",
+           "label": "1.49"
+          }
+         ]
+        },
+        {
+         "attributeName": "promotionFrom",
+         "attributeLabel": "promotionFrom",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "1790820958",
+           "label": "1790820958"
+          }
+         ]
+        },
+        {
+         "attributeName": "promotionLabel",
+         "attributeLabel": "promotionLabel",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "01.10.–07.10.2026",
+           "label": "01.10.–07.10.2026"
+          }
+         ]
+        },
+        {
+         "attributeName": "promotionLabelPublication",
+         "attributeLabel": "promotionLabelPublication",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "01.10.–07.10.2026",
+           "label": "01.10.–07.10.2026"
+          }
+         ]
+        },
+        {
+         "attributeName": "promotionTo",
+         "attributeLabel": "promotionTo",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "1791324000",
+           "label": "1791324000"
+          }
+         ]
+        },
+        {
+         "attributeName": "wine_of_the_week",
+         "attributeLabel": "wine_of_the_week",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "false",
+           "label": "false"
+          }
+         ]
+        },
+        {
+         "attributeName": "_tracking_discount",
+         "attributeLabel": "_tracking_discount",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "0.46",
+           "label": "0.46"
+          }
+         ]
+        },
+        {
+         "attributeName": "_tracking_item_category2",
+         "attributeLabel": "_tracking_item_category2",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "Früchte und Gemüse",
+           "label": "Früchte und Gemüse"
+          }
+         ]
+        },
+        {
+         "attributeName": "_tracking_item_id",
+         "attributeLabel": "_tracking_item_id",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "1006226",
+           "label": "1006226"
+          }
+         ]
+        },
+        {
+         "attributeName": "_tracking_item_name",
+         "attributeLabel": "_tracking_item_name",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "Satsumas",
+           "label": "Satsumas"
+          }
+         ]
+        },
+        {
+         "attributeName": "buying_channel",
+         "attributeLabel": "Verkaufskanal",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "all",
+           "label": "all"
+          },
+          {
+           "value": "stores",
+           "label": "stores"
+          }
+         ]
+        },
+        {
+         "attributeName": "category",
+         "attributeLabel": "category",
+         "attributeType": "ID",
+         "vals": [
+          {
+           "value": "1144362",
+           "label": "Lebensmittel"
+          },
+          {
+           "value": "1144363",
+           "label": "Früchte und Gemüse"
+          }
+         ]
+        },
+        {
+         "attributeName": "design",
+         "attributeLabel": "prediggo.attribute.design",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "whitesmoke",
+           "label": "whitesmoke"
+          }
+         ]
+        },
+        {
+         "attributeName": "isAssortmentPromotion",
+         "attributeLabel": "isAssortmentPromotion",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "false",
+           "label": "false"
+          }
+         ]
+        },
+        {
+         "attributeName": "isBuyable",
+         "attributeLabel": "isBuyable",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "false",
+           "label": "false"
+          }
+         ]
+        },
+        {
+         "attributeName": "navisionId",
+         "attributeLabel": "navisionId",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "b16e004a-470c-4a86-b79e-67c94ec76b07",
+           "label": "b16e004a-470c-4a86-b79e-67c94ec76b07"
+          }
+         ]
+        },
+        {
+         "attributeName": "product_publication",
+         "attributeLabel": "Kategorie",
+         "attributeType": "ID",
+         "vals": [
+          {
+           "value": "6200459",
+           "label": "Wochenaktionen"
+          }
+         ]
+        },
+        {
+         "attributeName": "product_publication_filter",
+         "attributeLabel": "Angebote",
+         "attributeType": "ID",
+         "vals": [
+          {
+           "value": "4649555",
+           "label": "Aktuelle Aktionen"
+          }
+         ]
+        },
+        {
+         "attributeName": "salesQuantity",
+         "attributeLabel": "salesQuantity",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "1",
+           "label": "1"
+          }
+         ]
+        },
+        {
+         "attributeName": "stopperType",
+         "attributeLabel": "stopperType",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "x_percent",
+           "label": "x_percent"
+          }
+         ]
+        },
+        {
+         "attributeName": "unit_price",
+         "attributeLabel": "Stückpreis",
+         "attributeType": "RANGE",
+         "vals": [
+          {
+           "value": "1.49",
+           "label": "1.49"
+          }
+         ]
+        },
+        {
+         "attributeName": "availability",
+         "attributeLabel": "availability",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "10.00",
+           "label": "10.00"
+          }
+         ]
+        },
+        {
+         "attributeName": "price",
+         "attributeLabel": "Preis",
+         "attributeType": "RANGE",
+         "vals": [
+          {
+           "value": "1.49",
+           "label": "1.49"
+          }
+         ]
+        },
+        {
+         "attributeName": "Geschmacksprofil",
+         "attributeLabel": "pred-custom1",
+         "attributeType": "RANGE",
+         "vals": [
+          {
+           "value": "0.0",
+           "label": "0.0"
+          }
+         ]
+        }
+       ],
+       "displayInfo": {}
+      },
+      "template": {
+       "posX": 1,
+       "posY": 1,
+       "sizeX": 1,
+       "sizeY": 1
+      }
+     }
+    ],
+    "facets": []
+   },
+   {
+    "blockId": 0,
+    "blockName": "Weekly special",
+    "stats": {
+     "totalResults": 2,
+     "currentPage": 1,
+     "totalPages": 2,
+     "resultsInPage": 1
+    },
+    "slots": [
+     {
+      "position": 2,
+      "item": {
+       "sku": "7c570b1b-5d0a-4f5a-b35f-e961a660bc52",
+       "price": 2.95,
+       "itemType": "PRODUCT",
+       "trackingCode": "ZDNhMWIxNTMtM2E2Yi00YjM4LThjYWUtMzBlOThhMjFlYzYxfGQzYTFiMTUzLTNhNmItNGIzOC04Y2FlLTMwZTk4YTIxZWM2MXxTcGVjaWFsIE9mZmVycyAmIGFzc29ydG1lbnR8V2Vla2x5IHNwZWNpYWx8N2M1NzBiMWItNWQwYS00ZjVhLWIzNWYtZTk2MWE2NjBiYzUyfGl0ZW1UeXBlOlBST0RVQ1RfL19wcm9tb19jdXJyZW50X3dlZWs6dHJ1ZV8vX3dlZWtlbmRfaGlnaGxpZ2h0OmZhbHNlfFBST0RVQ1R8MXxGQUNFVF9OQVZJR0FUSU9OfG51bGx8bnVsbHxudWxsfG51bGx8bnVsbHxudWxsfG51bGx8bWFzdGVyX3NjZW5hcmlvfG51bGx8MTc5MTM3MzM2MDMxMXxkZV9DSHxDT01QVVRFUg",
+       "attributeInfo": [
+        {
+         "attributeName": "promotion_permitted",
+         "attributeLabel": "promotion_permitted",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "1",
+           "label": "1"
+          }
+         ]
+        },
+        {
+         "attributeName": "imageUrl",
+         "attributeLabel": "imageUrl",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "https://denner.imgix.net/assets/340309ca-0424-44a9-a733-8fbe97d8ded8/web/902989_25_08_20_kombi.png",
+           "label": "https://denner.imgix.net/assets/340309ca-0424-44a9-a733-8fbe97d8ded8/web/902989_25_08_20_kombi.png"
+          }
+         ]
+        },
+        {
+         "attributeName": "content_size_text",
+         "attributeLabel": "Inhalt",
+         "attributeType": "ID",
+         "vals": [
+          {
+           "value": "0.8 unit.g",
+           "label": "0.8 unit.g"
+          }
+         ]
+        },
+        {
+         "attributeName": "discount_text",
+         "attributeLabel": "discount_text",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "½ PREIS",
+           "label": "½ PREIS"
+          }
+         ]
+        },
+        {
+         "attributeName": "footnote",
+         "attributeLabel": "footnote",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "Konkurrenzvergleich",
+           "label": "Konkurrenzvergleich"
+          }
+         ]
+        },
+        {
+         "attributeName": "insteadPriceText",
+         "attributeLabel": "insteadPriceText",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "statt 5.99",
+           "label": "statt 5.99"
+          }
+         ]
+        },
+        {
+         "attributeName": "itemUrl",
+         "attributeLabel": "itemUrl",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "/de/aktionen/black-angus-rindsentrecote~p1002966?variant=7c570b1b-5d0a-4f5a-b35f-e961a660bc52",
+           "label": "/de/aktionen/black-angus-rindsentrecote~p1002966?variant=7c570b1b-5d0a-4f5a-b35f-e961a660bc52"
+          }
+         ]
+        },
+        {
+         "attributeName": "name",
+         "attributeLabel": "name",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "Black Angus Rindsentrecôte",
+           "label": "Black Angus Rindsentrecôte"
+          }
+         ]
+        },
+        {
+         "attributeName": "nameSubline",
+         "attributeLabel": "nameSubline",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "am Stück, Uruguay/Argentinien, ca. 800 g, per 100 g",
+           "label": "am Stück, Uruguay/Argentinien, ca. 800 g, per 100 g"
+          }
+         ]
+        },
+        {
+         "attributeName": "pimcoreId",
+         "attributeLabel": "pimcoreId",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "6201047",
+           "label": "6201047"
+          }
+         ]
+        },
+        {
+         "attributeName": "priceFormatted",
+         "attributeLabel": "priceFormatted",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "2.95",
+           "label": "2.95"
+          }
+         ]
+        },
+        {
+         "attributeName": "promotionFrom",
+         "attributeLabel": "promotionFrom",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "1790820958",
+           "label": "1790820958"
+          }
+         ]
+        },
+        {
+         "attributeName": "promotionLabel",
+         "attributeLabel": "promotionLabel",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "01.10.–07.10.2026",
+           "label": "01.10.–07.10.2026"
+          }
+         ]
+        },
+        {
+         "attributeName": "promotionLabelPublication",
+         "attributeLabel": "promotionLabelPublication",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "01.10.–07.10.2026",
+           "label": "01.10.–07.10.2026"
+          }
+         ]
+        },
+        {
+         "attributeName": "promotionTo",
+         "attributeLabel": "promotionTo",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "1791324000",
+           "label": "1791324000"
+          }
+         ]
+        },
+        {
+         "attributeName": "wine_of_the_week",
+         "attributeLabel": "wine_of_the_week",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "false",
+           "label": "false"
+          }
+         ]
+        },
+        {
+         "attributeName": "_tracking_discount",
+         "attributeLabel": "_tracking_discount",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "3.04",
+           "label": "3.04"
+          }
+         ]
+        },
+        {
+         "attributeName": "_tracking_item_category2",
+         "attributeLabel": "_tracking_item_category2",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "Fleisch/Wurst/Fisch",
+           "label": "Fleisch/Wurst/Fisch"
+          }
+         ]
+        },
+        {
+         "attributeName": "_tracking_item_id",
+         "attributeLabel": "_tracking_item_id",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "1002966",
+           "label": "1002966"
+          }
+         ]
+        },
+        {
+         "attributeName": "_tracking_item_name",
+         "attributeLabel": "_tracking_item_name",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "Black Angus Rindsentrecôte",
+           "label": "Black Angus Rindsentrecôte"
+          }
+         ]
+        },
+        {
+         "attributeName": "buying_channel",
+         "attributeLabel": "Verkaufskanal",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "all",
+           "label": "all"
+          },
+          {
+           "value": "stores",
+           "label": "stores"
+          }
+         ]
+        },
+        {
+         "attributeName": "category",
+         "attributeLabel": "category",
+         "attributeType": "ID",
+         "vals": [
+          {
+           "value": "1144362",
+           "label": "Lebensmittel"
+          },
+          {
+           "value": "1144364",
+           "label": "Fleisch/Wurst/Fisch"
+          }
+         ]
+        },
+        {
+         "attributeName": "design",
+         "attributeLabel": "prediggo.attribute.design",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "whitesmoke",
+           "label": "whitesmoke"
+          }
+         ]
+        },
+        {
+         "attributeName": "isAssortmentPromotion",
+         "attributeLabel": "isAssortmentPromotion",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "false",
+           "label": "false"
+          }
+         ]
+        },
+        {
+         "attributeName": "isBuyable",
+         "attributeLabel": "isBuyable",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "false",
+           "label": "false"
+          }
+         ]
+        },
+        {
+         "attributeName": "navisionId",
+         "attributeLabel": "navisionId",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "7c570b1b-5d0a-4f5a-b35f-e961a660bc52",
+           "label": "7c570b1b-5d0a-4f5a-b35f-e961a660bc52"
+          }
+         ]
+        },
+        {
+         "attributeName": "product_publication",
+         "attributeLabel": "Kategorie",
+         "attributeType": "ID",
+         "vals": [
+          {
+           "value": "6200459",
+           "label": "Wochenaktionen"
+          }
+         ]
+        },
+        {
+         "attributeName": "product_publication_filter",
+         "attributeLabel": "Angebote",
+         "attributeType": "ID",
+         "vals": [
+          {
+           "value": "4649555",
+           "label": "Aktuelle Aktionen"
+          }
+         ]
+        },
+        {
+         "attributeName": "salesQuantity",
+         "attributeLabel": "salesQuantity",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "1",
+           "label": "1"
+          }
+         ]
+        },
+        {
+         "attributeName": "stopperType",
+         "attributeLabel": "stopperType",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "x_percent",
+           "label": "x_percent"
+          }
+         ]
+        },
+        {
+         "attributeName": "unit_price",
+         "attributeLabel": "Stückpreis",
+         "attributeType": "RANGE",
+         "vals": [
+          {
+           "value": "2.95",
+           "label": "2.95"
+          }
+         ]
+        },
+        {
+         "attributeName": "availability",
+         "attributeLabel": "availability",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "10.00",
+           "label": "10.00"
+          }
+         ]
+        },
+        {
+         "attributeName": "price",
+         "attributeLabel": "Preis",
+         "attributeType": "RANGE",
+         "vals": [
+          {
+           "value": "2.95",
+           "label": "2.95"
+          }
+         ]
+        },
+        {
+         "attributeName": "Geschmacksprofil",
+         "attributeLabel": "pred-custom1",
+         "attributeType": "RANGE",
+         "vals": [
+          {
+           "value": "0.0",
+           "label": "0.0"
+          }
+         ]
+        }
+       ],
+       "displayInfo": {}
+      },
+      "template": {
+       "posX": 2,
+       "posY": 1,
+       "sizeX": 1,
+       "sizeY": 1
+      }
+     }
+    ],
+    "facets": [
+     {
+      "attributeName": "type_food",
+      "attributeLabel": "Lebensmittel",
+      "attributeType": "ID",
+      "attributeUnit": "",
+      "multiSelect": true,
+      "position": 1,
+      "options": [
+       {
+        "refiningId": "&prd_page=1&prd_nbResultsPerPage=200&prd_sorting=MY_SELECTION&prd_constraints=itemType%3APRODUCT_%2F_promo_current_week%3Atrue_%2F_weekend_highlight%3Afalse_%2F_type_food%3A1144368",
+        "noFollow": false,
+        "nbResults": 32,
+        "selected": false,
+        "debugText": "1144368",
+        "value": "1144368",
+        "label": "Sonstiges"
+       },
+       {
+        "refiningId": "&prd_page=1&prd_nbResultsPerPage=200&prd_sorting=MY_SELECTION&prd_constraints=itemType%3APRODUCT_%2F_promo_current_week%3Atrue_%2F_weekend_highlight%3Afalse_%2F_type_food%3A1144370",
+        "noFollow": false,
+        "nbResults": 25,
+        "selected": false,
+        "debugText": "1144370",
+        "value": "1144370",
+        "label": "Schokolade/Süsses"
+       },
+       {
+        "refiningId": "&prd_page=1&prd_nbResultsPerPage=200&prd_sorting=MY_SELECTION&prd_constraints=itemType%3APRODUCT_%2F_promo_current_week%3Atrue_%2F_weekend_highlight%3Afalse_%2F_type_food%3A1144371",
+        "noFollow": false,
+        "nbResults": 16,
+        "selected": false,
+        "debugText": "1144371",
+        "value": "1144371",
+        "label": "Snack/Apero"
+       },
+       {
+        "refiningId": "&prd_page=1&prd_nbResultsPerPage=200&prd_sorting=MY_SELECTION&prd_constraints=itemType%3APRODUCT_%2F_promo_current_week%3Atrue_%2F_weekend_highlight%3Afalse_%2F_type_food%3A1144364",
+        "noFollow": false,
+        "nbResults": 15,
+        "selected": false,
+        "debugText": "1144364",
+        "value": "1144364",
+        "label": "Fleisch/Wurst/Fisch"
+       },
+       {
+        "refiningId": "&prd_page=1&prd_nbResultsPerPage=200&prd_sorting=MY_SELECTION&prd_constraints=itemType%3APRODUCT_%2F_promo_current_week%3Atrue_%2F_weekend_highlight%3Afalse_%2F_type_food%3A1144365",
+        "noFollow": false,
+        "nbResults": 12,
+        "selected": false,
+        "debugText": "1144365",
+        "value": "1144365",
+        "label": "Milch/Käse/Eier"
+       },
+       {
+        "refiningId": "&prd_page=1&prd_nbResultsPerPage=200&prd_sorting=MY_SELECTION&prd_constraints=itemType%3APRODUCT_%2F_promo_current_week%3Atrue_%2F_weekend_highlight%3Afalse_%2F_type_food%3A1144366",
+        "noFollow": false,
+        "nbResults": 7,
+        "selected": false,
+        "debugText": "1144366",
+        "value": "1144366",
+        "label": "Tiefkühlprodukte"
+       },
+       {
+        "refiningId": "&prd_page=1&prd_nbResultsPerPage=200&prd_sorting=MY_SELECTION&prd_constraints=itemType%3APRODUCT_%2F_promo_current_week%3Atrue_%2F_weekend_highlight%3Afalse_%2F_type_food%3A1144363",
+        "noFollow": false,
+        "nbResults": 6,
+        "selected": false,
+        "debugText": "1144363",
+        "value": "1144363",
+        "label": "Früchte und Gemüse"
+       },
+       {
+        "refiningId": "&prd_page=1&prd_nbResultsPerPage=200&prd_sorting=MY_SELECTION&prd_constraints=itemType%3APRODUCT_%2F_promo_current_week%3Atrue_%2F_weekend_highlight%3Afalse_%2F_type_food%3A1144367",
+        "noFollow": false,
+        "nbResults": 5,
+        "selected": false,
+        "debugText": "1144367",
+        "value": "1144367",
+        "label": "Fertigprodukte"
+       },
+       {
+        "refiningId": "&prd_page=1&prd_nbResultsPerPage=200&prd_sorting=MY_SELECTION&prd_constraints=itemType%3APRODUCT_%2F_promo_current_week%3Atrue_%2F_weekend_highlight%3Afalse_%2F_type_food%3A1144369",
+        "noFollow": false,
+        "nbResults": 3,
+        "selected": false,
+        "debugText": "1144369",
+        "value": "1144369",
+        "label": "Brot/Backwaren"
+       }
+      ],
+      "actions": {
+       "selectAll": {
+        "refiningId": "&prd_page=1&prd_nbResultsPerPage=200&prd_sorting=MY_SELECTION&prd_constraints=itemType%3APRODUCT_%2F_promo_current_week%3Atrue_%2F_weekend_highlight%3Afalse_%2F_type_food%3A1144368_%2F_type_food%3A1144370_%2F_type_food%3A1144371_%2F_type_food%3A1144364_%2F_type_food%3A1144365_%2F_type_food%3A1144366_%2F_type_food%3A1144363_%2F_type_food%3A1144367_%2F_type_food%3A1144369",
+        "noFollow": true,
+        "action": "selectAll",
+        "label": "Alle auswählen"
+       }
+      }
+     },
+     {
+      "attributeName": "type_non_food",
+      "attributeLabel": "Nicht-Lebensmittel",
+      "attributeType": "ID",
+      "attributeUnit": "",
+      "multiSelect": true,
+      "position": 2,
+      "options": [
+       {
+        "refiningId": "&prd_page=1&prd_nbResultsPerPage=200&prd_sorting=MY_SELECTION&prd_constraints=itemType%3APRODUCT_%2F_promo_current_week%3Atrue_%2F_weekend_highlight%3Afalse_%2F_type_non_food%3A1144378",
+        "noFollow": false,
+        "nbResults": 28,
+        "selected": false,
+        "debugText": "1144378",
+        "value": "1144378",
+        "label": "Pflege/Kosmetik"
+       },
+       {
+        "refiningId": "&prd_page=1&prd_nbResultsPerPage=200&prd_sorting=MY_SELECTION&prd_constraints=itemType%3APRODUCT_%2F_promo_current_week%3Atrue_%2F_weekend_highlight%3Afalse_%2F_type_non_food%3A1144379",
+        "noFollow": false,
+        "nbResults": 22,
+        "selected": false,
+        "debugText": "1144379",
+        "value": "1144379",
+        "label": "Waschen/Haushalt"
+       }
+      ],
+      "actions": {
+       "selectAll": {
+        "refiningId": "&prd_page=1&prd_nbResultsPerPage=200&prd_sorting=MY_SELECTION&prd_constraints=itemType%3APRODUCT_%2F_promo_current_week%3Atrue_%2F_weekend_highlight%3Afalse_%2F_type_non_food%3A1144378_%2F_type_non_food%3A1144379",
+        "noFollow": true,
+        "action": "selectAll",
+        "label": "Alle auswählen"
+       }
+      }
+     }
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,17 @@
+node_modules/
+dist/
+coverage/
+
+# Local databases and exports
+*.db
+*.db-wal
+*.db-shm
+*.csv
+*.jsonl
+
+# Secrets — copy .env.example to .env and keep it local
+.env
+.env.*
+!.env.example
+
+.DS_Store

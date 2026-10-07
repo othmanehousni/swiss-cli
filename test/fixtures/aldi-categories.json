@@ -1,0 +1,163 @@
+{
+ "data": [
+  {
+   "key": "1588161418433031",
+   "order": 26,
+   "thumbnail": null,
+   "name": "Aktionen",
+   "urlSlugText": "aktionen",
+   "urlSlugTextAlternatives": {
+    "de-CH": "aktionen",
+    "fr-CH": "actions",
+    "it-CH": "promozioni"
+   },
+   "children": [
+    {
+     "key": "158816141843303101",
+     "order": null,
+     "thumbnail": null,
+     "name": "Auto, Töff & Velo",
+     "urlSlugText": "aktionen/auto-toeff-velo",
+     "urlSlugTextAlternatives": {
+      "de-CH": "aktionen/auto-toeff-velo",
+      "fr-CH": "actions/voiture-moto-et-velo",
+      "it-CH": "promozioni/auto-moto-e-bici"
+     },
+     "children": []
+    },
+    {
+     "key": "158816141843303103",
+     "order": null,
+     "thumbnail": null,
+     "name": "Batterien & Akkus",
+     "urlSlugText": "aktionen/batterien-akkus",
+     "urlSlugTextAlternatives": {
+      "de-CH": "aktionen/batterien-akkus",
+      "it-CH": "promozioni/pile-e-batterie",
+      "fr-CH": "actions/piles-et-accus"
+     },
+     "children": []
+    },
+    {
+     "key": "158816141843303104",
+     "order": null,
+     "thumbnail": null,
+     "name": "Bekleidung & Accessoires",
+     "urlSlugText": "aktionen/bekleidung-accessoires",
+     "urlSlugTextAlternatives": {
+      "fr-CH": "actions/vetements-et-accessoires",
+      "de-CH": "aktionen/bekleidung-accessoires",
+      "it-CH": "promozioni/abbigliamento-e-accessori"
+     },
+     "children": []
+    }
+   ]
+  },
+  {
+   "key": "1588161418433035",
+   "order": 25,
+   "thumbnail": null,
+   "name": "Alkoholfreie Getränke",
+   "urlSlugText": "alkoholfreie-getraenke",
+   "urlSlugTextAlternatives": {
+    "de-CH": "alkoholfreie-getraenke",
+    "fr-CH": "boissons-non-alcoolisees",
+    "it-CH": "bevande-analcoliche"
+   },
+   "children": [
+    {
+     "key": "158816141843303501",
+     "order": null,
+     "thumbnail": null,
+     "name": "Alkoholfreie Weine, Spirituosen & Biere",
+     "urlSlugText": "alkoholfreie-getraenke/alkoholfreie-weine-spirituosen-biere",
+     "urlSlugTextAlternatives": {
+      "it-CH": "bevande-analcoliche/vini-liquori-e-birre-analcolici",
+      "fr-CH": "boissons-non-alcoolisees/vins-spiritueux-et-bieres-sans-alcool",
+      "de-CH": "alkoholfreie-getraenke/alkoholfreie-weine-spirituosen-biere"
+     },
+     "children": []
+    },
+    {
+     "key": "158816141843303502",
+     "order": null,
+     "thumbnail": null,
+     "name": "Funktionsgetränke & Energydrinks",
+     "urlSlugText": "alkoholfreie-getraenke/funktionsgetraenke-energydrinks",
+     "urlSlugTextAlternatives": {
+      "de-CH": "alkoholfreie-getraenke/funktionsgetraenke-energydrinks",
+      "fr-CH": "boissons-non-alcoolisees/boissons-fonctionnelles-et-boissons-energisantes",
+      "it-CH": "bevande-analcoliche/bevande-funzionali-e-bevande-energetiche"
+     },
+     "children": []
+    },
+    {
+     "key": "158816141843303503",
+     "order": null,
+     "thumbnail": null,
+     "name": "Kaffee",
+     "urlSlugText": "alkoholfreie-getraenke/kaffee",
+     "urlSlugTextAlternatives": {
+      "it-CH": "bevande-analcoliche/caffe",
+      "fr-CH": "boissons-non-alcoolisees/cafe",
+      "de-CH": "alkoholfreie-getraenke/kaffee"
+     },
+     "children": []
+    }
+   ]
+  },
+  {
+   "key": "1588161418433059",
+   "order": 11,
+   "thumbnail": null,
+   "name": "Milchprodukte & Eier",
+   "urlSlugText": "milchprodukte-eier",
+   "urlSlugTextAlternatives": {
+    "fr-CH": "produits-laitiers-et-oeufs",
+    "de-CH": "milchprodukte-eier",
+    "it-CH": "latticini-e-uova"
+   },
+   "children": [
+    {
+     "key": "158816141843305901",
+     "order": null,
+     "thumbnail": null,
+     "name": "Butter, Milch & Rahm",
+     "urlSlugText": "milchprodukte-eier/butter-milch-rahm",
+     "urlSlugTextAlternatives": {
+      "de-CH": "milchprodukte-eier/butter-milch-rahm",
+      "fr-CH": "produits-laitiers-et-oeufs/beurre-lait-et-creme",
+      "it-CH": "latticini-e-uova/burro-latte-e-panna"
+     },
+     "children": []
+    },
+    {
+     "key": "158816141843305902",
+     "order": null,
+     "thumbnail": null,
+     "name": "Eier",
+     "urlSlugText": "milchprodukte-eier/eier",
+     "urlSlugTextAlternatives": {
+      "fr-CH": "produits-laitiers-et-oeufs/oeufs",
+      "it-CH": "latticini-e-uova/uova",
+      "de-CH": "milchprodukte-eier/eier"
+     },
+     "children": []
+    },
+    {
+     "key": "158816141843305903",
+     "order": null,
+     "thumbnail": null,
+     "name": "Joghurts, Quark & Desserts",
+     "urlSlugText": "milchprodukte-eier/joghurts-quark-desserts",
+     "urlSlugTextAlternatives": {
+      "de-CH": "milchprodukte-eier/joghurts-quark-desserts",
+      "fr-CH": "produits-laitiers-et-oeufs/yaourts-fromage-blanc-et-desserts",
+      "it-CH": "latticini-e-uova/yogurt-quark-e-dessert"
+     },
+     "children": []
+    }
+   ]
+  }
+ ]
+}

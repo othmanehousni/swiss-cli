@@ -1,0 +1,138 @@
+{
+ "code": "6679118",
+ "name": "Karma Gyozas",
+ "title": "Karma Gyozas",
+ "description": "Die Karma Gyozas sind eine köstliche Ergänzung zu Ihrem asiatischen Menü. Als Produkt der Marke Karma bieten sie eine hohe Qualität, die Sie schmecken können. Einfach aus dem Tiefkühler nehmen und zubereiten, für ein schnelles und schmackhaftes Gericht.",
+ "ingredients": "Teigtaschen gefüllt mit Gemüse vorgegart 264g: Gemüse 45% (Kohl 32%, Zwiebeln 8%, Karotten 4%, Frühlingszwiebeln 1%), <b>WEIZENMEHL</b>, Wasser, Shiitake-Pilze, Sojasauce (Wasser, <b>SOJABOHNEN</b>, Kochsalz, Fructosesirup, <b>WEIZEN</b>), Maisstärke, Reiskleieöl, <b>SESAMÖL</b>, Ingwer, Knoblauch, Zucker, Kochsalz, Pfeffer weiss, Kaffirlimettenblätter.\nSour Sauce 60g: Wasser, <b>SOJABOHNEN</b>, Tafelessig, Kochsalz, Alkoholessig, Fructosesirup, <b>WEIZEN</b>, Zucker, Glucosesirup, <b>SOJASAUCE</b>, Gewürze, Melasse.",
+ "ean": "7627534001681",
+ "originCountries": [
+  "Thailand"
+ ],
+ "storageInformation": "Tiefkühlprodukt: bei -18 °C oder kälter aufbewahren. \nIm Kühlschrank bei höchstens 5 °C maximal 1 Tag haltbar.\nAufgetaute Produkte nicht wieder einfrieren.",
+ "nutritionInformation": {
+  "nutritionInformationPerPortion": {
+   "description": "1 Portion (162g)",
+   "numberOfServingsText": "Portionen pro Packung: 2",
+   "nutrients": [
+    {
+     "assembledValue": "904",
+     "bigSevenNutrient": true,
+     "indented": false,
+     "name": "Energie"
+    },
+    {
+     "assembledValue": "214",
+     "bigSevenNutrient": true,
+     "indented": false,
+     "name": "Energie"
+    },
+    {
+     "assembledValue": "5.2g",
+     "bigSevenNutrient": true,
+     "indented": false,
+     "name": "Fett"
+    },
+    {
+     "assembledValue": "1g",
+     "bigSevenNutrient": true,
+     "indented": true,
+     "name": "davon gesättigte Fettsäuren"
+    },
+    {
+     "assembledValue": "34g",
+     "bigSevenNutrient": true,
+     "indented": false,
+     "name": "Kohlenhydrate"
+    },
+    {
+     "assembledValue": "8.4g",
+     "bigSevenNutrient": true,
+     "indented": true,
+     "name": "davon Zucker"
+    },
+    {
+     "assembledValue": "2.6g",
+     "bigSevenNutrient": true,
+     "indented": false,
+     "name": "Nahrungsfasern (Ballaststoffe)"
+    },
+    {
+     "assembledValue": "6.6g",
+     "bigSevenNutrient": true,
+     "indented": false,
+     "name": "Eiweiss"
+    },
+    {
+     "assembledValue": "3.7g",
+     "bigSevenNutrient": true,
+     "indented": false,
+     "name": "Salz"
+    }
+   ]
+  },
+  "nutritionInformationPerUnit": {
+   "description": "100g",
+   "nutrients": [
+    {
+     "assembledValue": "558",
+     "bigSevenNutrient": true,
+     "indented": false,
+     "name": "Energie"
+    },
+    {
+     "assembledValue": "132",
+     "bigSevenNutrient": true,
+     "indented": false,
+     "name": "Energie"
+    },
+    {
+     "assembledValue": "3.2g",
+     "bigSevenNutrient": true,
+     "indented": false,
+     "name": "Fett"
+    },
+    {
+     "assembledValue": "0.6g",
+     "bigSevenNutrient": true,
+     "indented": true,
+     "name": "davon gesättigte Fettsäuren"
+    },
+    {
+     "assembledValue": "21g",
+     "bigSevenNutrient": true,
+     "indented": false,
+     "name": "Kohlenhydrate"
+    },
+    {
+     "assembledValue": "5.2g",
+     "bigSevenNutrient": true,
+     "indented": true,
+     "name": "davon Zucker"
+    },
+    {
+     "assembledValue": "1.6g",
+     "bigSevenNutrient": true,
+     "indented": false,
+     "name": "Nahrungsfasern (Ballaststoffe)"
+    },
+    {
+     "assembledValue": "4.1g",
+     "bigSevenNutrient": true,
+     "indented": false,
+     "name": "Eiweiss"
+    },
+    {
+     "assembledValue": "2.3g",
+     "bigSevenNutrient": true,
+     "indented": false,
+     "name": "Salz"
+    }
+   ]
+  }
+ },
+ "averageRating": 3.5,
+ "numberOfRatings": 56,
+ "regulatedProductName": "Teigtaschen gefüllt mit Gemüse, vorgegart, mit Sour Sauce",
+ "labels": [],
+ "ecoScore": "B"
+}

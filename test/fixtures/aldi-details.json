@@ -1,0 +1,121 @@
+{
+ "data": {
+  "sku": "000000000000288415",
+  "name": "Butter",
+  "brandName": null,
+  "description": "",
+  "urlSlugText": "no-brand-butter",
+  "canonical": "no-brand-butter-000000000000288415",
+  "useAbstractForCanonical": false,
+  "urlSlugTextAlternatives": {
+   "de-CH": "no-brand-butter",
+   "fr-CH": "no-brand-beurre",
+   "it-CH": "no-brand-burro"
+  },
+  "metaTitle": null,
+  "metaDescription": null,
+  "metaKeywords": null,
+  "metaRobots": "index, follow",
+  "ageRestriction": null,
+  "alcohol": null,
+  "discontinued": false,
+  "discontinuedNote": null,
+  "notForSale": true,
+  "notForSaleReason": null,
+  "quantityMin": 1,
+  "quantityMax": 99,
+  "quantityInterval": 1,
+  "quantityDefault": 1,
+  "quantityUnit": "ea",
+  "weightType": "0",
+  "sellingSize": "250 g",
+  "countryOrigin": null,
+  "energyClass": null,
+  "storageInstructions": "Vor Licht geschützt und kühl aufbewahren, bei max. +10°C mindestens haltbar bis.",
+  "usageInstructions": "für die kalte und warme Küche, Brotaufstrich",
+  "ingredients": null,
+  "legalDisclaimer": null,
+  "onSaleDateDisplay": null,
+  "onSaleDate": null,
+  "stockInformationAvailable": false,
+  "isAbstract": false,
+  "abstractSku": "000000000000288415A",
+  "grade": null,
+  "isCustomerFacingApproved": true,
+  "isDropship": false,
+  "sellingUnitDisplay": null,
+  "price": {
+   "amount": 385,
+   "amountRelevant": 385,
+   "amountRelevantDisplay": "CHF 3.85",
+   "bottleDeposit": 0,
+   "bottleDepositDisplay": "CHF 0.00",
+   "comparison": 154,
+   "comparisonDisplay": "CHF 1.54/100 g",
+   "currencyCode": "CHF",
+   "currencySymbol": "CHF",
+   "perUnit": null,
+   "perUnitDisplay": null,
+   "wasPriceDisplay": null,
+   "additionalInfo": null,
+   "savingsDisplay": null,
+   "bottleDepositType": null,
+   "feeText": null
+  },
+  "countryExtensions": null,
+  "nutritionalClaims": null,
+  "multiInformations": [],
+  "categories": [
+   {
+    "id": "1588161418433059",
+    "name": "Milchprodukte & Eier",
+    "urlSlugText": "milchprodukte-eier"
+   },
+   {
+    "id": "158816141843305901",
+    "name": "Butter, Milch & Rahm",
+    "urlSlugText": "milchprodukte-eier/butter-milch-rahm"
+   }
+  ],
+  "assets": [
+   {
+    "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/71a03886-1e67-4bfe-a661-f3295b942832/{slug}",
+    "maxWidth": 2000,
+    "maxHeight": 2000,
+    "mimeType": "image/*",
+    "assetType": "FR01",
+    "alt": null,
+    "displayName": null
+   }
+  ],
+  "allergens": [],
+  "warnings": null,
+  "variants": null,
+  "badges": [
+   {
+    "position": "4",
+    "items": [
+     {
+      "url": null,
+      "alt": null,
+      "displayText": "Tiefpreis",
+      "color": "red",
+      "mimeType": "text/plain"
+     }
+    ]
+   },
+   {
+    "position": "1",
+    "items": [
+     {
+      "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/pfz_suisse_garantie_287x287px-1?fmt=png-alpha",
+      "alt": "Suisse Garantie Swiss flag certification emblem",
+      "displayText": null,
+      "color": null,
+      "mimeType": "image/*"
+     }
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,664 @@
+{
+ "status": "OK",
+ "pageId": 14,
+ "blocks": {
+  "searches": [
+   {
+    "blockId": 0,
+    "blockName": "Wine Shop Listing",
+    "stats": {
+     "totalResults": 1,
+     "currentPage": 1,
+     "totalPages": 1,
+     "resultsInPage": 1
+    },
+    "slots": [
+     {
+      "position": 1,
+      "item": {
+       "sku": "1027166",
+       "price": 89.7,
+       "itemType": "CONTENT_3",
+       "trackingCode": "MTNmMDE4MWYtOTRmNi00ZDUyLWFmODItZDNiNTBlY2QyMDkyfDEzZjAxODFmLTk0ZjYtNGQ1Mi1hZjgyLWQzYjUwZWNkMjA5MnxXaW5lIFNob3AgTGlzdGluZyBQYWdlfFdpbmUgU2hvcCBMaXN0aW5nfDEwMjcxNjZ8aXRlbVR5cGU6UFJPRFVDVF8vX2l0ZW1UeXBlOkNPTlRFTlRfM3xDT05URU5UXzN8MHxGQUNFVF9OQVZJR0FUSU9OfG51bGx8bnVsbHxudWxsfG51bGx8bnVsbHxudWxsfG51bGx8bWFzdGVyX3NjZW5hcmlvfG51bGx8MTc5MTM3MTkxNzY1N3xkZV9DSHxDT01QVVRFUg",
+       "attributeInfo": [
+        {
+         "attributeName": "promotion_permitted",
+         "attributeLabel": "promotion_permitted",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "1",
+           "label": "1"
+          }
+         ]
+        },
+        {
+         "attributeName": "imageUrl",
+         "attributeLabel": "imageUrl",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "https://denner.imgix.net/assets/f2257d88-935f-4211-ad2b-0ad5e2bfb7ab/web/051464_23_02_21.tif_PACK_ITEM.png",
+           "label": "https://denner.imgix.net/assets/f2257d88-935f-4211-ad2b-0ad5e2bfb7ab/web/051464_23_02_21.tif_PACK_ITEM.png"
+          }
+         ]
+        },
+        {
+         "attributeName": "character",
+         "attributeLabel": "character",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "Helles Zitronengelb. Duftet verführerisch nach grünen Äpfeln und Zitrusfrüchten. Im Gaumen feine Perlage, wirkt unheimlich frisch-fruchtig. Anhaltende Aromatik.",
+           "label": "Helles Zitronengelb. Duftet verführerisch nach grünen Äpfeln und Zitrusfrüchten. Im Gaumen feine Perlage, wirkt unheimlich frisch-fruchtig. Anhaltende Aromatik."
+          }
+         ]
+        },
+        {
+         "attributeName": "content_size_text",
+         "attributeLabel": "Inhalt",
+         "attributeType": "ID",
+         "vals": [
+          {
+           "value": "75 cl",
+           "label": "75 cl"
+          }
+         ]
+        },
+        {
+         "attributeName": "country_name",
+         "attributeLabel": "Land",
+         "attributeType": "ID",
+         "vals": [
+          {
+           "value": "Italien",
+           "label": "Italien"
+          }
+         ]
+        },
+        {
+         "attributeName": "itemUrl",
+         "attributeLabel": "itemUrl",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "/de/weinshop/col-del-sol-extra-dry-prosecco-superiore-valdobbiadene-docg~p1027166",
+           "label": "/de/weinshop/col-del-sol-extra-dry-prosecco-superiore-valdobbiadene-docg~p1027166"
+          }
+         ]
+        },
+        {
+         "attributeName": "name",
+         "attributeLabel": "name",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "Col del Sol Extra Dry Prosecco Superiore Valdobbiadene DOCG",
+           "label": "Col del Sol Extra Dry Prosecco Superiore Valdobbiadene DOCG"
+          }
+         ]
+        },
+        {
+         "attributeName": "nameSubline",
+         "attributeLabel": "nameSubline",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "Italien, Venetien, 75 cl",
+           "label": "Italien, Venetien, 75 cl"
+          }
+         ]
+        },
+        {
+         "attributeName": "pimcoreId",
+         "attributeLabel": "pimcoreId",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "1157527",
+           "label": "1157527"
+          }
+         ]
+        },
+        {
+         "attributeName": "priceFormatted",
+         "attributeLabel": "priceFormatted",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "89.70",
+           "label": "89.70"
+          }
+         ]
+        },
+        {
+         "attributeName": "priceSubText",
+         "attributeLabel": "priceSubText",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "Flasche: 14.95",
+           "label": "Flasche: 14.95"
+          }
+         ]
+        },
+        {
+         "attributeName": "region_name",
+         "attributeLabel": "Region",
+         "attributeType": "ID",
+         "vals": [
+          {
+           "value": "Venetien",
+           "label": "Venetien"
+          }
+         ]
+        },
+        {
+         "attributeName": "wine_of_the_week",
+         "attributeLabel": "wine_of_the_week",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "false",
+           "label": "false"
+          }
+         ]
+        },
+        {
+         "attributeName": "_tracking_discount",
+         "attributeLabel": "_tracking_discount",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "0",
+           "label": "0"
+          }
+         ]
+        },
+        {
+         "attributeName": "_tracking_item_brand",
+         "attributeLabel": "_tracking_item_brand",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "Venetien",
+           "label": "Venetien"
+          }
+         ]
+        },
+        {
+         "attributeName": "_tracking_item_category",
+         "attributeLabel": "_tracking_item_category",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "Italien",
+           "label": "Italien"
+          }
+         ]
+        },
+        {
+         "attributeName": "_tracking_item_category2",
+         "attributeLabel": "_tracking_item_category2",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "Schaumwein /",
+           "label": "Schaumwein /"
+          }
+         ]
+        },
+        {
+         "attributeName": "_tracking_item_category3",
+         "attributeLabel": "_tracking_item_category3",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "4.39 - 465 / 4 Stars",
+           "label": "4.39 - 465 / 4 Stars"
+          }
+         ]
+        },
+        {
+         "attributeName": "_tracking_item_category4",
+         "attributeLabel": "_tracking_item_category4",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "à 6 x 75 cl",
+           "label": "à 6 x 75 cl"
+          }
+         ]
+        },
+        {
+         "attributeName": "_tracking_item_category5",
+         "attributeLabel": "_tracking_item_category5",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "Lieferbar / 6–8 °C",
+           "label": "Lieferbar / 6–8 °C"
+          }
+         ]
+        },
+        {
+         "attributeName": "_tracking_item_id",
+         "attributeLabel": "_tracking_item_id",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "1027166",
+           "label": "1027166"
+          }
+         ]
+        },
+        {
+         "attributeName": "_tracking_item_name",
+         "attributeLabel": "_tracking_item_name",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "Col del Sol Extra Dry Prosecco Superiore Valdobbiadene DOCG",
+           "label": "Col del Sol Extra Dry Prosecco Superiore Valdobbiadene DOCG"
+          }
+         ]
+        },
+        {
+         "attributeName": "_tracking_item_variant",
+         "attributeLabel": "_tracking_item_variant",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "75 cl",
+           "label": "75 cl"
+          }
+         ]
+        },
+        {
+         "attributeName": "_tracking_unit_base_measure_ml",
+         "attributeLabel": "_tracking_unit_base_measure_ml",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "750",
+           "label": "750"
+          }
+         ]
+        },
+        {
+         "attributeName": "acid",
+         "attributeLabel": "acid",
+         "attributeType": "RANGE",
+         "vals": [
+          {
+           "value": "0.0",
+           "label": "0.0"
+          }
+         ]
+        },
+        {
+         "attributeName": "barrique_aging",
+         "attributeLabel": "barrique_aging",
+         "attributeType": "RANGE",
+         "vals": [
+          {
+           "value": "-2.0",
+           "label": "-2.0"
+          }
+         ]
+        },
+        {
+         "attributeName": "box_item_count",
+         "attributeLabel": "box_item_count",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "6",
+           "label": "6"
+          }
+         ]
+        },
+        {
+         "attributeName": "buying_channel",
+         "attributeLabel": "Verkaufskanal",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "all",
+           "label": "all"
+          },
+          {
+           "value": "online",
+           "label": "online"
+          }
+         ]
+        },
+        {
+         "attributeName": "canister",
+         "attributeLabel": "canister",
+         "attributeType": "ID",
+         "vals": [
+          {
+           "value": "1146162",
+           "label": "bottle"
+          }
+         ]
+        },
+        {
+         "attributeName": "category",
+         "attributeLabel": "category",
+         "attributeType": "ID",
+         "vals": [
+          {
+           "value": "1144372",
+           "label": "Getränke"
+          },
+          {
+           "value": "1144373",
+           "label": "Wein/Champagner"
+          },
+          {
+           "value": "5479472",
+           "label": "Schaumwein"
+          },
+          {
+           "value": "5479482",
+           "label": "Italien"
+          },
+          {
+           "value": "5479499",
+           "label": "Venetien"
+          }
+         ]
+        },
+        {
+         "attributeName": "content_size",
+         "attributeLabel": "Inhalt",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "0.75",
+           "label": "0.75"
+          }
+         ]
+        },
+        {
+         "attributeName": "grapes",
+         "attributeLabel": "Traubensorte",
+         "attributeType": "ID",
+         "vals": [
+          {
+           "value": "1146372",
+           "label": "Glera"
+          }
+         ]
+        },
+        {
+         "attributeName": "has_online_specials",
+         "attributeLabel": "has_online_specials",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "false",
+           "label": "false"
+          }
+         ]
+        },
+        {
+         "attributeName": "hasExpertFlag",
+         "attributeLabel": "hasExpertFlag",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "true",
+           "label": "true"
+          }
+         ]
+        },
+        {
+         "attributeName": "intensity",
+         "attributeLabel": "intensity",
+         "attributeType": "RANGE",
+         "vals": [
+          {
+           "value": "1.0",
+           "label": "1.0"
+          }
+         ]
+        },
+        {
+         "attributeName": "isAssortmentPromotion",
+         "attributeLabel": "isAssortmentPromotion",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "false",
+           "label": "false"
+          }
+         ]
+        },
+        {
+         "attributeName": "isBuyable",
+         "attributeLabel": "isBuyable",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "true",
+           "label": "true"
+          }
+         ]
+        },
+        {
+         "attributeName": "navisionId",
+         "attributeLabel": "navisionId",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "1027166",
+           "label": "1027166"
+          }
+         ]
+        },
+        {
+         "attributeName": "ratingTotal",
+         "attributeLabel": "ratingTotal",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "465",
+           "label": "465"
+          }
+         ]
+        },
+        {
+         "attributeName": "salesQuantity",
+         "attributeLabel": "salesQuantity",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "6",
+           "label": "6"
+          }
+         ]
+        },
+        {
+         "attributeName": "storage",
+         "attributeLabel": "storage",
+         "attributeType": "ID",
+         "vals": [
+          {
+           "value": "1146227",
+           "label": "1 Jahr ab Kauf"
+          }
+         ]
+        },
+        {
+         "attributeName": "sugar",
+         "attributeLabel": "sugar",
+         "attributeType": "RANGE",
+         "vals": [
+          {
+           "value": "1.0",
+           "label": "1.0"
+          }
+         ]
+        },
+        {
+         "attributeName": "tannins",
+         "attributeLabel": "tannins",
+         "attributeType": "RANGE",
+         "vals": [
+          {
+           "value": "-2.0",
+           "label": "-2.0"
+          }
+         ]
+        },
+        {
+         "attributeName": "wine_type",
+         "attributeLabel": "Weintyp",
+         "attributeType": "ID",
+         "vals": [
+          {
+           "value": "5479471",
+           "label": "Schaumwein"
+          }
+         ]
+        },
+        {
+         "attributeName": "unit_price",
+         "attributeLabel": "Stückpreis",
+         "attributeType": "RANGE",
+         "vals": [
+          {
+           "value": "14.95",
+           "label": "14.95"
+          }
+         ]
+        },
+        {
+         "attributeName": "availability",
+         "attributeLabel": "availability",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "10.00",
+           "label": "10.00"
+          }
+         ]
+        },
+        {
+         "attributeName": "rating",
+         "attributeLabel": "rating",
+         "attributeType": "VALUE",
+         "vals": [
+          {
+           "value": "4.50",
+           "label": "4.50"
+          }
+         ]
+        },
+        {
+         "attributeName": "price",
+         "attributeLabel": "Preis",
+         "attributeType": "RANGE",
+         "vals": [
+          {
+           "value": "89.70",
+           "label": "89.70"
+          }
+         ]
+        },
+        {
+         "attributeName": "TurnOver",
+         "attributeLabel": "turnOver",
+         "attributeType": "RANGE",
+         "vals": [
+          {
+           "value": "37545.90",
+           "label": "37545.90"
+          }
+         ]
+        },
+        {
+         "attributeName": "Geschmacksprofil",
+         "attributeLabel": "pred-custom1",
+         "attributeType": "RANGE",
+         "vals": [
+          {
+           "value": "0.0",
+           "label": "0.0"
+          }
+         ]
+        }
+       ],
+       "displayInfo": {}
+      },
+      "template": {
+       "posX": 1,
+       "posY": 1,
+       "sizeX": 1,
+       "sizeY": 1
+      }
+     }
+    ],
+    "facets": [
+     {
+      "attributeName": "wine_type",
+      "attributeLabel": "Weintyp",
+      "attributeType": "ID",
+      "attributeUnit": "",
+      "multiSelect": true,
+      "position": 0,
+      "options": [
+       {
+        "refiningId": "&prd_page=1&prd_nbResultsPerPage=200&prd_sorting=MY_SELECTION&prd_constraints=itemType%3APRODUCT_%2F_itemType%3ACONTENT_3_%2F_wine_type%3A5479520",
+        "noFollow": false,
+        "nbResults": 47,
+        "selected": false,
+        "debugText": "5479520",
+        "value": "5479520",
+        "label": "Rosé"
+       },
+       {
+        "refiningId": "&prd_page=1&prd_nbResultsPerPage=200&prd_sorting=MY_SELECTION&prd_constraints=itemType%3APRODUCT_%2F_itemType%3ACONTENT_3_%2F_wine_type%3A5479453",
+        "noFollow": false,
+        "nbResults": 496,
+        "selected": false,
+        "debugText": "5479453",
+        "value": "5479453",
+        "label": "Rotwein"
+       },
+       {
+        "refiningId": "&prd_page=1&prd_nbResultsPerPage=200&prd_sorting=MY_SELECTION&prd_constraints=itemType%3APRODUCT_%2F_itemType%3ACONTENT_3_%2F_wine_type%3A5479471",
+        "noFollow": false,
+        "nbResults": 75,
+        "selected": false,
+        "debugText": "5479471",
+        "value": "5479471",
+        "label": "Schaumwein"
+       },
+       {
+        "refiningId": "&prd_page=1&prd_nbResultsPerPage=200&prd_sorting=MY_SELECTION&prd_constraints=itemType%3APRODUCT_%2F_itemType%3ACONTENT_3_%2F_wine_type%3A5479461",
+        "noFollow": false,
+        "nbResults": 141,
+        "selected": false,
+        "debugText": "5479461",
+        "value": "5479461",
+        "label": "Weisswein"
+       }
+      ],
+      "actions": {
+       "selectAll": {
+        "refiningId": "&prd_page=1&prd_nbResultsPerPage=200&prd_sorting=MY_SELECTION&prd_constraints=itemType%3APRODUCT_%2F_itemType%3ACONTENT_3_%2F_wine_type%3A5479520_%2F_wine_type%3A5479453_%2F_wine_type%3A5479471_%2F_wine_type%3A5479461",
+        "noFollow": true,
+        "action": "selectAll",
+        "label": "Alle auswählen"
+       }
+      }
+     }
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,62 @@
+{
+ "categoryCode": "m_0001",
+ "categoryName": "Früchte & Gemüse",
+ "pagination": {
+  "currentPage": 0,
+  "pageSize": 1,
+  "sort": "relevance",
+  "totalPages": 567,
+  "totalResults": 567
+ },
+ "categories": [
+  {
+   "id": "SPECIAL_OFFERS_M_0001",
+   "name": "Aktionen auf Früchte & Gemüse"
+  },
+  {
+   "id": "m_0001_bio",
+   "name": "Bio Früchte & Gemüse"
+  },
+  {
+   "id": "m_0002",
+   "name": "Früchte"
+  },
+  {
+   "id": "m_9693",
+   "name": "Nüsse, Datteln, Marroni und Feigen"
+  },
+  {
+   "id": "m_0050",
+   "name": "Salate"
+  },
+  {
+   "id": "m_0028",
+   "name": "Salatgemüse frisch"
+  },
+  {
+   "id": "m_0040",
+   "name": "Pilze"
+  },
+  {
+   "id": "m_0016",
+   "name": "Wurzelgemüse"
+  },
+  {
+   "id": "m_0022",
+   "name": "Kohlgemüse"
+  },
+  {
+   "id": "m_0034",
+   "name": "Weiteres Gemüse"
+  },
+  {
+   "id": "m_0044",
+   "name": "Frische Kräuter & Frische Gewürze"
+  },
+  {
+   "id": "m_0113",
+   "name": "The Veggie Chef - Pflanzliche Alternativen zu Fleisch & Fisch"
+  }
+ ],
+ "products": []
+}

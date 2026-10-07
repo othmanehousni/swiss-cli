@@ -1,0 +1,195 @@
+{
+ "categoryCode": "supermarket",
+ "categoryName": "Lebensmittel",
+ "pagination": {
+  "currentPage": 0,
+  "pageSize": 100,
+  "sort": "relevance",
+  "totalPages": 113,
+  "totalResults": 11250
+ },
+ "categories": [],
+ "facets": [],
+ "products": [
+  {
+   "averageRating": 4.0,
+   "basePrice": {
+    "currencyIso": "CHF",
+    "formattedValue": "0.00",
+    "value": 0.0
+   },
+   "basePriceUnit": "ST",
+   "categoryPathForTracking": "lebensmittel/fruechte-gemuese/fruechte/exotische-fruechte/avocados",
+   "code": "3465933",
+   "content": "1",
+   "contentUnit": "ST",
+   "glutenFree": false,
+   "hasPromotion": false,
+   "images": [
+    {
+     "format": "productTile-supermarket-SM2x-XL2x",
+     "url": "https://www.coop.ch/img/produkte/310_310/RGB/3465933_001.jpg?_=1710535453816",
+     "usedFor": "small"
+    }
+   ],
+   "labels": [
+    {
+     "id": "LABEL_ZBIO",
+     "name": "Bio"
+    }
+   ],
+   "lactoseFree": false,
+   "numberOfRatings": 383,
+   "originText": "Naturaplan",
+   "price": {
+    "currencyIso": "CHF",
+    "formattedValue": "1.95",
+    "value": 1.95
+   },
+   "primaryCategory": {
+    "id": "m_5485",
+    "name": "Avocados"
+   },
+   "title": "Naturaplan Bio Avocado 1 Stück",
+   "vegan": false,
+   "vegetarian": false,
+   "weekPromotion": false
+  },
+  {
+   "averageRating": 4.0,
+   "basePrice": {
+    "currencyIso": "CHF",
+    "formattedValue": "0.30",
+    "value": 0.3
+   },
+   "basePriceUnit": "g",
+   "categoryPathForTracking": "lebensmittel/fruechte-gemuese/salatgemuese/tomaten",
+   "code": "3090149",
+   "content": "1",
+   "contentUnit": "kg",
+   "glutenFree": false,
+   "hasPromotion": true,
+   "images": [
+    {
+     "format": "productTile-supermarket-SM2x-XL2x",
+     "url": "https://www.coop.ch/img/produkte/310_310/RGB/3090149_001.jpg?_=1662114560519",
+     "usedFor": "small"
+    }
+   ],
+   "labels": [],
+   "lactoseFree": false,
+   "listPromotions": [
+    "40%"
+   ],
+   "numberOfRatings": 239,
+   "originText": "Coop",
+   "originalPrice": {
+    "currencyIso": "CHF",
+    "formattedValue": "4.95",
+    "value": 4.95
+   },
+   "price": {
+    "currencyIso": "CHF",
+    "formattedValue": "2.95",
+    "value": 2.95
+   },
+   "primaryCategory": {
+    "id": "m_0029",
+    "name": "Tomaten"
+   },
+   "title": "Rispentomaten ca. 1kg",
+   "vegan": false,
+   "vegetarian": false,
+   "weekPromotion": true
+  },
+  {
+   "averageRating": 4.5,
+   "basePrice": {
+    "currencyIso": "CHF",
+    "formattedValue": "0.73",
+    "value": 0.73
+   },
+   "basePriceUnit": "l",
+   "categoryPathForTracking": "lebensmittel/getraenke/mineralwasser/multipacks-ab-1-liter",
+   "code": "3050447",
+   "content": "9",
+   "contentUnit": "l",
+   "glutenFree": false,
+   "hasPromotion": true,
+   "images": [
+    {
+     "format": "productTile-supermarket-SM2x-XL2x",
+     "url": "https://www.coop.ch/img/produkte/310_310/RGB/3050447_001.jpg?_=1789044029757",
+     "usedFor": "small"
+    }
+   ],
+   "labels": [],
+   "lactoseFree": false,
+   "listPromotions": [
+    "40% ab 2"
+   ],
+   "numberOfRatings": 407,
+   "originText": "Evian",
+   "price": {
+    "currencyIso": "CHF",
+    "formattedValue": "6.60",
+    "value": 6.6
+   },
+   "primaryCategory": {
+    "id": "m_2018",
+    "name": "Mineralwasser Multipacks mit Flaschen ab 1 Liter"
+   },
+   "title": "evian Mineralwasser ohne Kohlensäure 6x1,5l",
+   "vegan": false,
+   "vegetarian": false,
+   "weekPromotion": false
+  },
+  {
+   "averageRating": 4.0,
+   "basePrice": {
+    "currencyIso": "CHF",
+    "formattedValue": "0.31",
+    "value": 0.31
+   },
+   "basePriceUnit": "g",
+   "categoryPathForTracking": "lebensmittel/fruechte-gemuese/fruechte/trauben",
+   "code": "3509081",
+   "content": "500",
+   "contentUnit": "g",
+   "glutenFree": false,
+   "hasPromotion": true,
+   "images": [
+    {
+     "format": "productTile-supermarket-SM2x-XL2x",
+     "url": "https://www.coop.ch/img/produkte/310_310/RGB/3509081_001.jpg?_=1771018046872",
+     "usedFor": "small"
+    }
+   ],
+   "labels": [],
+   "lactoseFree": false,
+   "listPromotions": [
+    "20%"
+   ],
+   "numberOfRatings": 78,
+   "originText": "Coop",
+   "originalPrice": {
+    "currencyIso": "CHF",
+    "formattedValue": "1.95",
+    "value": 1.95
+   },
+   "price": {
+    "currencyIso": "CHF",
+    "formattedValue": "1.55",
+    "value": 1.55
+   },
+   "primaryCategory": {
+    "id": "m_1784",
+    "name": "Trauben"
+   },
+   "title": "Trauben Mix kernarm",
+   "vegan": false,
+   "vegetarian": false,
+   "weekPromotion": false
+  }
+ ]
+}

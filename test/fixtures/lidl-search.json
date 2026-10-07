@@ -1,0 +1,1418 @@
+{
+ "numFound": 130,
+ "offset": 0,
+ "fetchsize": 60,
+ "items": [
+  {
+   "resultClass": "product",
+   "type": "product",
+   "code": "10059621",
+   "label": "",
+   "url": "",
+   "gridbox": {
+    "country": "CH",
+    "sequence": 1790946500123340,
+    "data": {
+     "ageRestriction": false,
+     "hasColors": false,
+     "awards": [],
+     "brand": {
+      "name": "QUALITÉ SUISSE",
+      "url": "/q/search?q=qualit%C3%A9+suisse",
+      "showBrand": true
+     },
+     "canonicalPath": "/p/de-CH/qualite-suisse-schweizer-bio-haferdrink/p10059621",
+     "canonicalUrl": "/p/de-CH/qualite-suisse-schweizer-bio-haferdrink/p10059621",
+     "category": "Food",
+     "dealOfDay": {
+      "active": false
+     },
+     "designTheme": "default",
+     "displayFreeDelivery": false,
+     "erpNumber": "10059621",
+     "flashSales": false,
+     "fullTitle": "QUALITÉ SUISSE Schweizer Bio Haferdrink",
+     "gs1Attributes": [],
+     "guaranteeLabels": [],
+     "havingPrice": true,
+     "havingThreesixty": false,
+     "havingVideos": false,
+     "highlightedSeals": 0,
+     "ians": [
+      "5113868"
+     ],
+     "image": "https://imgproxy-retcat.assets.schwarz/mCvQCUgBDISXRFZWLFgI14bhQ0OypAkbDWMh0IxYW4o/sm:0/exar:1:ce/w:427/h:320/cz/M6Ly9wcm9kLWNhd/GFsb2ctbWVkaWEvY2gvMS81RTMwMzAyNzc4QTcyOEVFMkIzMUJBQUM/yRkI5MTkwMDM4M0JGQzQzMUE3RTI0RUI2MTlDMjVCMzA0QkZFMzZFLnBuZw.png",
+     "isLidlGiftCard": false,
+     "isUsedProduct": false,
+     "itemId": 10059621,
+     "keyfacts": {
+      "analyticsCategory": "Food",
+      "description": "<ul> <li>Pro 1000 ml</li> </ul>",
+      "fullTitle": "QUALITÉ SUISSE Schweizer Bio Haferdrink",
+      "moreDetails": "Weitere Produktdetails",
+      "title": "Schweizer Bio Haferdrink",
+      "wonCategoryPrimary": "Bedürfniswelten/Food und Near Food/Käse, Milchprodukte & Eier/Milch & Sahne",
+      "wonCategoryPrimaryPath": "0/17/1739/173910"
+     },
+     "lidlPlus": [
+      {
+       "price": {
+        "basePrice": {
+         "prefix": false
+        },
+        "discount": {
+         "deletedPrice": 1.99,
+         "discountHasStar": false,
+         "discountText": "-20%",
+         "fromNormalPriceForLidlPlus": false,
+         "fromRecommendedPrice": false,
+         "hideBargainHint": false,
+         "bargainHintEnabled": false,
+         "bargainHintText": "BargainHint_Text",
+         "showDiscount": true,
+         "showFrom": false,
+         "showPercentage": true,
+         "showUpTo": false
+        },
+        "displayedCurrency": "CHF",
+        "hasStar": false,
+        "hasVat": false,
+        "oldPrice": 1.99,
+        "price": 1.59,
+        "priceTheme": "white_yellow",
+        "specialTaxes": [],
+        "superscript": "*"
+       },
+       "lidlPlusText": "Mit Lidl Plus",
+       "highlightText": "-20%"
+      }
+     ],
+     "multipack": false,
+     "online": false,
+     "preventSelling": false,
+     "price": {
+      "currencyCode": "CHF",
+      "currencyCodeSecond": "",
+      "currencySymbol": "CHF",
+      "currencySymbolSecond": "",
+      "displayedCurrency": "CHF",
+      "hasStar": true,
+      "hasVat": false,
+      "specialTaxes": [],
+      "variantsHaveDifferentPrices": false
+     },
+     "productId": 10059621,
+     "productType": "RETAIL",
+     "productOrigin": "progress_event",
+     "quickAddToCart": false,
+     "regionsPrices": {},
+     "renderedTs": 1790946500,
+     "seals": [
+      {
+       "altText": "Schweizer Qualität.",
+       "image": "https://imgproxy-retcat.assets.schwarz/6wKG_BemBCz2RmyUunb-u5DcKcnNmXxp4Qs-Uh8Ogto/sm:0/w:140/cz/M6Ly9wcm9kLWNhd/GFsb2ctbWVkaWEvY2gvMi9DOTEyQ0Q2MUI1NzhDMTEwMzU5M0EwMEE/yNzNBNzM2REFFNjkyNDMzODg3RjlFOTAwRjZGMkI4RDRBOTRGMTEyLnBuZw.png"
+      },
+      {
+       "altText": "Vegan-Label",
+       "image": "https://imgproxy-retcat.assets.schwarz/W9NCFVv0wpu5k4uYL_vUg-mARTv1scHX4MOHQeP9p4w/sm:0/w:140/cz/M6Ly9wcm9kLWNhd/GFsb2ctbWVkaWEvY2gvMi8xM0E1RUZCRDBBQjcxOTBDNkQxNEE2RUF/FMjI5NDNENUM4NkQ1MEYzMjhEMEY1NUQ5RTU5NUI4RTcxOTQwMDkzLnBuZw.png"
+      }
+     ],
+     "stockAvailability": {
+      "availabilityIndicator": 0,
+      "badgeInfo": {
+       "badges": [
+        {
+         "text": "1.10. - 7.10.",
+         "type": "IN_STORE_PAST_DATE_RANGE"
+        }
+       ]
+      },
+      "badgeInfoV2": [
+       {
+        "badges": [
+         {
+          "text": "1.10. - 7.10.",
+          "type": "IN_STORE_PAST_DATE_RANGE"
+         }
+        ],
+        "validFrom": 1790805600,
+        "validUntil": 1791410399
+       }
+      ],
+      "onlineAvailable": false,
+      "minOrderableQuantity": 1,
+      "backInStockNotification": false,
+      "backInStockNotificationSoldOut": false
+     },
+     "store": true,
+     "storeStartDate": 1790805600,
+     "storeEndDate": 1791410399,
+     "title": "Schweizer Bio Haferdrink",
+     "timezoneId": "Europe/Zurich",
+     "zones": {}
+    },
+    "productId": 10059621,
+    "meta": {
+     "categoryPaths": [],
+     "campaignPaths": [
+      [
+       {
+        "id": "10020520",
+        "name": "Lidl Plus Angebote",
+        "url": "/c/de-CH/lidl-plus-angebote/a10020520",
+        "hiddenCategory": false
+       }
+      ],
+      [
+       {
+        "id": "10103780",
+        "name": "Wochenaktion",
+        "url": "/c/de-CH/wochenaktion/a10103780",
+        "hiddenCategory": false
+       }
+      ]
+     ],
+     "fullTitle": "QUALITÉ SUISSE Schweizer Bio Haferdrink",
+     "retailLists": [
+      [
+       {
+        "id": 4501,
+        "productSortIndex": 30
+       },
+       {
+        "id": 8292,
+        "productSortIndex": 20020
+       }
+      ]
+     ],
+     "lists": [
+      4501,
+      8292
+     ],
+     "wonCategoryBreadcrumbs": [
+      [
+       {
+        "id": "10068374",
+        "name": "Essen & Trinken",
+        "url": "/c/de-CH/essen-trinken/s10068374",
+        "hiddenCategory": false
+       },
+       {
+        "id": "10095761",
+        "name": "Käse, Milchprodukte & Eier",
+        "url": "/h/de-CH/kaese-milchprodukte-eier/h10095761",
+        "hiddenCategory": false
+       },
+       {
+        "id": "10096075",
+        "name": "Milch & Rahm",
+        "url": "/h/de-CH/milch-rahm/h10096075",
+        "hiddenCategory": false
+       }
+      ]
+     ],
+     "worldOfNeeds": [
+      {
+       "code": "173910",
+       "isMain": true,
+       "name": "Milch & Sahne",
+       "parent": "1739",
+       "superCategories": [
+        {
+         "code": "1739",
+         "name": "Käse, Milchprodukte & Eier",
+         "parent": "17"
+        },
+        {
+         "code": "17",
+         "name": "Food und Near Food",
+         "parent": "0"
+        },
+        {
+         "code": "0",
+         "name": "Bedürfniswelten",
+         "parent": ""
+        }
+       ]
+      }
+     ],
+     "preview": false
+    },
+    "action": "UPDATE",
+    "language": "de",
+    "eventType": "GRIDBOX",
+    "id": "10059621"
+   },
+   "tracking": {
+    "position": 50,
+    "xPayload": {
+     "searchTrackingMasterId": "Product.10059621",
+     "searchTrackingTitle": "Schweizer+Bio+Haferdrink",
+     "searchTrackingPageSize": 60,
+     "searchTrackingPage": 1,
+     "searchTrackingEvent": "click",
+     "list": "search",
+     "searchTrackingId": "Product.10059621",
+     "searchTrackingOrigPos": 1,
+     "searchTrackingPos": 50,
+     "searchTrackingOrigPageSize": 60,
+     "searchTrackingChannel": "CH",
+     "category": "Food"
+    }
+   }
+  },
+  {
+   "resultClass": "product",
+   "type": "product",
+   "code": "10059581",
+   "label": "",
+   "url": "",
+   "gridbox": {
+    "country": "CH",
+    "sequence": 1791185173916208,
+    "data": {
+     "ageRestriction": false,
+     "hasColors": false,
+     "awards": [],
+     "brand": {
+      "name": "BON GELATI",
+      "url": "/q/search?q=bon+gelati",
+      "showBrand": true
+     },
+     "canonicalPath": "/p/de-CH/bon-gelati-eis-gestrudelt/p10059581",
+     "canonicalUrl": "/p/de-CH/bon-gelati-eis-gestrudelt/p10059581",
+     "category": "Food",
+     "dealOfDay": {
+      "active": false
+     },
+     "designTheme": "default",
+     "displayFreeDelivery": false,
+     "erpNumber": "10059581",
+     "flashSales": false,
+     "fullTitle": "BON GELATI Eis gestrudelt",
+     "gs1Attributes": [],
+     "guaranteeLabels": [],
+     "havingPrice": true,
+     "havingThreesixty": false,
+     "havingVideos": false,
+     "highlightedSeals": 0,
+     "ians": [
+      "137052"
+     ],
+     "image": "https://imgproxy-retcat.assets.schwarz/p7ungaSinc74vIFQYQh9HpNiIuxIZJR_9h8Vi1gCNR4/sm:0/exar:1:ce/w:427/h:320/cz/M6Ly9wcm9kLWNhd/GFsb2ctbWVkaWEvY2gvMS9EQ0M0OUFERkQyMEZGQkJGMTBBMUJDOTJ/GODgxMTAwRUY1RkFEOTc2NzMxNDU0NjlCNEU0Mjc2QkI0QUE3N0EzLnBuZw.png",
+     "isLidlGiftCard": false,
+     "isUsedProduct": false,
+     "itemId": 10059581,
+     "keyfacts": {
+      "analyticsCategory": "Food",
+      "description": "<ul> <li>Diverse Sorten</li> <li>Pro 900 ml</li> <li>1 l = 3.32</li> </ul>",
+      "fullTitle": "BON GELATI Eis gestrudelt",
+      "moreDetails": "Weitere Produktdetails",
+      "title": "Eis gestrudelt",
+      "wonCategoryPrimary": "Bedürfniswelten/Food und Near Food/Tiefkühlkost (Gefrorene Lebensmittel)/Glace",
+      "wonCategoryPrimaryPath": "0/17/1716/171610"
+     },
+     "lidlPlus": [],
+     "multipack": false,
+     "online": false,
+     "preventSelling": false,
+     "price": {
+      "currencyCode": "CHF",
+      "currencyCodeSecond": "",
+      "currencySymbol": "CHF",
+      "currencySymbolSecond": "",
+      "discount": {
+       "absoluteDiscount": 1.0,
+       "deletedPrice": 3.99,
+       "discountHasStar": false,
+       "discountText": "-25%",
+       "fromRecommendedPrice": false,
+       "hideBargainHint": false,
+       "bargainHintEnabled": false,
+       "bargainHintText": "BargainHint_Text",
+       "percentageDiscount": 25,
+       "showDiscount": true,
+       "showFrom": false,
+       "showPercentage": true,
+       "showUpTo": false
+      },
+      "displayedCurrency": "CHF",
+      "hasStar": false,
+      "hasVat": false,
+      "oldPrice": 3.99,
+      "price": 2.99,
+      "priceTheme": "white_red",
+      "specialTaxes": [],
+      "superscript": "*",
+      "variantsHaveDifferentPrices": false
+     },
+     "productId": 10059581,
+     "productType": "RETAIL",
+     "productOrigin": "progress_event",
+     "quickAddToCart": false,
+     "regionsPrices": {},
+     "renderedTs": 1791185173,
+     "seals": [
+      {
+       "altText": "Tiefgefroren DE",
+       "image": "https://imgproxy-retcat.assets.schwarz/qBuJI-5Hb1HUZ1yRE-GyNmLo40R3mvwKVrQgjjQ4618/sm:0/w:140/cz/M6Ly9wcm9kLWNhd/GFsb2ctbWVkaWEvY2gvMi8wMDFDNUU4QUIxNTJDMUVBNDREMjE2QUI/5NUY2MUM1REU4NTExNzVCRDRFQUZBQzRCODM2MEYyODMyQThBMEU2LnBuZw.png"
+      }
+     ],
+     "stockAvailability": {
+      "availabilityIndicator": 0,
+      "badgeInfo": {
+       "badges": [
+        {
+         "text": "1.10. - 7.10.",
+         "type": "IN_STORE_PAST_DATE_RANGE"
+        }
+       ]
+      },
+      "badgeInfoV2": [
+       {
+        "badges": [
+         {
+          "text": "1.10. - 7.10.",
+          "type": "IN_STORE_PAST_DATE_RANGE"
+         }
+        ],
+        "validFrom": 1790805600,
+        "validUntil": 1791410399
+       }
+      ],
+      "onlineAvailable": false,
+      "minOrderableQuantity": 1,
+      "backInStockNotification": false,
+      "backInStockNotificationSoldOut": false
+     },
+     "store": true,
+     "storeStartDate": 1790805600,
+     "storeEndDate": 1791410399,
+     "title": "Eis gestrudelt",
+     "timezoneId": "Europe/Zurich",
+     "zones": {}
+    },
+    "productId": 10059581,
+    "meta": {
+     "categoryPaths": [],
+     "campaignPaths": [
+      [
+       {
+        "id": "10103780",
+        "name": "Wochenaktion",
+        "url": "/c/de-CH/wochenaktion/a10103780",
+        "hiddenCategory": false
+       }
+      ]
+     ],
+     "fullTitle": "BON GELATI Eis gestrudelt",
+     "retailLists": [
+      [
+       {
+        "id": 8292,
+        "productSortIndex": 20099
+       }
+      ]
+     ],
+     "lists": [
+      8292
+     ],
+     "wonCategoryBreadcrumbs": [
+      [
+       {
+        "id": "10068374",
+        "name": "Essen & Trinken",
+        "url": "/c/de-CH/essen-trinken/s10068374",
+        "hiddenCategory": false
+       },
+       {
+        "id": "10071049",
+        "name": "Tiefgekühlt",
+        "url": "/h/de-CH/tiefkuehlkost/h10071049",
+        "hiddenCategory": false
+       },
+       {
+        "id": "10096196",
+        "name": "Eis",
+        "url": "/h/de-CH/glace/h10096196",
+        "hiddenCategory": false
+       }
+      ]
+     ],
+     "worldOfNeeds": [
+      {
+       "code": "171610",
+       "isMain": true,
+       "name": "Glace",
+       "parent": "1716",
+       "superCategories": [
+        {
+         "code": "1716",
+         "name": "Tiefkühlkost (Gefrorene Lebensmittel)",
+         "parent": "17"
+        },
+        {
+         "code": "17",
+         "name": "Food und Near Food",
+         "parent": "0"
+        },
+        {
+         "code": "0",
+         "name": "Bedürfniswelten",
+         "parent": ""
+        }
+       ]
+      }
+     ],
+     "preview": false
+    },
+    "action": "UPDATE",
+    "language": "de",
+    "eventType": "GRIDBOX",
+    "id": "10059581"
+   },
+   "tracking": {
+    "position": 14,
+    "xPayload": {
+     "searchTrackingMasterId": "Product.10059581",
+     "searchTrackingTitle": "Eis+gestrudelt",
+     "searchTrackingPageSize": 60,
+     "searchTrackingPage": 1,
+     "searchTrackingEvent": "click",
+     "list": "search",
+     "searchTrackingId": "Product.10059581",
+     "searchTrackingOrigPos": 1,
+     "searchTrackingPos": 14,
+     "searchTrackingOrigPageSize": 60,
+     "searchTrackingChannel": "CH",
+     "category": "Food"
+    }
+   }
+  },
+  {
+   "resultClass": "product",
+   "type": "product",
+   "code": "10059448",
+   "label": "",
+   "url": "",
+   "gridbox": {
+    "country": "CH",
+    "sequence": 1790933070474277,
+    "data": {
+     "ageRestriction": false,
+     "hasColors": false,
+     "awards": [],
+     "brand": {
+      "name": "SILVERCREST",
+      "url": "/q/search?q=silvercrest",
+      "showBrand": true
+     },
+     "canonicalPath": "/p/de-CH/silvercrest-multizerkleinerer/p10059448",
+     "canonicalUrl": "/p/de-CH/silvercrest-multizerkleinerer/p10059448",
+     "category": "Non Food",
+     "dealOfDay": {
+      "active": false
+     },
+     "designTheme": "default",
+     "displayFreeDelivery": false,
+     "erpNumber": "10059448",
+     "flashSales": false,
+     "fullTitle": "SILVERCREST Multizerkleinerer",
+     "gs1Attributes": [],
+     "guaranteeLabels": [],
+     "havingPrice": true,
+     "havingThreesixty": false,
+     "havingVideos": false,
+     "highlightedSeals": 0,
+     "ians": [
+      "516934"
+     ],
+     "image": "https://imgproxy-retcat.assets.schwarz/hYIj2EpuNyiU-A7csIDii08NIRVeqTQbRVzcx0igKgQ/sm:0/exar:1:ce/w:427/h:320/cz/M6Ly9wcm9kLWNhd/GFsb2ctbWVkaWEvY2gvMS85MTI4OERFRjFCNTYyMzNCMzNGQ0QyNzM/5OERDQTg5RTA2REI3MkVERjAwRjhBRjdBODM3N0JBQTNFNTFDQTFFLnBuZw.png",
+     "isLidlGiftCard": false,
+     "isUsedProduct": false,
+     "itemId": 10059448,
+     "keyfacts": {
+      "analyticsCategory": "Non Food",
+      "description": "<ul> <li>Pro St&uuml;ck</li> </ul> <p>Im Vergleich zum letzten Lidl Preis.</p>",
+      "fullTitle": "SILVERCREST Multizerkleinerer",
+      "moreDetails": "Weitere Produktdetails",
+      "title": "Multizerkleinerer",
+      "wonCategoryPrimary": "Bedürfniswelten/Küche & Haushalt/Küchengeräte",
+      "wonCategoryPrimaryPath": "0/11/1111"
+     },
+     "lidlPlus": [],
+     "multipack": false,
+     "online": false,
+     "preventSelling": false,
+     "price": {
+      "currencyCode": "CHF",
+      "currencyCodeSecond": "",
+      "currencySymbol": "CHF",
+      "currencySymbolSecond": "",
+      "discount": {
+       "absoluteDiscount": 5.0,
+       "deletedPrice": 19.99,
+       "discountHasStar": false,
+       "discountText": "-25﹪",
+       "fromRecommendedPrice": false,
+       "hideBargainHint": false,
+       "bargainHintEnabled": false,
+       "bargainHintText": "BargainHint_Text",
+       "percentageDiscount": 25,
+       "showDiscount": true,
+       "showFrom": false,
+       "showPercentage": true,
+       "showUpTo": false
+      },
+      "displayedCurrency": "CHF",
+      "hasStar": false,
+      "hasVat": false,
+      "oldPrice": 19.99,
+      "price": 14.99,
+      "priceTheme": "white_red",
+      "specialTaxes": [],
+      "superscript": "*",
+      "variantsHaveDifferentPrices": false
+     },
+     "productId": 10059448,
+     "productType": "RETAIL",
+     "productOrigin": "progress_event",
+     "quickAddToCart": false,
+     "regionsPrices": {},
+     "renderedTs": 1790933070,
+     "seals": [
+      {
+       "altText": "SilverCrest Logo mit einem stilisierten Dreieck auf der linken Seite.",
+       "image": "https://imgproxy-retcat.assets.schwarz/bNi1N8856IGSvmQQbe9QJGKQgB-bsQXkcnWMfP4STvU/sm:0/w:140/cz/M6Ly9wcm9kLWNhd/GFsb2ctbWVkaWEvY2gvMi9ENjVDRUQzNURDN0ZDMDg3NDREQjVCRTU/xRUJENzRGRDA0RjZFNzAwRTM5MjlEMjdCRDM2QUZFNjgyMUJBNTEwLnBuZw.png"
+      },
+      {
+       "altText": "Kennzeichnung: EdelStahl, Rostfrei.",
+       "image": "https://imgproxy-retcat.assets.schwarz/KPQ3KLjiU-_KN7D35Q20TJAPvMZ0NgORJ89SET_nqqA/sm:0/w:140/cz/M6Ly9wcm9kLWNhd/GFsb2ctbWVkaWEvY2gvMi9FQzQzNjY0RDM4OTI3OTdGQzlEOTY2MTI/0NDdBREU5MkM5OUE5REVDNkNGNTI2MkFDRjkzNjdDRjlBNjI5NDUzLnBuZw.png"
+      }
+     ],
+     "stockAvailability": {
+      "availabilityIndicator": 0,
+      "badgeInfo": {
+       "badges": [
+        {
+         "text": "1.10. - 7.10.",
+         "type": "IN_STORE_PAST_DATE_RANGE"
+        }
+       ]
+      },
+      "badgeInfoV2": [
+       {
+        "badges": [
+         {
+          "text": "1.10. - 7.10.",
+          "type": "IN_STORE_PAST_DATE_RANGE"
+         }
+        ],
+        "validFrom": 1790805600,
+        "validUntil": 1791410399
+       }
+      ],
+      "onlineAvailable": false,
+      "minOrderableQuantity": 1,
+      "backInStockNotification": false,
+      "backInStockNotificationSoldOut": false
+     },
+     "store": true,
+     "storeStartDate": 1790805600,
+     "storeEndDate": 1791410399,
+     "title": "Multizerkleinerer",
+     "timezoneId": "Europe/Zurich",
+     "zones": {}
+    },
+    "productId": 10059448,
+    "meta": {
+     "categoryPaths": [],
+     "campaignPaths": [
+      [
+       {
+        "id": "10103773",
+        "name": "Küche",
+        "url": "/c/de-CH/kueche/a10103773",
+        "hiddenCategory": false
+       }
+      ]
+     ],
+     "fullTitle": "SILVERCREST Multizerkleinerer",
+     "retailLists": [
+      [
+       {
+        "id": 8299,
+        "productSortIndex": 3
+       }
+      ]
+     ],
+     "lists": [
+      8299
+     ],
+     "wonCategoryBreadcrumbs": [
+      [
+       {
+        "id": "10068166",
+        "name": "Küche & Haushalt",
+        "url": "/c/de-CH/kueche-haushalt/s10068166",
+        "hiddenCategory": false
+       },
+       {
+        "id": "10067522",
+        "name": "Küchengeräte",
+        "url": "/h/de-CH/kuechengeraete/h10067522",
+        "hiddenCategory": false
+       }
+      ]
+     ],
+     "worldOfNeeds": [
+      {
+       "code": "1111",
+       "isMain": true,
+       "name": "Küchengeräte",
+       "parent": "11",
+       "superCategories": [
+        {
+         "code": "11",
+         "name": "Küche & Haushalt",
+         "parent": "0"
+        },
+        {
+         "code": "0",
+         "name": "Bedürfniswelten",
+         "parent": ""
+        }
+       ]
+      }
+     ],
+     "preview": false
+    },
+    "action": "UPDATE",
+    "language": "de",
+    "eventType": "GRIDBOX",
+    "id": "10059448"
+   },
+   "tracking": {
+    "position": 54,
+    "xPayload": {
+     "searchTrackingMasterId": "Product.10059448",
+     "searchTrackingTitle": "Multizerkleinerer",
+     "searchTrackingPageSize": 60,
+     "searchTrackingPage": 1,
+     "searchTrackingEvent": "click",
+     "list": "search",
+     "searchTrackingId": "Product.10059448",
+     "searchTrackingOrigPos": 1,
+     "searchTrackingPos": 54,
+     "searchTrackingOrigPageSize": 60,
+     "searchTrackingChannel": "CH",
+     "category": "Non Food"
+    }
+   }
+  },
+  {
+   "resultClass": "product",
+   "type": "product",
+   "code": "10059416",
+   "label": "",
+   "url": "",
+   "gridbox": {
+    "country": "CH",
+    "sequence": 1790933060296116,
+    "data": {
+     "ageRestriction": false,
+     "hasColors": false,
+     "awards": [],
+     "brand": {
+      "showBrand": false
+     },
+     "canonicalPath": "/p/de-CH/topfrosen/p10059416",
+     "canonicalUrl": "/p/de-CH/topfrosen/p10059416",
+     "category": "Non Food",
+     "dealOfDay": {
+      "active": false
+     },
+     "designTheme": "default",
+     "displayFreeDelivery": false,
+     "erpNumber": "10059416",
+     "flashSales": false,
+     "fullTitle": "Topfrosen",
+     "gs1Attributes": [],
+     "guaranteeLabels": [],
+     "havingPrice": true,
+     "havingThreesixty": false,
+     "havingVideos": false,
+     "highlightedSeals": 0,
+     "ians": [
+      "99830"
+     ],
+     "image": "https://imgproxy-retcat.assets.schwarz/SsX1as1jBZVxaIZ4N9JKPg4RdLuvmBzT6H6Nxx9-urw/sm:0/exar:1:ce/w:427/h:320/cz/M6Ly9wcm9kLWNhd/GFsb2ctbWVkaWEvY2gvMS82NTFEOTVBOUVBMTFFMkZENjRFNkNERTN/GMTJDQkUzNzA1MzRFOENCNTZGQUMxQzRCQzlFOENCNUM4RjNCQTM2LnBuZw.png",
+     "isLidlGiftCard": false,
+     "isUsedProduct": false,
+     "itemId": 10059416,
+     "keyfacts": {
+      "analyticsCategory": "Non Food",
+      "description": "<ul> <li>H&ouml;he: ca. 30 cm</li> <li>Diverse Bl&uuml;tenfarben</li> <li>Pro St&uuml;ck</li> </ul>",
+      "fullTitle": "Topfrosen",
+      "moreDetails": "Weitere Produktdetails",
+      "supplementalDescription": "12-cm-Topf",
+      "title": "Topfrosen",
+      "wonCategoryPrimary": "Bedürfniswelten/Food und Near Food/Blumen & Pflanzen/Blumen & Pflanzen",
+      "wonCategoryPrimaryPath": "0/17/1732/173210"
+     },
+     "lidlPlus": [],
+     "multipack": false,
+     "online": false,
+     "preventSelling": false,
+     "price": {
+      "currencyCode": "CHF",
+      "currencyCodeSecond": "",
+      "currencySymbol": "CHF",
+      "currencySymbolSecond": "",
+      "displayedCurrency": "CHF",
+      "hasStar": false,
+      "hasVat": false,
+      "oldPrice": 0.0,
+      "price": 2.99,
+      "priceTheme": "white_red",
+      "specialTaxes": [],
+      "superscript": "*",
+      "variantsHaveDifferentPrices": false
+     },
+     "productId": 10059416,
+     "productType": "RETAIL",
+     "productOrigin": "progress_event",
+     "quickAddToCart": false,
+     "regionsPrices": {},
+     "renderedTs": 1790933060,
+     "seals": [
+      {
+       "altText": "Haus-Symbol mit Pfeilen, die die Nutzung im Innen- und Außenbereich darstellen.",
+       "image": "https://imgproxy-retcat.assets.schwarz/Zh4d6KXkzB-cLIdF9iE2jcaIPgL4Ilc6cqwA8uhrJJg/sm:0/w:140/cz/M6Ly9wcm9kLWNhd/GFsb2ctbWVkaWEvY2gvMi8yQkUwQTlGQUUyRkQ0MjE3Nzg5QkQxNzI/3MzM2OUZFQTlEQzIxQUJERDJGQ0Y1MTA2REZDNzcxM0RCREM3QjIwLnBuZw.png"
+      },
+      {
+       "altText": "Halbschattiges Sonnensymbol für einen halbschattigen Standort.",
+       "image": "https://imgproxy-retcat.assets.schwarz/kcINaHTUygtIUOCgmtUMItAKUX2mgj4Hq9FizGWV7lc/sm:0/w:140/cz/M6Ly9wcm9kLWNhd/GFsb2ctbWVkaWEvY2gvMi85QkVDMTE3N0YwRUU4MDM3QUQ3RTQ5MUJ/COUVBNzcyNzU2RENENDg0RjVEREU0Q0Y3RjhFQTA0MUQzRTQ1ODU5LnBuZw.png"
+      }
+     ],
+     "stockAvailability": {
+      "availabilityIndicator": 0,
+      "badgeInfo": {
+       "badges": [
+        {
+         "text": "1.10. - 7.10.",
+         "type": "IN_STORE_PAST_DATE_RANGE"
+        }
+       ]
+      },
+      "badgeInfoV2": [
+       {
+        "badges": [
+         {
+          "text": "1.10. - 7.10.",
+          "type": "IN_STORE_PAST_DATE_RANGE"
+         }
+        ],
+        "validFrom": 1790805600,
+        "validUntil": 1791410399
+       }
+      ],
+      "onlineAvailable": false,
+      "minOrderableQuantity": 1,
+      "backInStockNotification": false,
+      "backInStockNotificationSoldOut": false
+     },
+     "store": true,
+     "storeStartDate": 1790805600,
+     "storeEndDate": 1791410399,
+     "title": "Topfrosen",
+     "timezoneId": "Europe/Zurich",
+     "zones": {}
+    },
+    "productId": 10059416,
+    "meta": {
+     "categoryPaths": [],
+     "campaignPaths": [
+      [
+       {
+        "id": "10103775",
+        "name": "Blumen und Pflanzen",
+        "url": "/c/de-CH/blumen-und-pflanzen/a10103775",
+        "hiddenCategory": false
+       }
+      ]
+     ],
+     "fullTitle": "Topfrosen",
+     "retailLists": [
+      [
+       {
+        "id": 8297,
+        "productSortIndex": 1
+       }
+      ]
+     ],
+     "lists": [
+      8297
+     ],
+     "wonCategoryBreadcrumbs": [
+      [
+       {
+        "id": "10068374",
+        "name": "Essen & Trinken",
+        "url": "/c/de-CH/essen-trinken/s10068374",
+        "hiddenCategory": false
+       },
+       {
+        "id": "10071024",
+        "name": "Blumen & Pflanzen",
+        "url": "/h/de-CH/blumen-pflanzen/h10071024",
+        "hiddenCategory": false
+       },
+       {
+        "id": "10096743",
+        "name": "Blumen & Pflanzen",
+        "url": "/h/de-CH/blumen-pflanzen/h10096743",
+        "hiddenCategory": false
+       }
+      ]
+     ],
+     "worldOfNeeds": [
+      {
+       "code": "173210",
+       "isMain": true,
+       "name": "Blumen & Pflanzen",
+       "parent": "1732",
+       "superCategories": [
+        {
+         "code": "1732",
+         "name": "Blumen & Pflanzen",
+         "parent": "17"
+        },
+        {
+         "code": "17",
+         "name": "Food und Near Food",
+         "parent": "0"
+        },
+        {
+         "code": "0",
+         "name": "Bedürfniswelten",
+         "parent": ""
+        }
+       ]
+      }
+     ],
+     "preview": false
+    },
+    "action": "UPDATE",
+    "language": "de",
+    "eventType": "GRIDBOX",
+    "id": "10059416"
+   },
+   "tracking": {
+    "position": 7,
+    "xPayload": {
+     "searchTrackingMasterId": "Product.10059416",
+     "searchTrackingTitle": "Topfrosen",
+     "searchTrackingPageSize": 60,
+     "searchTrackingPage": 1,
+     "searchTrackingEvent": "click",
+     "list": "search",
+     "searchTrackingId": "Product.10059416",
+     "searchTrackingOrigPos": 1,
+     "searchTrackingPos": 7,
+     "searchTrackingOrigPageSize": 60,
+     "searchTrackingChannel": "CH",
+     "category": "Non Food"
+    }
+   }
+  },
+  {
+   "resultClass": "product",
+   "type": "product",
+   "code": "10059556",
+   "label": "",
+   "url": "",
+   "gridbox": {
+    "country": "CH",
+    "sequence": 1790933068985880,
+    "data": {
+     "ageRestriction": false,
+     "hasColors": false,
+     "awards": [],
+     "brand": {
+      "name": "FEBREZE",
+      "url": "/q/search?q=febreze",
+      "showBrand": true
+     },
+     "canonicalPath": "/p/de-CH/febreze-lufterfrischer-bad-duo/p10059556",
+     "canonicalUrl": "/p/de-CH/febreze-lufterfrischer-bad-duo/p10059556",
+     "category": "Non Food",
+     "dealOfDay": {
+      "active": false
+     },
+     "designTheme": "default",
+     "displayFreeDelivery": false,
+     "erpNumber": "10059556",
+     "flashSales": false,
+     "fullTitle": "FEBREZE Lufterfrischer Bad Duo",
+     "gs1Attributes": [],
+     "guaranteeLabels": [],
+     "havingPrice": true,
+     "havingThreesixty": false,
+     "havingVideos": false,
+     "highlightedSeals": 0,
+     "ians": [
+      "1800898"
+     ],
+     "image": "https://imgproxy-retcat.assets.schwarz/jglVz5mUlAJYdJ8ZJ6h5glxxVkktwvhGN9G3Xkoblrg/sm:0/exar:1:ce/w:427/h:320/cz/M6Ly9wcm9kLWNhd/GFsb2ctbWVkaWEvY2gvMS82NzE5Mzk3NUI1RDg0MTYwM0I1NjAxODU/3OTM5NjlGMTgxRUI0RTAwOTBBQzc3QTcwQkM1ODk4NEMxQjI4NDUzLnBuZw.png",
+     "isLidlGiftCard": false,
+     "isUsedProduct": false,
+     "itemId": 10059556,
+     "keyfacts": {
+      "analyticsCategory": "Non Food",
+      "description": "<ul> <li>Reine Frische, tropische Fr&uuml;chte, Vanille</li> <li>Pro 16 ml</li> <li>100 ml = 37.19</li> </ul>",
+      "fullTitle": "FEBREZE Lufterfrischer Bad Duo",
+      "moreDetails": "Weitere Produktdetails",
+      "title": "Lufterfrischer Bad Duo",
+      "wonCategoryPrimary": "Bedürfniswelten/Food und Near Food/Haushalt/Weitere Haushaltswaren",
+      "wonCategoryPrimaryPath": "0/17/1747/174713"
+     },
+     "lidlPlus": [],
+     "multipack": false,
+     "online": false,
+     "preventSelling": false,
+     "price": {
+      "currencyCode": "CHF",
+      "currencyCodeSecond": "",
+      "currencySymbol": "CHF",
+      "currencySymbolSecond": "",
+      "discount": {
+       "discountHasStar": false,
+       "discountText": "Aktion",
+       "fromRecommendedPrice": false,
+       "showDiscount": false,
+       "showFrom": false,
+       "showPercentage": false,
+       "showUpTo": false
+      },
+      "displayedCurrency": "CHF",
+      "hasStar": false,
+      "hasVat": false,
+      "oldPrice": 0.0,
+      "price": 5.95,
+      "priceTheme": "white_red",
+      "specialTaxes": [],
+      "superscript": "*",
+      "variantsHaveDifferentPrices": false
+     },
+     "productId": 10059556,
+     "productType": "RETAIL",
+     "productOrigin": "progress_event",
+     "quickAddToCart": false,
+     "regionsPrices": {},
+     "renderedTs": 1790933068,
+     "seals": [],
+     "stockAvailability": {
+      "availabilityIndicator": 0,
+      "badgeInfo": {
+       "badges": [
+        {
+         "text": "1.10. - 7.10.",
+         "type": "IN_STORE_PAST_DATE_RANGE"
+        }
+       ]
+      },
+      "badgeInfoV2": [
+       {
+        "badges": [
+         {
+          "text": "1.10. - 7.10.",
+          "type": "IN_STORE_PAST_DATE_RANGE"
+         }
+        ],
+        "validFrom": 1790805600,
+        "validUntil": 1791410399
+       }
+      ],
+      "onlineAvailable": false,
+      "minOrderableQuantity": 1,
+      "backInStockNotification": false,
+      "backInStockNotificationSoldOut": false
+     },
+     "store": true,
+     "storeStartDate": 1790805600,
+     "storeEndDate": 1791410399,
+     "title": "Lufterfrischer Bad Duo",
+     "timezoneId": "Europe/Zurich",
+     "zones": {}
+    },
+    "productId": 10059556,
+    "meta": {
+     "categoryPaths": [],
+     "campaignPaths": [
+      [
+       {
+        "id": "10103771",
+        "name": "PARKSIDE",
+        "url": "/c/de-CH/parkside/a10103771",
+        "hiddenCategory": false
+       }
+      ]
+     ],
+     "fullTitle": "FEBREZE Lufterfrischer Bad Duo",
+     "retailLists": [
+      [
+       {
+        "id": 8301,
+        "productSortIndex": 25
+       }
+      ]
+     ],
+     "lists": [
+      8301
+     ],
+     "wonCategoryBreadcrumbs": [
+      [
+       {
+        "id": "10068374",
+        "name": "Essen & Trinken",
+        "url": "/c/de-CH/essen-trinken/s10068374",
+        "hiddenCategory": false
+       },
+       {
+        "id": "10096287",
+        "name": "Haushalt",
+        "url": "/h/de-CH/haushalt/h10096287",
+        "hiddenCategory": false
+       },
+       {
+        "id": "10096292",
+        "name": "Weitere Haushaltsartikel",
+        "url": "/h/de-CH/sonstige-haushaltsartikel/h10096292",
+        "hiddenCategory": false
+       }
+      ]
+     ],
+     "worldOfNeeds": [
+      {
+       "code": "174713",
+       "isMain": true,
+       "name": "Weitere Haushaltswaren",
+       "parent": "1747",
+       "superCategories": [
+        {
+         "code": "1747",
+         "name": "Haushalt",
+         "parent": "17"
+        },
+        {
+         "code": "17",
+         "name": "Food und Near Food",
+         "parent": "0"
+        },
+        {
+         "code": "0",
+         "name": "Bedürfniswelten",
+         "parent": ""
+        }
+       ]
+      }
+     ],
+     "preview": false
+    },
+    "action": "UPDATE",
+    "language": "de",
+    "eventType": "GRIDBOX",
+    "id": "10059556"
+   },
+   "tracking": {
+    "position": 11,
+    "xPayload": {
+     "searchTrackingMasterId": "Product.10059556",
+     "searchTrackingTitle": "Lufterfrischer+Bad+Duo",
+     "searchTrackingPageSize": 60,
+     "searchTrackingPage": 1,
+     "searchTrackingEvent": "click",
+     "list": "search",
+     "searchTrackingId": "Product.10059556",
+     "searchTrackingOrigPos": 1,
+     "searchTrackingPos": 11,
+     "searchTrackingOrigPageSize": 60,
+     "searchTrackingChannel": "CH",
+     "category": "Non Food"
+    }
+   }
+  }
+ ],
+ "facets": [
+  {
+   "type": "TEXT",
+   "code": "category",
+   "label": "Kategorie",
+   "selector": "REFINE",
+   "rendering": {
+    "style": "TEXT",
+    "searchable": false,
+    "selectedPosition": "BELOW",
+    "renderLabel": true,
+    "collapsible": true
+   },
+   "topvalues": [
+    {
+     "type": "TEXT",
+     "label": "Essen & Trinken",
+     "selected": false,
+     "count": 498,
+     "url": "/q/api/search?assortment=CH&locale=de_CH&version=v2.0.0&q=+&category=Essen+%26+Trinken",
+     "link": {
+      "type": "search",
+      "filter": {
+       "category": [
+        "Essen & Trinken"
+       ]
+      },
+      "q": " "
+     },
+     "children": [],
+     "value": "10068374"
+    },
+    {
+     "type": "TEXT",
+     "label": "Küche & Haushalt",
+     "selected": false,
+     "count": 53,
+     "url": "/q/api/search?assortment=CH&locale=de_CH&version=v2.0.0&q=+&category=K%C3%BCche+%26+Haushalt",
+     "link": {
+      "type": "search",
+      "filter": {
+       "category": [
+        "Küche & Haushalt"
+       ]
+      },
+      "q": " "
+     },
+     "children": [],
+     "value": "10068166"
+    },
+    {
+     "type": "TEXT",
+     "label": "Werkstatt & Garten",
+     "selected": false,
+     "count": 78,
+     "url": "/q/api/search?assortment=CH&locale=de_CH&version=v2.0.0&q=+&category=Werkstatt+%26+Garten",
+     "link": {
+      "type": "search",
+      "filter": {
+       "category": [
+        "Werkstatt & Garten"
+       ]
+      },
+      "q": " "
+     },
+     "children": [],
+     "value": "10068222"
+    },
+    {
+     "type": "TEXT",
+     "label": "Sport & Freizeit",
+     "selected": false,
+     "count": 5,
+     "url": "/q/api/search?assortment=CH&locale=de_CH&version=v2.0.0&q=+&category=Sport+%26+Freizeit",
+     "link": {
+      "type": "search",
+      "filter": {
+       "category": [
+        "Sport & Freizeit"
+       ]
+      },
+      "q": " "
+     },
+     "children": [],
+     "value": "10068226"
+    },
+    {
+     "type": "TEXT",
+     "label": "Wohnen & Einrichtung",
+     "selected": false,
+     "count": 26,
+     "url": "/q/api/search?assortment=CH&locale=de_CH&version=v2.0.0&q=+&category=Wohnen+%26+Einrichtung",
+     "link": {
+      "type": "search",
+      "filter": {
+       "category": [
+        "Wohnen & Einrichtung"
+       ]
+      },
+      "q": " "
+     },
+     "children": [],
+     "value": "10068371"
+    },
+    {
+     "type": "TEXT",
+     "label": "Mode & Accessoires",
+     "selected": false,
+     "count": 31,
+     "url": "/q/api/search?assortment=CH&locale=de_CH&version=v2.0.0&q=+&category=Mode+%26+Accessoires",
+     "link": {
+      "type": "search",
+      "filter": {
+       "category": [
+        "Mode & Accessoires"
+       ]
+      },
+      "q": " "
+     },
+     "children": [],
+     "value": "10068373"
+    },
+    {
+     "type": "TEXT",
+     "label": "Baby, Kind & Spielzeug",
+     "selected": false,
+     "count": 25,
+     "url": "/q/api/search?assortment=CH&locale=de_CH&version=v2.0.0&q=+&category=Baby%2C+Kind+%26+Spielzeug",
+     "link": {
+      "type": "search",
+      "filter": {
+       "category": [
+        "Baby, Kind & Spielzeug"
+       ]
+      },
+      "q": " "
+     },
+     "children": [],
+     "value": "10068225"
+    }
+   ],
+   "values": [
+    {
+     "type": "TEXT",
+     "label": "Essen & Trinken",
+     "selected": false,
+     "count": 498,
+     "url": "/q/api/search?assortment=CH&locale=de_CH&version=v2.0.0&q=+&category=Essen+%26+Trinken",
+     "link": {
+      "type": "search",
+      "filter": {
+       "category": [
+        "Essen & Trinken"
+       ]
+      },
+      "q": " "
+     },
+     "children": [],
+     "value": "10068374"
+    },
+    {
+     "type": "TEXT",
+     "label": "Küche & Haushalt",
+     "selected": false,
+     "count": 53,
+     "url": "/q/api/search?assortment=CH&locale=de_CH&version=v2.0.0&q=+&category=K%C3%BCche+%26+Haushalt",
+     "link": {
+      "type": "search",
+      "filter": {
+       "category": [
+        "Küche & Haushalt"
+       ]
+      },
+      "q": " "
+     },
+     "children": [],
+     "value": "10068166"
+    },
+    {
+     "type": "TEXT",
+     "label": "Werkstatt & Garten",
+     "selected": false,
+     "count": 78,
+     "url": "/q/api/search?assortment=CH&locale=de_CH&version=v2.0.0&q=+&category=Werkstatt+%26+Garten",
+     "link": {
+      "type": "search",
+      "filter": {
+       "category": [
+        "Werkstatt & Garten"
+       ]
+      },
+      "q": " "
+     },
+     "children": [],
+     "value": "10068222"
+    },
+    {
+     "type": "TEXT",
+     "label": "Sport & Freizeit",
+     "selected": false,
+     "count": 5,
+     "url": "/q/api/search?assortment=CH&locale=de_CH&version=v2.0.0&q=+&category=Sport+%26+Freizeit",
+     "link": {
+      "type": "search",
+      "filter": {
+       "category": [
+        "Sport & Freizeit"
+       ]
+      },
+      "q": " "
+     },
+     "children": [],
+     "value": "10068226"
+    },
+    {
+     "type": "TEXT",
+     "label": "Wohnen & Einrichtung",
+     "selected": false,
+     "count": 26,
+     "url": "/q/api/search?assortment=CH&locale=de_CH&version=v2.0.0&q=+&category=Wohnen+%26+Einrichtung",
+     "link": {
+      "type": "search",
+      "filter": {
+       "category": [
+        "Wohnen & Einrichtung"
+       ]
+      },
+      "q": " "
+     },
+     "children": [],
+     "value": "10068371"
+    },
+    {
+     "type": "TEXT",
+     "label": "Mode & Accessoires",
+     "selected": false,
+     "count": 31,
+     "url": "/q/api/search?assortment=CH&locale=de_CH&version=v2.0.0&q=+&category=Mode+%26+Accessoires",
+     "link": {
+      "type": "search",
+      "filter": {
+       "category": [
+        "Mode & Accessoires"
+       ]
+      },
+      "q": " "
+     },
+     "children": [],
+     "value": "10068373"
+    },
+    {
+     "type": "TEXT",
+     "label": "Baby, Kind & Spielzeug",
+     "selected": false,
+     "count": 25,
+     "url": "/q/api/search?assortment=CH&locale=de_CH&version=v2.0.0&q=+&category=Baby%2C+Kind+%26+Spielzeug",
+     "link": {
+      "type": "search",
+      "filter": {
+       "category": [
+        "Baby, Kind & Spielzeug"
+       ]
+      },
+      "q": " "
+     },
+     "children": [],
+     "value": "10068225"
+    }
+   ]
+  }
+ ]
+}

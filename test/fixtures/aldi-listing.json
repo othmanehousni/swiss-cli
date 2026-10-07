@@ -1,0 +1,326 @@
+{
+ "meta": {
+  "pagination": {
+   "offset": 0,
+   "limit": 60,
+   "totalCount": 125
+  }
+ },
+ "data": [
+  {
+   "sku": "000000000000288415",
+   "name": "Butter",
+   "brandName": null,
+   "urlSlugText": "no-brand-butter",
+   "urlSlugTextAlternatives": {
+    "de-CH": "no-brand-butter",
+    "fr-CH": "no-brand-beurre",
+    "it-CH": "no-brand-burro"
+   },
+   "ageRestriction": null,
+   "alcohol": null,
+   "discontinued": false,
+   "discontinuedNote": null,
+   "notForSale": true,
+   "notForSaleReason": null,
+   "quantityMin": 1,
+   "quantityMax": 99,
+   "quantityInterval": 1,
+   "quantityDefault": 1,
+   "quantityUnit": "ea",
+   "weightType": "0",
+   "sellingSize": "250 g",
+   "energyClass": null,
+   "onSaleDateDisplay": null,
+   "onSaleDate": null,
+   "isAbstract": false,
+   "abstractSku": "000000000000288415A",
+   "isDropship": false,
+   "sellingUnitDisplay": null,
+   "price": {
+    "amount": 385,
+    "amountRelevant": 385,
+    "amountRelevantDisplay": "CHF 3.85",
+    "bottleDeposit": 0,
+    "bottleDepositDisplay": "CHF 0.00",
+    "comparison": 154,
+    "comparisonDisplay": "CHF 1.54/100 g",
+    "currencyCode": "CHF",
+    "currencySymbol": "CHF",
+    "perUnit": null,
+    "perUnitDisplay": null,
+    "wasPriceDisplay": null,
+    "additionalInfo": null,
+    "savingsDisplay": null,
+    "bottleDepositType": null,
+    "feeText": null
+   },
+   "countryExtensions": null,
+   "categories": [
+    {
+     "id": "1588161418433059",
+     "name": "Milchprodukte & Eier",
+     "urlSlugText": "milchprodukte-eier"
+    },
+    {
+     "id": "158816141843305901",
+     "name": "Butter, Milch & Rahm",
+     "urlSlugText": "milchprodukte-eier/butter-milch-rahm"
+    }
+   ],
+   "assets": [
+    {
+     "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/71a03886-1e67-4bfe-a661-f3295b942832/{slug}",
+     "maxWidth": 2000,
+     "maxHeight": 2000,
+     "mimeType": "image/*",
+     "assetType": "FR01",
+     "alt": null,
+     "displayName": null
+    }
+   ],
+   "badges": [
+    {
+     "position": "4",
+     "items": [
+      {
+       "url": null,
+       "alt": null,
+       "displayText": "Tiefpreis",
+       "color": "red",
+       "mimeType": "text/plain"
+      }
+     ]
+    },
+    {
+     "position": "1",
+     "items": [
+      {
+       "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/pfz_suisse_garantie_287x287px-1?fmt=png-alpha",
+       "alt": "Suisse Garantie Swiss flag certification emblem",
+       "displayText": null,
+       "color": null,
+       "mimeType": "image/*"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "sku": "000000000000154805",
+   "name": "Vino Rosso d'Italia",
+   "brandName": "RONCO DI SASSI",
+   "urlSlugText": "ronco-di-sassi-vino-rosso-d-italia",
+   "urlSlugTextAlternatives": {
+    "de-CH": "ronco-di-sassi-vino-rosso-d-italia",
+    "fr-CH": "ronco-di-sassi-vino-rosso-d-italia",
+    "it-CH": "ronco-di-sassi-vino-rosso-d-italia"
+   },
+   "ageRestriction": 16,
+   "alcohol": "15.5 %",
+   "discontinued": false,
+   "discontinuedNote": null,
+   "notForSale": true,
+   "notForSaleReason": null,
+   "quantityMin": 1,
+   "quantityMax": 99,
+   "quantityInterval": 1,
+   "quantityDefault": 1,
+   "quantityUnit": "bt",
+   "weightType": "0",
+   "sellingSize": "750 ml",
+   "energyClass": null,
+   "onSaleDateDisplay": null,
+   "onSaleDate": null,
+   "isAbstract": false,
+   "abstractSku": "000000000000154805A",
+   "isDropship": false,
+   "sellingUnitDisplay": null,
+   "price": {
+    "amount": 1099,
+    "amountRelevant": 1099,
+    "amountRelevantDisplay": "CHF 10.99",
+    "bottleDeposit": 0,
+    "bottleDepositDisplay": "CHF 0.00",
+    "comparison": 1465,
+    "comparisonDisplay": "CHF 14.65/1 l",
+    "currencyCode": "CHF",
+    "currencySymbol": "CHF",
+    "perUnit": null,
+    "perUnitDisplay": null,
+    "wasPriceDisplay": "CHF 13.99",
+    "additionalInfo": null,
+    "savingsDisplay": null,
+    "bottleDepositType": null,
+    "feeText": null
+   },
+   "countryExtensions": null,
+   "categories": [
+    {
+     "id": "1588161418433031",
+     "name": "Aktionen",
+     "urlSlugText": "aktionen"
+    }
+   ],
+   "assets": [
+    {
+     "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/1790584d-18d7-4d35-a37f-2e33e366802c/{slug}",
+     "maxWidth": 2000,
+     "maxHeight": 2000,
+     "mimeType": "image/*",
+     "assetType": "FR01",
+     "alt": null,
+     "displayName": null
+    }
+   ],
+   "badges": []
+  },
+  {
+   "sku": "000000000000110499",
+   "name": "Halloween-Mix",
+   "brandName": "HARIBO",
+   "urlSlugText": "haribo-halloween-mix",
+   "urlSlugTextAlternatives": {
+    "de-CH": "haribo-halloween-mix",
+    "fr-CH": "haribo-mix-halloween",
+    "it-CH": "haribo-halloween-mix"
+   },
+   "ageRestriction": null,
+   "alcohol": null,
+   "discontinued": false,
+   "discontinuedNote": null,
+   "notForSale": true,
+   "notForSaleReason": null,
+   "quantityMin": 1,
+   "quantityMax": 99,
+   "quantityInterval": 1,
+   "quantityDefault": 1,
+   "quantityUnit": "bag",
+   "weightType": "0",
+   "sellingSize": "500 g",
+   "energyClass": null,
+   "onSaleDateDisplay": "verfügbar ab 12.10.2026",
+   "onSaleDate": "2026-10-12",
+   "isAbstract": false,
+   "abstractSku": "000000000000110499A",
+   "isDropship": false,
+   "sellingUnitDisplay": null,
+   "price": {
+    "amount": 449,
+    "amountRelevant": 449,
+    "amountRelevantDisplay": "CHF 4.49",
+    "bottleDeposit": 0,
+    "bottleDepositDisplay": "CHF 0.00",
+    "comparison": 90,
+    "comparisonDisplay": "CHF 0.90/100 g",
+    "currencyCode": "CHF",
+    "currencySymbol": "CHF",
+    "perUnit": null,
+    "perUnitDisplay": null,
+    "wasPriceDisplay": null,
+    "additionalInfo": null,
+    "savingsDisplay": null,
+    "bottleDepositType": null,
+    "feeText": null
+   },
+   "countryExtensions": null,
+   "categories": [
+    {
+     "id": "1588161418433031",
+     "name": "Aktionen",
+     "urlSlugText": "aktionen"
+    }
+   ],
+   "assets": [
+    {
+     "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/691bcbbd-d59c-40a0-8c33-0d64e4bad68f/{slug}",
+     "maxWidth": 2000,
+     "maxHeight": 2000,
+     "mimeType": "image/*",
+     "assetType": "FR01",
+     "alt": null,
+     "displayName": null
+    }
+   ],
+   "badges": []
+  },
+  {
+   "sku": "000000000000153669",
+   "name": "Orange",
+   "brandName": "FANTA",
+   "urlSlugText": "fanta-orange",
+   "urlSlugTextAlternatives": {
+    "de-CH": "fanta-orange",
+    "fr-CH": "fanta-orange",
+    "it-CH": "fanta-orange"
+   },
+   "ageRestriction": null,
+   "alcohol": null,
+   "discontinued": false,
+   "discontinuedNote": null,
+   "notForSale": true,
+   "notForSaleReason": null,
+   "quantityMin": 1,
+   "quantityMax": 99,
+   "quantityInterval": 1,
+   "quantityDefault": 1,
+   "quantityUnit": "ea",
+   "weightType": "0",
+   "sellingSize": "330 ml",
+   "energyClass": null,
+   "onSaleDateDisplay": "verfügbar seit 21.09.2026",
+   "onSaleDate": "2026-09-21",
+   "isAbstract": false,
+   "abstractSku": "000000000000153669A",
+   "isDropship": false,
+   "sellingUnitDisplay": null,
+   "price": {
+    "amount": 54,
+    "amountRelevant": 54,
+    "amountRelevantDisplay": "CHF 0.54",
+    "bottleDeposit": 0,
+    "bottleDepositDisplay": "CHF 0.00",
+    "comparison": 164,
+    "comparisonDisplay": "CHF 1.64/1 l",
+    "currencyCode": "CHF",
+    "currencySymbol": "CHF",
+    "perUnit": null,
+    "perUnitDisplay": null,
+    "wasPriceDisplay": null,
+    "additionalInfo": null,
+    "savingsDisplay": null,
+    "bottleDepositType": null,
+    "feeText": null
+   },
+   "countryExtensions": null,
+   "categories": [
+    {
+     "id": "1588161418433031",
+     "name": "Aktionen",
+     "urlSlugText": "aktionen"
+    }
+   ],
+   "assets": [
+    {
+     "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/22db4fc1-b75a-4400-bc41-cf9883998abd/{slug}",
+     "maxWidth": 2000,
+     "maxHeight": 2000,
+     "mimeType": "image/*",
+     "assetType": "FR01",
+     "alt": null,
+     "displayName": null
+    },
+    {
+     "url": "https://dm.emea.cms.aldi.cx/is/image/aldiprodeu/product/jpg/scaleWidth/{width}/e974f873-b3b9-4427-b16a-497606842c78/{slug}",
+     "maxWidth": 2000,
+     "maxHeight": 2000,
+     "mimeType": "image/*",
+     "assetType": "FR02",
+     "alt": null,
+     "displayName": null
+    }
+   ],
+   "badges": []
+  }
+ ]
+}
