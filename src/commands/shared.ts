@@ -226,8 +226,7 @@ export function explainError(
     return {
       message: error.message,
       hints: [
-        'The store probably changed its website. Please report it so it can be fixed:',
-        `${REPOSITORY_URL}/issues`,
+        `The store probably changed its website. Please report it so it can be fixed: ${REPOSITORY_URL}/issues`,
       ],
     };
   }

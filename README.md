@@ -68,14 +68,18 @@ store publishes, so coverage differs:
 | **Aldi Suisse** | Full regular assortment and current special buys | ~2,300 products | ~40 s | ready |
 | **Denner** | Current promotions and the wine shop (no full grocery list online) | ~800 products | ~5 s | ready |
 | **Lidl Suisse** | Current weekly offers and online-shop items (no permanent food list online) | ~750 products | ~10 s | ready |
-| **Migros** | Full assortment | — | — | experimental |
+| **Migros** | Full assortment | — | — | **not working** (see below) |
 
 *Times measured in October 2026 at the default polite speed.*
 
-**About Migros:** migros.ch blocked the cloud network this tool was built on, so the
-Migros support could not be tested live. It is built on the same API that the
-open-source [migros-api-wrapper](https://github.com/aliyss/migros-api-wrapper) uses. From a
-home connection it may well work: check with `swiss-grocery doctor migros`.
+**About Migros:** the Migros support does not work at the moment. It reads the
+category product listing of migros.ch's website API, which Migros removed in 2026: from
+a home connection it now answers `HTTP 404`. The open-source
+[migros-api-wrapper](https://github.com/aliyss/migros-api-wrapper) dropped the same
+listing in December 2025, and no replacement is publicly known yet. migros.ch also
+blocks the cloud network this tool is developed on, which makes finding one harder.
+`swiss-grocery fetch all` skips Migros until this is fixed; `swiss-grocery doctor migros`
+shows its current state.
 
 Run `swiss-grocery stores` to see this list with what you have already downloaded.
 
@@ -136,7 +140,7 @@ show what it does, with examples.
 
 ```console
 $ swiss-grocery fetch coop                      # everything Coop publishes
-$ swiss-grocery fetch migros --all              # the whole catalog (--all is the default)
+$ swiss-grocery fetch aldi --all                # the whole catalog (--all is the default)
 $ swiss-grocery fetch coop --category food      # only groceries
 $ swiss-grocery fetch coop --category Milch     # one category (accents optional)
 $ swiss-grocery fetch aldi --limit 100          # a quick sample to try things out

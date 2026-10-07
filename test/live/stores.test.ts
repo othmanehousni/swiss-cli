@@ -2,7 +2,8 @@
  * Live smoke tests against the real store websites (opt-in: npm run test:live).
  * They check that each store's API still has the shape swiss-grocery expects:
  * categories load, and the first page of products comes back with prices.
- * Migros only runs with LIVE_MIGROS=1 (it blocks many cloud networks).
+ * Migros only runs with LIVE_MIGROS=1: it blocks many cloud networks, and its category
+ * listing is gone (see the README).
  */
 import { describe, expect, it } from 'vitest';
 import { userAgent } from '../../src/config.js';

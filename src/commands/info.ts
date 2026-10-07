@@ -55,7 +55,12 @@ export function registerInfoCommands(program: Command): void {
               name: provider.info.name,
               website: provider.info.website,
               coverage: provider.info.coverage,
-              status: provider.info.verified ? 'ready' : 'experimental',
+              status: provider.info.unavailable
+                ? 'not working'
+                : provider.info.verified
+                  ? 'ready'
+                  : 'experimental',
+              ...(provider.info.unavailable ? { problem: provider.info.unavailable } : {}),
               products: summary?.products ?? 0,
               lastUpdate: summary?.lastSuccess ?? null,
             })),
@@ -65,13 +70,16 @@ export function registerInfoCommands(program: Command): void {
         const { out } = app;
         out.print();
         for (const { provider, summary } of rows) {
-          const badge = provider.info.verified
-            ? out.c.green('ready')
-            : out.c.yellow('experimental');
+          const badge = provider.info.unavailable
+            ? out.c.red('not working')
+            : provider.info.verified
+              ? out.c.green('ready')
+              : out.c.yellow('experimental');
           out.print(
             `  ${out.c.bold(provider.info.name)} ${out.c.dim(`(${provider.info.id})`)}  ${badge}`,
           );
           out.print(`    ${provider.info.coverage}`);
+          if (provider.info.unavailable) out.print(`    ${out.c.red(provider.info.unavailable)}`);
           out.print(
             out.c.dim(
               summary && summary.products > 0
@@ -84,6 +92,11 @@ export function registerInfoCommands(program: Command): void {
         out.print(
           out.c.dim(
             '  "experimental": the store blocked the network this tool was built on, so it is untested.',
+          ),
+        );
+        out.print(
+          out.c.dim(
+            '  "not working": the store changed its website; `fetch all` skips it until it is fixed.',
           ),
         );
         out.print(

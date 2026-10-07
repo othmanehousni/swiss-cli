@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { UnexpectedResponseError } from '../../src/crawler/errors.js';
 import { aldi } from '../../src/providers/aldi.js';
 import { resolveCategories } from '../../src/providers/categories.js';
 import { coop } from '../../src/providers/coop.js';
@@ -6,6 +7,7 @@ import { denner } from '../../src/providers/denner.js';
 import { lidl } from '../../src/providers/lidl.js';
 import { migros } from '../../src/providers/migros.js';
 import { fakeContext, fixture } from '../helpers/context.js';
+import type { FakeResponse } from '../helpers/fake-fetch.js';
 
 describe('Aldi (real API fixtures)', () => {
   it('flattens the category tree and lists top-level categories for a full crawl', async () => {
@@ -278,6 +280,18 @@ describe('Migros (synthetic responses shaped like the documented API)', () => {
       imageUrl: 'https://image.migros.ch/d/%7Bstack%7D/x.jpg',
     });
     expect(page.next).toBeNull();
+  });
+
+  it('explains that Migros removed its category listing when it answers 404', async () => {
+    const { ctx } = fakeContext(
+      (url): FakeResponse =>
+        url.includes('/guest')
+          ? { headers: { leshopch: 'token' }, body: {} }
+          : { status: 404, headers: { 'content-type': 'application/json' }, body: {} },
+    );
+    const page = migros.fetchPage(ctx, { key: 'k', label: 'l', params: { categoryId: '1' } }, null);
+    await expect(page).rejects.toBeInstanceOf(UnexpectedResponseError);
+    await expect(page).rejects.toThrow(/no longer offers the category product listing/);
   });
 });
 

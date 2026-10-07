@@ -131,7 +131,9 @@ async function runCrawl(app: App, request: CrawlRequest): Promise<boolean> {
         `${provider.info.name}${request.categories.length > 0 ? ` · ${request.categories.join(', ')}` : ''}`,
       );
       out.info(out.c.dim(`  ${provider.info.coverage}`));
-      if (!provider.info.verified) {
+      if (provider.info.unavailable) {
+        out.warn(`${provider.info.unavailable} Trying anyway…`);
+      } else if (!provider.info.verified) {
         out.warn(
           `${provider.info.name} support is experimental (it could not be tested live yet). ` +
             `If it fails, run: swiss-grocery doctor ${store}`,
@@ -230,7 +232,7 @@ async function runCrawl(app: App, request: CrawlRequest): Promise<boolean> {
 const FETCH_EXAMPLES = `
 Examples:
   $ swiss-grocery fetch aldi                    everything Aldi Suisse publishes (~1 minute)
-  $ swiss-grocery fetch migros --all            the whole Migros catalog
+  $ swiss-grocery fetch coop --all              the whole Coop catalog
   $ swiss-grocery fetch coop --category food    only groceries
   $ swiss-grocery fetch lidl denner             several stores, one after the other
   $ swiss-grocery fetch all                     every store
@@ -291,9 +293,19 @@ export function registerCrawlCommands(program: Command): void {
       try {
         if (opts.all && opts.category)
           throw new UserError('Use either --all or --category, not both.');
+        let stores = parseStores(storeArgs);
+        if (storeArgs.some((arg) => arg.toLowerCase().split(',').includes('all'))) {
+          // "all" means every store that works; asking for one by name still tries it.
+          for (const store of stores.filter((s) => getProvider(s).info.unavailable)) {
+            app.out.hint(
+              `Skipping ${getProvider(store).info.name}: ${getProvider(store).info.unavailable}`,
+            );
+          }
+          stores = stores.filter((s) => !getProvider(s).info.unavailable);
+        }
         const ok = await runCrawl(app, {
           kind: 'fetch',
-          stores: parseStores(storeArgs),
+          stores,
           categories: ((opts.category as string[] | undefined) ?? [])
             .flatMap((c) => c.split(','))
             .map((c) => c.trim())

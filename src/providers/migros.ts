@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { HttpError } from '../crawler/errors.js';
+import { HttpError, UnexpectedResponseError } from '../crawler/errors.js';
 import { nextOffset } from '../crawler/pagination.js';
 import { computeUnitPrice, parseMoney, unitPriceFrom } from '../normalization/price.js';
 import { parseQuantity } from '../normalization/quantity.js';
@@ -12,10 +12,12 @@ import { normalizeEach, parseEnvelope, uniqueStrings, zurichDateToIso } from './
 /**
  * Migros — the JSON APIs behind migros.ch.
  *
- * EXPERIMENTAL: migros.ch blocked the (cloud) network this tool was built on, so
- * this provider could not be tested live. Endpoints and fields follow the
- * open-source migros-api-wrapper (MIT, github.com/aliyss/migros-api-wrapper).
- * Run `swiss-grocery doctor migros` to check it from your connection.
+ * NOT WORKING (October 2026): the category product listing below answers HTTP 404
+ * from home connections. Migros dropped its category search in 2026 (the
+ * open-source migros-api-wrapper removed it in December 2025, and other clients
+ * report "no category browse endpoint exists"). migros.ch blocks the cloud
+ * network this tool is built on, so a replacement could not be worked out yet.
+ * Endpoints and fields follow migros-api-wrapper (MIT, github.com/aliyss/migros-api-wrapper).
  *
  * Flow: guest token -> category tree (storemap) -> product ids per category
  * -> product cards (name, price) in batches -> product detail (optional).
@@ -222,8 +224,9 @@ export const migros: Provider = {
     id: 'migros',
     name: 'Migros',
     website: 'https://www.migros.ch',
-    coverage:
-      'Full assortment with prices as shown on migros.ch (experimental: untested, see doctor).',
+    coverage: 'Full assortment with prices as shown on migros.ch.',
+    unavailable:
+      'Migros removed the product listing this tool reads from its website (2026), so the Migros support needs an update.',
     rotating: false,
     verified: false,
     requestsPerSecond: 1,
@@ -270,7 +273,15 @@ export const migros: Provider = {
         },
         { headers },
       ),
-    );
+    ).catch((error: unknown) => {
+      if (error instanceof HttpError && error.status === 404) {
+        throw new UnexpectedResponseError(
+          CATEGORY_SEARCH,
+          'Migros no longer offers the category product listing this tool reads (HTTP 404 for /onesearch-oc-seaapi/public/v5/search/category)',
+        );
+      }
+      throw error;
+    });
     const search = parseEnvelope(
       z.object({ productIds: z.array(z.number()), numberOfProducts: z.number().nullish() }),
       body,

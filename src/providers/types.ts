@@ -46,6 +46,8 @@ export interface StoreInfo {
   rotating: boolean;
   /** false = the store blocked the build environment, so this provider is untested. */
   verified: boolean;
+  /** Set when the store is known not to work right now: why, in plain words. */
+  unavailable?: string;
   /** Polite default request rate. */
   requestsPerSecond: number;
 }
