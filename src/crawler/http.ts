@@ -94,23 +94,28 @@ function dispatcher(): Dispatcher {
 const defaultFetch: FetchLike = (url, init) =>
   undiciFetch(url, { ...init, dispatcher: dispatcher() });
 
-/** Recognises the block pages of the bot protections used by Swiss retailers. */
+function isJson(headers: FetchResponse['headers'], body: string): boolean {
+  return (headers.get('content-type') ?? '').includes('json') || /^\s*[{[]/.test(body);
+}
+
+/**
+ * Recognises the block pages of the bot protections used by Swiss retailers.
+ * An API's own JSON error is not a block page, even when the API sits behind
+ * Cloudflare: Supabase, for example, answers "permission denied" with a JSON 403.
+ */
 export function detectBotProtection(
   status: number,
   headers: FetchResponse['headers'],
   body: string,
 ): string | null {
   if (status === 429) return null; // plain rate limiting: back off and retry
-  const server = (headers.get('server') ?? '').toLowerCase();
-  if (
-    headers.has('x-datadome') ||
-    server.includes('datadome') ||
-    body.includes('captcha-delivery.com')
-  ) {
-    return 'DataDome';
-  }
+  if (body.includes('captcha-delivery.com')) return 'DataDome'; // its block page or JSON
   if (status !== 403 && status !== 503) return null;
-  if (server.includes('cloudflare') || headers.has('cf-mitigated')) {
+  if (headers.get('cf-mitigated') === 'challenge') return 'Cloudflare';
+  if (isJson(headers, body)) return null;
+  const server = (headers.get('server') ?? '').toLowerCase();
+  if (headers.has('x-datadome') || server.includes('datadome')) return 'DataDome';
+  if (server.includes('cloudflare') || headers.has('cf-ray')) {
     if (status === 403 || /just a moment|cf-chl|challenge-platform/i.test(body))
       return 'Cloudflare';
   }
@@ -221,7 +226,7 @@ export class HttpClient {
           response.status,
           isRetryableStatus(response.status),
           parseRetryAfter(response.headers.get('retry-after')),
-          body.slice(0, 300),
+          body.slice(0, 1000),
         );
       },
       {

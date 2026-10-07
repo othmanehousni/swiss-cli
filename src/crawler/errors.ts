@@ -8,6 +8,28 @@ function hostOf(url: string): string {
   }
 }
 
+function pathOf(url: string): string {
+  try {
+    return new URL(url).pathname;
+  } catch {
+    return '';
+  }
+}
+
+/** The explanation an API put in its JSON error body, e.g. {"message": "Invalid API key"}. */
+export function apiErrorMessage(body: string): string | null {
+  try {
+    const parsed = JSON.parse(body) as Record<string, unknown> | null;
+    for (const key of ['message', 'error_description', 'error', 'title', 'detail']) {
+      const value = parsed?.[key];
+      if (typeof value === 'string' && value.trim()) return value.trim().slice(0, 200);
+    }
+  } catch {
+    // not JSON
+  }
+  return null;
+}
+
 export class HttpError extends Error {
   constructor(
     readonly url: string,
@@ -16,7 +38,11 @@ export class HttpError extends Error {
     readonly retryAfterMs: number | null,
     readonly bodySnippet: string,
   ) {
-    super(`${hostOf(url)} answered HTTP ${status}`);
+    // The path tells which request failed, which matters when a store changes its API.
+    const detail = apiErrorMessage(bodySnippet);
+    super(
+      `${hostOf(url)} answered HTTP ${status} for ${pathOf(url)}${detail ? ` (${detail})` : ''}`,
+    );
     this.name = 'HttpError';
   }
 }

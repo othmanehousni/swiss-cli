@@ -323,6 +323,52 @@ describe('HttpClient', () => {
     });
   });
 
+  it('treats a JSON error from an API behind Cloudflare as a normal HTTP error', async () => {
+    // Supabase sits behind Cloudflare and answers "permission denied" with a JSON 403.
+    const { http, fake } = client(() => ({
+      status: 403,
+      headers: { server: 'cloudflare', 'cf-ray': '1-ZRH', 'content-type': 'application/json' },
+      body: { code: '42501', message: 'permission denied for table products' },
+    }));
+    const error = await http.getJson('https://x.supabase.co/rest/v1/products?limit=1').then(
+      () => null,
+      (e: unknown) => e,
+    );
+    expect(error).toBeInstanceOf(HttpError);
+    expect((error as HttpError).message).toBe(
+      'x.supabase.co answered HTTP 403 for /rest/v1/products (permission denied for table products)',
+    );
+    expect(fake.requests()).toHaveLength(1);
+  });
+
+  it('still recognises Cloudflare challenges and DataDome JSON blocks', async () => {
+    const challenge = client(() => ({
+      status: 403,
+      headers: { 'cf-mitigated': 'challenge', 'content-type': 'text/html' },
+      body: '<html>Just a moment...</html>',
+    }));
+    await expect(challenge.http.getJson('https://www.migros.ch/x')).rejects.toMatchObject({
+      protection: 'Cloudflare',
+    });
+    const datadome = client(() => ({
+      status: 403,
+      headers: { 'content-type': 'application/json' },
+      body: { url: 'https://geo.captcha-delivery.com/captcha/?initialCid=x' },
+    }));
+    await expect(datadome.http.getJson('https://www.coop.ch/x')).rejects.toMatchObject({
+      protection: 'DataDome',
+    });
+  });
+
+  it('does not mistake a 404 from a DataDome-protected site for a block', async () => {
+    const { http } = client(() => ({
+      status: 404,
+      headers: { 'x-datadome': 'protected' },
+      body: '<html>Not found</html>',
+    }));
+    await expect(http.getJson('https://www.coop.ch/p/1')).rejects.toBeInstanceOf(HttpError);
+  });
+
   it('respects robots.txt disallow rules', async () => {
     const { http, fake } = client((url) =>
       url.endsWith('/robots.txt') ? { body: 'User-agent: *\nDisallow: /private' } : { body: {} },
