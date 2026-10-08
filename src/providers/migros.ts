@@ -355,14 +355,16 @@ export const migros: Provider = {
     const nodes: TreeNode[] = [];
     const unknown: string[] = [];
     for (const slug of slugs) {
-      // Asked like the website does: in the address's language, without a guest token.
-      // The answer has the id and the names in every language.
+      // Asked like the website does: with the guest token, in the address's language
+      // (English first). The answer has the id and the names in every language.
       const url = `${BREADCRUMB}?slug=${encodeURIComponent(slug)}`;
       let body: unknown;
       try {
-        body = await ctx.http.getJson(url, {
-          headers: { 'migros-language': lang, 'Accept-Language': lang },
-        });
+        body = await call(ctx, (headers) =>
+          ctx.http.getJson(url, {
+            headers: { ...headers, 'migros-language': lang, 'Accept-Language': lang },
+          }),
+        );
       } catch (error) {
         // A sitemap can still list a category page that Migros has removed.
         if (!(error instanceof HttpError && error.status === 404)) throw error;

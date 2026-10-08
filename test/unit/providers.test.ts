@@ -338,7 +338,7 @@ describe('Migros (synthetic responses shaped like the website requests)', () => 
     ]);
     const crumb = fake.requests().find((c) => c.url.includes('slug=snacks-sussigkeiten'));
     expect(crumb?.headers['migros-language']).toBe('de');
-    expect(crumb?.headers.leshopch).toBeUndefined(); // the website sends no token here
+    expect(crumb?.headers.leshopch).toBeTruthy(); // the lookup answers 401 without the guest token
     const search = fake.requests().find((c) => c.url.includes('/category/7494736/search'));
     expect(JSON.parse(search?.body ?? '{}')).toMatchObject({ from: 0, limit: 1, language: 'de' });
     // Nothing under /shopping-list, which robots.txt closes to tools.
