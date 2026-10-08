@@ -6,7 +6,7 @@ import { registerInfoCommands } from './commands/info.js';
 import { registerQueryCommands } from './commands/query.js';
 import { explainError, UserError } from './commands/shared.js';
 import { registerSyncCommand } from './commands/sync.js';
-import { defaultLang, loadDotEnv, VERSION } from './config.js';
+import { loadDotEnv, VERSION } from './config.js';
 import { LANGS } from './providers/types.js';
 import { Output } from './ui/output.js';
 
@@ -42,9 +42,10 @@ const program = new Command()
     'database file to use (default: your user data folder, or $SWISS_GROCERY_DB)',
   )
   .addOption(
-    new Option('--lang <language>', 'language for product names and descriptions')
-      .choices([...LANGS])
-      .default(defaultLang()),
+    new Option(
+      '--lang <language>',
+      'language for product names and descriptions (default: $SWISS_GROCERY_<STORE>_LANG, $SWISS_GROCERY_LANG or de)',
+    ).choices([...LANGS]),
   )
   .option('--verbose', 'show each request and full error details')
   .option('-q, --quiet', 'print only results and errors')

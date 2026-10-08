@@ -1,4 +1,10 @@
-import { ACCEPT_LANGUAGE, defaultDatabasePath, REPOSITORY_URL, userAgent } from '../config.js';
+import {
+  ACCEPT_LANGUAGE,
+  defaultDatabasePath,
+  defaultLang,
+  REPOSITORY_URL,
+  userAgent,
+} from '../config.js';
 import { StoreBusyError } from '../crawler/crawler.js';
 import {
   BlockedError,
@@ -11,7 +17,7 @@ import {
 import { HttpClient } from '../crawler/http.js';
 import { RetryAfterTooLongError } from '../crawler/retry.js';
 import { isStoreId, STORE_IDS, type StoreId } from '../normalization/types.js';
-import type { Lang, Provider, ProviderContext } from '../providers/types.js';
+import { LANGS, type Lang, type Provider, type ProviderContext } from '../providers/types.js';
 import { Database } from '../storage/database.js';
 import { Output } from '../ui/output.js';
 
@@ -29,7 +35,8 @@ export class UserError extends Error {
 
 export interface GlobalOptions {
   db?: string;
-  lang: Lang;
+  /** Only set when --lang is given on the command line. */
+  lang?: Lang;
   verbose?: boolean;
   quiet?: boolean;
   color?: boolean;
@@ -54,8 +61,21 @@ export class App {
     this.dbPath = options.db ?? defaultDatabasePath();
   }
 
-  get lang(): Lang {
-    return this.options.lang;
+  /**
+   * The language to read a store in: --lang if given, else the store's own setting
+   * (e.g. SWISS_GROCERY_MIGROS_LANG=fr), else SWISS_GROCERY_LANG, else German.
+   */
+  langFor(store: StoreId): Lang {
+    if (this.options.lang) return this.options.lang;
+    const name = `SWISS_GROCERY_${store.toUpperCase()}_LANG`;
+    const value = process.env[name]?.trim().toLowerCase();
+    if (!value) return defaultLang();
+    if (!(LANGS as readonly string[]).includes(value)) {
+      throw new UserError(`${name} must be one of ${LANGS.join(', ')} (it is "${value}").`, [
+        'Change it in your .env file or your environment.',
+      ]);
+    }
+    return value as Lang;
   }
 
   db(): Database {
@@ -138,7 +158,7 @@ export function providerContext(
 ): ProviderContext {
   const http = new HttpClient({
     userAgent: userAgent(),
-    acceptLanguage: ACCEPT_LANGUAGE[app.lang],
+    acceptLanguage: ACCEPT_LANGUAGE[app.langFor(provider.info.id)],
     requestsPerSecond: options.rate ?? provider.info.requestsPerSecond,
     ...(options.signal ? { signal: options.signal } : {}),
     onEvent: (event) => {
@@ -157,7 +177,7 @@ export function providerContext(
   });
   return {
     http,
-    lang: app.lang,
+    lang: app.langFor(provider.info.id),
     debug: (message) => app.out.debug(`${provider.info.id}: ${message}`),
   };
 }

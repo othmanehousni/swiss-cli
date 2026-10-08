@@ -265,7 +265,7 @@ Sizes are normalized so that `6 x 1,5 l`, `75 cl`, `2,5 dl`, `per 100 g` and
 | `doctor [stores…]` | Check your setup and test each store |
 | `sync` | Copy your data to Supabase (`--full`, `--dry-run`, `--print-schema`) |
 
-Options for every command: `--lang de|fr|it` (product language), `--db <file>`,
+Options for every command: `--lang de|fr|it` (product language, for every store), `--db <file>`,
 `--verbose`, `--quiet`, `--no-color`. Most commands accept `--json` for scripts.
 
 ---
@@ -415,6 +415,7 @@ All optional, as environment variables or in a `.env` file:
 |---|---|---|
 | `SWISS_GROCERY_DB` | Database file | your user data folder |
 | `SWISS_GROCERY_LANG` | Product language: `de`, `fr`, `it` | `de` |
+| `SWISS_GROCERY_<STORE>_LANG` | Language for one store, e.g. `SWISS_GROCERY_MIGROS_LANG=fr` | `SWISS_GROCERY_LANG` |
 | `SWISS_GROCERY_USER_AGENT` | User-Agent sent to stores | identifies this tool |
 | `SWISS_GROCERY_MIGROS_REGION` | Migros price region (`national`, `gmz`, `gmaa`…) | `national` |
 | `SUPABASE_URL`, `SUPABASE_SECRET_KEY` | For `sync` | — |
