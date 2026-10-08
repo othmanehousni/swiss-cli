@@ -32,7 +32,9 @@ More about a product: swiss-grocery show aldi:202753
 - **Track** prices over time: every price change and promotion is kept in a history.
 - **Export** everything to CSV (opens in Excel), JSON or JSON Lines.
 - **Keep it fresh** cheaply: after the first download, `update` only re-reads listings.
-- **Optional:** copy your data to a [Supabase](https://supabase.com) (Postgres) database.
+- **Your language:** product names in German, French or Italian, chosen per store.
+- **Optional:** copy your data to [Supabase](https://supabase.com) (Postgres) or
+  [Firebase](https://firebase.google.com) (Cloud Firestore), e.g. for a website.
 
 Your data stays on your computer. The tool is polite to the stores: it identifies
 itself, follows `robots.txt`, and sends about one or two requests per second.
@@ -44,16 +46,18 @@ itself, follows `robots.txt`, and sends about one or two requests per second.
 1. [What each store publishes](#what-each-store-publishes)
 2. [Install](#install)
 3. [Quick start](#quick-start)
-4. [Everyday use](#everyday-use)
-5. [Reading the results](#reading-the-results)
-6. [All commands](#all-commands)
-7. [How it works](#how-it-works)
-8. [The data](#the-data)
-9. [Supabase (optional)](#supabase-optional)
-10. [Settings](#settings)
-11. [Troubleshooting](#troubleshooting)
-12. [Responsible use](#responsible-use)
-13. [For developers](#for-developers)
+4. [Language](#language)
+5. [Everyday use](#everyday-use)
+6. [Reading the results](#reading-the-results)
+7. [All commands](#all-commands)
+8. [How it works](#how-it-works)
+9. [The data](#the-data)
+10. [Supabase (optional)](#supabase-optional)
+11. [Firebase (optional)](#firebase-optional)
+12. [Settings](#settings)
+13. [Troubleshooting](#troubleshooting)
+14. [Responsible use](#responsible-use)
+15. [For developers](#for-developers)
 
 ---
 
@@ -115,13 +119,22 @@ $ swiss-grocery --version
 > Prefer not to install it globally? From a copy of this repository:
 > `npm install && npm run build && node dist/cli.js --help` (or `npm link`).
 
+**Updating:** run the install command again, or in your copy of the repository
+`git pull && npm install` (it rebuilds the tool). Your database is kept and upgraded
+automatically.
+
 ---
 
 ## Quick start
 
+Product names come in German unless you choose another language. The examples in this
+guide are in French; to get French names, first create a file named `.env` in the folder
+where you run `swiss-grocery`, containing `SWISS_GROCERY_LANG=fr` (more in
+[Language](#language)).
+
 ```console
 $ swiss-grocery fetch aldi          # 1. download Aldi Suisse's products (~40 seconds)
-$ swiss-grocery search "milch"      # 2. find products and compare prices
+$ swiss-grocery search "lait"       # 2. find products and compare prices
 $ swiss-grocery update              # 3. later on (e.g. every day): refresh prices
 ```
 
@@ -133,6 +146,24 @@ show what it does, with examples.
 
 ---
 
+## Language
+
+Coop, Migros, Aldi, Lidl and Denner publish their products in German, French and Italian.
+`swiss-grocery` downloads them in one language per store:
+
+| Setting (in `.env`) | Effect |
+|---|---|
+| nothing | German for every store |
+| `SWISS_GROCERY_LANG=fr` | French for every store (`it` for Italian) |
+| `SWISS_GROCERY_MIGROS_LANG=fr` | French for Migros only; works for any store (`SWISS_GROCERY_COOP_LANG`, …) |
+
+`--lang fr` on a command line applies to every store for that command only. The language
+covers product names, categories, labels and details, so search in that language:
+`lait` finds French names, `milch` German ones. Changing it later is safe: the next
+`fetch` or `update` replaces the names; product numbers and price histories stay.
+
+---
+
 ## Everyday use
 
 ### Download a store
@@ -141,7 +172,7 @@ show what it does, with examples.
 $ swiss-grocery fetch coop                      # everything Coop publishes
 $ swiss-grocery fetch migros --all              # the whole catalog (--all is the default)
 $ swiss-grocery fetch coop --category food      # only groceries
-$ swiss-grocery fetch coop --category Milch     # one category (accents optional)
+$ swiss-grocery fetch coop --category lait      # categories whose name contains "lait"
 $ swiss-grocery fetch aldi --limit 100          # a quick sample to try things out
 ```
 
@@ -168,7 +199,7 @@ Listings contain names, prices, sizes and promotions. Extra information needs on
 request per product, so it is only fetched when you ask:
 
 ```console
-$ swiss-grocery fetch coop --category Milch --details    # details for one category
+$ swiss-grocery fetch coop --category lait --details     # details for some categories
 $ swiss-grocery update --details                          # details for new products only
 ```
 
@@ -187,14 +218,14 @@ resumed, and later updates only fetch details for new products.
 
 ```console
 $ swiss-grocery search "coca cola"
-$ swiss-grocery search milch --sort unit-price          # cheapest per litre first
-$ swiss-grocery search käse --store migros,coop         # only some stores
-$ swiss-grocery search schokolade --promo               # only promotions
-$ swiss-grocery search kaffee --fields brand,category,url
+$ swiss-grocery search lait --sort unit-price           # cheapest per litre first
+$ swiss-grocery search fromage --store migros,coop      # only some stores
+$ swiss-grocery search chocolat --promo                 # only promotions
+$ swiss-grocery search café --fields brand,category,url
 ```
 
-Every word must match, accents are optional (`kase`, `kaese` and `käse` all find "Käse"),
-and brands are searched too. Sort orders: `relevance` (default), `price`, `unit-price`,
+Every word must match, accents are optional (`cafe` finds "Café", `creme` finds "Crème"),
+and brands are searched too. Search in the language the stores were downloaded in. Sort orders: `relevance` (default), `price`, `unit-price`,
 `discount`, `name`, `store`.
 
 ### Look at one product
@@ -239,13 +270,13 @@ $ swiss-grocery doctor     # tests your setup and each store from your connectio
 | **Per unit** | Price per kg, per litre or per piece (`pc`), to compare different sizes. |
 | **was CHF …** | The regular price before the promotion. |
 | **app CHF …** | Price with the store's app (Lidl Plus). The Price column stays the price without it. |
-| **-31% ab 2** | Conditional offers (here: from 2 items). The shelf price is unchanged. |
+| **-31% ab 2** | Conditional offers (here: from 2 items), in the store's own words and language. The shelf price is unchanged. |
 | **from 08.10.** | Offer not valid yet: it starts on that date (weekly offers, special buys). |
 | **until 12.10.** | Last day of the offer. |
 | **ID** | Use it with `swiss-grocery show <ID>`. |
 
-Sizes are normalized so that `6 x 1,5 l`, `75 cl`, `2,5 dl`, `per 100 g` and
-`4 Stück à 125 g` all compare correctly.
+Sizes are normalized in every language, so that `6 x 1,5 l`, `75 cl`, `2,5 dl`,
+`les 100 g`, `4 Stück à 125 g` and `4 pièces de 125 g` all compare correctly.
 
 ---
 
@@ -263,7 +294,7 @@ Sizes are normalized so that `6 x 1,5 l`, `75 cl`, `2,5 dl`, `per 100 g` and
 | `fields` | Fields available to `--fields` |
 | `status` | What is in your database, freshness and completeness |
 | `doctor [stores…]` | Check your setup and test each store |
-| `sync` | Copy your data to Supabase (`--full`, `--dry-run`, `--print-schema`) |
+| `sync` | Copy your data to Supabase and/or Firebase (`--to`, `--full`, `--dry-run`, `--print-schema`) |
 
 Options for every command: `--lang de|fr|it` (product language, for every store), `--db <file>`,
 `--verbose`, `--quiet`, `--no-color`. Most commands accept `--json` for scripts.
@@ -284,7 +315,7 @@ Options for every command: `--lang de|fr|it` (product language, for every store)
         │
  storage/          SQLite: products, prices, price_history (+ crawl progress)
         │
- commands/  ui/    the CLI          sync/   optional copy to Supabase
+ commands/  ui/    the CLI          sync/   optional copy to Supabase or Firebase
 ```
 
 **The crawl.** For each store, `swiss-grocery` reads the category tree, pages through
@@ -403,7 +434,58 @@ to Supabase.
 
 The per-shop entries are *views*: they read the shared tables, so nothing is stored
 twice and they always show the latest sync. Comparing shops stays a simple query, e.g.
-`select store, name, price, unit_price from current_prices where name ilike '%milch%' order by unit_price;`
+`select store, name, price, unit_price from current_prices where name ilike '%lait%' order by unit_price;`
+
+---
+
+## Firebase (optional)
+
+You can also (or instead) copy your data to [Cloud Firestore](https://firebase.google.com/docs/firestore),
+Firebase's database. Your computer stays the source of truth.
+
+**1. Create the database (once).** In the [Firebase console](https://console.firebase.google.com)
+open your project, then *Build → Firestore Database → Create database*.
+
+**2. Download a key.** *Project settings → Service accounts → Generate new private key*.
+Save the `.json` file in the folder where you run `swiss-grocery` and point to it from
+your `.env` file:
+
+```dotenv
+FIREBASE_SERVICE_ACCOUNT=./firebase-service-account.json
+```
+
+The key gives full access to your project: **keep it private**. File names like
+`*firebase-adminsdk*.json` and `firebase-service-account*.json` are already in
+`.gitignore`. (Instead of the file you can set `FIREBASE_PROJECT_ID`,
+`FIREBASE_CLIENT_EMAIL` and `FIREBASE_PRIVATE_KEY`, see [`.env.example`](.env.example).)
+
+**3. Sync.**
+
+```console
+$ swiss-grocery doctor                # shows "Firebase project …: connected, Firestore ready"
+$ swiss-grocery sync --to firebase    # or just `sync`: every target you set up
+```
+
+**What you get.** One collection per shop, one document per product:
+
+```
+stores/migros                     { store: "migros", name: "Migros" }
+stores/migros/products/100014192  { name, brand, category_path, size_text, price,
+                                    regular_price, promo_label, unit_price, labels,
+                                    details, price_history: [ … ], removed_at, … }
+```
+
+A product's current price and its whole price history are inside its document. To query
+every shop at once, use a collection group query on `products`.
+
+**Costs and the daily limit.** Firestore counts every document written; the free plan
+allows 20,000 writes a day. Each sync only writes products whose details or price changed,
+so daily updates stay small. The first sync of a large store can exceed the limit: it then
+stops with "Firestore has used up its write quota for today", and running `sync` again the
+next day continues where it stopped.
+
+The key used by `sync` ignores Firestore's security rules. If a website or app reads the
+data directly, give it read-only rules, e.g. `allow read: if true; allow write: if false;`.
 
 ---
 
@@ -418,7 +500,10 @@ All optional, as environment variables or in a `.env` file:
 | `SWISS_GROCERY_<STORE>_LANG` | Language for one store, e.g. `SWISS_GROCERY_MIGROS_LANG=fr` | `SWISS_GROCERY_LANG` |
 | `SWISS_GROCERY_USER_AGENT` | User-Agent sent to stores | identifies this tool |
 | `SWISS_GROCERY_MIGROS_REGION` | Migros price region (`national`, `gmz`, `gmaa`…) | `national` |
-| `SUPABASE_URL`, `SUPABASE_SECRET_KEY` | For `sync` | — |
+| `SUPABASE_URL`, `SUPABASE_SECRET_KEY` | For `sync` to Supabase | — |
+| `FIREBASE_SERVICE_ACCOUNT` | For `sync` to Firebase: path to the service account key file | — |
+| `FIREBASE_PROJECT_ID`, `FIREBASE_CLIENT_EMAIL`, `FIREBASE_PRIVATE_KEY` | Instead of the key file | — |
+| `FIREBASE_DATABASE_ID` | A Firestore database other than the default one | `(default)` |
 | `HTTPS_PROXY`, `NO_PROXY` | Company proxy | none |
 
 Default database location: `~/.local/share/swiss-grocery/` (Linux),
@@ -447,6 +532,22 @@ SQL Editor → Run). It keeps your data.
 *Project Settings → API Keys*, and check that `SUPABASE_URL` is the same project. The
 publishable key (`sb_publishable_…`) cannot write data.
 
+**Firebase: "Firestore has used up its write quota for today".** The free plan allows
+20,000 writes a day. What was sent is kept: run `swiss-grocery sync --to firebase` again
+tomorrow and it continues where it stopped (or switch the project to the Blaze plan).
+
+**Firebase: "this Firebase project has no Firestore database yet"** or **"the Firestore
+API is not switched on"**. Create the database: *Build → Firestore Database → Create
+database*, wait a minute, and try again.
+
+**Firebase: "Google rejected the service account key".** Download a new key (*Project
+settings → Service accounts → Generate new private key*) and check that your computer's
+clock is right.
+
+**A search finds nothing** although the products are there? Search in the language the
+store was downloaded in (see [Language](#language)); the message after an empty search
+lists it for each store.
+
 **Behind a company proxy?** Set `HTTPS_PROXY=http://proxy:port`.
 
 **Something looks wrong?** Run the command again with `--verbose` to see every request.
@@ -470,7 +571,7 @@ speed: the stores' websites serve real shoppers.
 
 ```console
 $ npm install            # also builds dist/
-$ npm run dev -- search milch   # run from source (tsx)
+$ npm run dev -- search lait    # run from source (tsx)
 $ npm run check          # typecheck + lint (Biome) + unit tests
 $ npm run test:live      # smoke tests against the real stores (network)
 ```
@@ -479,7 +580,9 @@ $ npm run test:live      # smoke tests against the real stores (network)
   (nothing native to compile). Runtime dependencies: `commander`, `zod`, `undici`,
   `robots-parser`, `picocolors`.
 - Tests (`test/unit`) run offline. Store tests use trimmed real API responses recorded
-  in `test/fixtures`, so they check the real response shapes.
+  in `test/fixtures`, so they check the real response shapes. The Supabase and Firebase
+  syncs are tested against scripted answers; Firebase talks to Firestore's REST API with
+  a signed service-account token, so it needs no extra dependency.
 - **Adding a store:** create `src/providers/<store>.ts` implementing the `Provider`
   interface in `src/providers/types.ts` (`categories`, `sources`, `fetchPage`, and
   optionally `fetchDetails` / `isStillListed`), validate the store's responses with zod,
