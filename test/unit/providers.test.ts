@@ -359,6 +359,23 @@ describe('Migros (synthetic responses shaped like the website requests)', () => 
     expect(page).toMatchObject({ total: null, next: null });
   });
 
+  it('reads the product ids from the items of the real search answer', () => {
+    const answer = {
+      categories: [{ id: 7495010, name: 'Chocolate biscuits & cookies', slug: 'chocolate' }],
+      filters: [{ count: 14, id: 'promotion', label: 'Promotions', type: 'SINGLE' }],
+      items: [
+        { id: 100014192, type: 'PRODUCT' },
+        { id: 100018540, type: 'PRODUCT' },
+        { id: 5, type: 'TEASER' },
+      ],
+    };
+    expect(parseCategorySearch(answer, 'u')).toEqual({
+      uids: [100014192, 100018540],
+      received: 3,
+      total: null,
+    });
+  });
+
   it('names the fields of a search answer it does not recognise', () => {
     expect(() =>
       parseCategorySearch({ facets: [], paging: {} }, 'https://www.migros.ch/x'),

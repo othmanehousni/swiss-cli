@@ -172,10 +172,13 @@ export function parseCategorySearch(
     const field = LIST_FIELDS.find((name) => Array.isArray(scope[name]));
     if (!field) continue;
     const entries = scope[field] as unknown[];
-    // Sponsored products belong to other categories; the search is asked to leave them out.
-    const listed = entries.filter(
-      (e) => !(e && typeof e === 'object' && (e as { sponsored?: unknown }).sponsored === true),
-    );
+    // The website's answer is {"items": [{"id": 100014192, "type": "PRODUCT"}, ...]}. Other item
+    // types (teasers) and sponsored products, which belong to other categories, are skipped.
+    const listed = entries.filter((e) => {
+      if (!e || typeof e !== 'object') return true;
+      const { type, sponsored } = e as { type?: unknown; sponsored?: unknown };
+      return sponsored !== true && (typeof type !== 'string' || type.toUpperCase() === 'PRODUCT');
+    });
     const uids = [...new Set(listed.map(uidOf).filter((uid): uid is number => uid != null))];
     if (listed.length > 0 && uids.length === 0) break;
     const total = TOTAL_FIELDS.map((name) => scope[name] ?? root[name]).find(
@@ -310,6 +313,8 @@ export const migros: Provider = {
     website: 'https://www.migros.ch',
     coverage:
       'Full assortment with prices as shown on migros.ch (experimental: not tested live yet, see doctor).',
+    unavailable:
+      "migros.ch's robots.txt does not allow the category list this tool reads, so the Migros support needs another way to find the categories.",
     rotating: false,
     verified: false,
     requestsPerSecond: 1,

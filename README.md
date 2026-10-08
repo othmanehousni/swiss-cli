@@ -68,17 +68,16 @@ store publishes, so coverage differs:
 | **Aldi Suisse** | Full regular assortment and current special buys | ~2,300 products | ~40 s | ready |
 | **Denner** | Current promotions and the wine shop (no full grocery list online) | ~800 products | ~5 s | ready |
 | **Lidl Suisse** | Current weekly offers and online-shop items (no permanent food list online) | ~750 products | ~10 s | ready |
-| **Migros** | Full assortment | — | — | experimental (see below) |
+| **Migros** | Full assortment | — | — | **not working** (see below) |
 
 *Times measured in October 2026 at the default polite speed.*
 
-**About Migros:** in 2026 Migros replaced the category list and the product listing of
-its website API, so the first version of the Migros support stopped working
-(`HTTP 404`). It now makes the same requests the migros.ch website makes for a category
-page: the category list, the category search (100 products per page) and the product
-cards (100 per request). migros.ch blocks the cloud network this tool is developed on,
-so this could not be tested live yet: check it from your connection with
-`swiss-grocery doctor migros`.
+**About Migros:** not working at the moment. In 2026 Migros replaced the category list
+and the product listing of its website API. The new product listing (the category search
+and the product cards) is supported, but the website now reads its category list from
+an address that migros.ch's `robots.txt` closes to automated tools, and `swiss-grocery`
+always follows `robots.txt`. Until another way to find the categories is in place,
+`swiss-grocery fetch all` skips Migros; `swiss-grocery doctor migros` shows its state.
 
 Run `swiss-grocery stores` to see this list with what you have already downloaded.
 
