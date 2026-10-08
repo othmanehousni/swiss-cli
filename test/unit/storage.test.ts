@@ -30,7 +30,7 @@ afterEach(() => db.close());
 
 describe('database', () => {
   it('applies migrations on open', () => {
-    expect(db.get<{ user_version: number }>('PRAGMA user_version')?.user_version).toBe(1);
+    expect(db.get<{ user_version: number }>('PRAGMA user_version')?.user_version).toBe(2);
   });
 
   it('rolls back a failed transaction', () => {

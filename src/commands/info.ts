@@ -5,7 +5,13 @@ import { FOOD_ALIASES, resolveCategories } from '../providers/categories.js';
 import { allProviders, getProvider } from '../providers/index.js';
 import { loadCategories, saveCategories } from '../storage/products.js';
 import { databaseTotals, storeSummaries } from '../storage/queries.js';
-import { checkSupabase, supabaseConfig } from '../sync/supabase.js';
+import {
+  checkFirebase,
+  explainFirebaseError,
+  type FirebaseConfig,
+  firebaseConfig,
+} from '../sync/firebase.js';
+import { checkSupabase, type Diagnosis, supabaseConfig } from '../sync/supabase.js';
 import {
   formatAgo,
   formatBytes,
@@ -324,6 +330,26 @@ export function registerInfoCommands(program: Command): void {
             `  ${check.ok ? out.c.green('✔') : out.c.red('✖')} Supabase ${supabase.url}: ${check.message}`,
           );
           for (const hint of check.hints) out.print(`      ${out.c.cyan('→')} ${hint}`);
+        }
+        let firebase: FirebaseConfig | null = null;
+        let firebaseCheck: Diagnosis | null = null;
+        try {
+          firebase = firebaseConfig();
+        } catch (error) {
+          firebaseCheck = explainFirebaseError(error);
+        }
+        if (firebase) firebaseCheck = await checkFirebase(firebase);
+        if (!firebaseCheck) {
+          out.print(
+            `  ${out.c.dim('○')} Firebase not configured ${out.c.dim('(optional, only for `sync`)')}`,
+          );
+        } else {
+          if (!firebaseCheck.ok) healthy = false;
+          const where = firebase ? ` project ${firebase.projectId}` : '';
+          out.print(
+            `  ${firebaseCheck.ok ? out.c.green('✔') : out.c.red('✖')} Firebase${where}: ${firebaseCheck.message}`,
+          );
+          for (const hint of firebaseCheck.hints) out.print(`      ${out.c.cyan('→')} ${hint}`);
         }
 
         out.print();

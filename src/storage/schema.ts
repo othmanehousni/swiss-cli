@@ -117,4 +117,12 @@ export const MIGRATIONS: string[] = [
     synced_at TEXT NOT NULL
   );
   `,
+  /* 2: resumable syncs (a Firebase sync can stop at the daily write quota) */ `
+  CREATE TABLE sync_progress (
+    target     TEXT PRIMARY KEY,
+    since      TEXT,              -- what the unfinished sync sends: changes after this (NULL = all)
+    started_at TEXT NOT NULL,     -- becomes synced_at when it finishes
+    after_id   TEXT NOT NULL      -- the last product already sent
+  );
+  `,
 ];
