@@ -336,7 +336,7 @@ describe('HttpClient', () => {
     );
     expect(error).toBeInstanceOf(HttpError);
     expect((error as HttpError).message).toBe(
-      'x.supabase.co answered HTTP 403 for /rest/v1/products (permission denied for table products)',
+      'x.supabase.co answered HTTP 403 for /rest/v1/products?limit=1 (permission denied for table products)',
     );
     expect(fake.requests()).toHaveLength(1);
   });

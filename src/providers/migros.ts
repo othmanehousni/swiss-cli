@@ -251,20 +251,24 @@ function safeDecode(text: string): string {
   }
 }
 
+/** Languages to look categories up in: the website asks in English, so English first. */
+const SLUG_LANGS = ['en', 'de', 'fr', 'it'];
+
 /**
- * The top-level category pages the sitemap lists, e.g. ".../de/category/snacks-sussigkeiten"
- * (deeper pages count for their first part), and the language of those addresses.
+ * The top-level category pages the sitemap lists, e.g. ".../en/category/snacks-sweets"
+ * (deeper pages count for their first part), in the first language it has addresses for.
+ * Page addresses and their alternate-language links both count.
  */
 export function topCategorySlugs(sitemap: string): { lang: string; slugs: string[] } {
   const byLang = new Map<string, Set<string>>();
-  const page = /<loc>\s*https:\/\/www\.migros\.ch\/(de|fr|it|en)\/category\/([^<?#\s]+)\s*<\/loc>/g;
+  const page = /https:\/\/www\.migros\.ch\/(de|fr|it|en)\/category\/([^<>"'?#\s]+)/g;
   for (const [, lang = '', path = ''] of sitemap.matchAll(page)) {
     const slug = safeDecode(path.replace(/&amp;/g, '&')).split('/')[0];
     if (!slug) continue;
     if (!byLang.has(lang)) byLang.set(lang, new Set());
     byLang.get(lang)?.add(slug);
   }
-  const lang = byLang.has('de') ? 'de' : ([...byLang.keys()][0] ?? 'de');
+  const lang = SLUG_LANGS.find((l) => byLang.has(l)) ?? 'en';
   return { lang, slugs: [...(byLang.get(lang) ?? [])] };
 }
 
@@ -349,14 +353,23 @@ export const migros: Provider = {
       throw new UnexpectedResponseError(SITEMAP, 'the sitemap lists no category pages');
     }
     const nodes: TreeNode[] = [];
+    const unknown: string[] = [];
     for (const slug of slugs) {
-      // The address in the sitemap's language gives the id and the names in every language.
+      // Asked like the website does: in the address's language, without a guest token.
+      // The answer has the id and the names in every language.
       const url = `${BREADCRUMB}?slug=${encodeURIComponent(slug)}`;
-      const body = await call(ctx, (headers) =>
-        ctx.http.getJson(url, {
-          headers: { ...headers, 'migros-language': lang, 'Accept-Language': lang },
-        }),
-      );
+      let body: unknown;
+      try {
+        body = await ctx.http.getJson(url, {
+          headers: { 'migros-language': lang, 'Accept-Language': lang },
+        });
+      } catch (error) {
+        // A sitemap can still list a category page that Migros has removed.
+        if (!(error instanceof HttpError && error.status === 404)) throw error;
+        unknown.push(slug);
+        ctx.debug(`Migros does not know the category page "${lang}/category/${slug}"; skipped`);
+        continue;
+      }
       const category = parseEnvelope(Breadcrumb, body, url, 'Migros category');
       const id = String(category.id);
       const name = localName(category.name, ctx.lang) ?? slug;
@@ -369,6 +382,12 @@ export const migros: Provider = {
       );
       const children = (search.categories ?? []).map((c) => ({ id: String(c.id), name: c.name }));
       nodes.push({ id, name, children });
+    }
+    if (nodes.length === 0) {
+      throw new UnexpectedResponseError(
+        BREADCRUMB,
+        `the category lookup answered 404 for every category page in the sitemap (${lang}: ${unknown.slice(0, 3).join(', ')}…)`,
+      );
     }
     return flattenTree('migros', nodes);
   },

@@ -287,15 +287,20 @@ describe('Migros (synthetic responses shaped like the website requests)', () => 
 <url><loc>https://www.migros.ch/de/category/fruchte-gemuse</loc></url>
 <url><loc>https://www.migros.ch/de/category/snacks-sussigkeiten</loc></url>
 <url><loc>https://www.migros.ch/de/category/snacks-sussigkeiten/guetzli</loc></url>
+<url><loc>https://www.migros.ch/de/category/alte-kategorie</loc></url>
 <url><loc>https://www.migros.ch/fr/category/snacks-confiseries</loc></url>
 </urlset>`;
 
   it('finds the top-level category pages in the sitemap', () => {
     expect(topCategorySlugs(sitemap)).toEqual({
       lang: 'de',
-      slugs: ['fruchte-gemuse', 'snacks-sussigkeiten'],
+      slugs: ['fruchte-gemuse', 'snacks-sussigkeiten', 'alte-kategorie'],
     });
-    expect(topCategorySlugs('<urlset></urlset>')).toEqual({ lang: 'de', slugs: [] });
+    // English first (the website looks categories up in English), alternate links included.
+    const alternates = `<url><loc>https://www.migros.ch/de/category/snacks-sussigkeiten</loc>
+<xhtml:link rel="alternate" hreflang="en" href="https://www.migros.ch/en/category/snacks-sweets"/></url>`;
+    expect(topCategorySlugs(alternates)).toEqual({ lang: 'en', slugs: ['snacks-sweets'] });
+    expect(topCategorySlugs('<urlset></urlset>')).toEqual({ lang: 'en', slugs: [] });
   });
 
   it('builds the category tree from the sitemap, the breadcrumb and the search', async () => {
@@ -313,6 +318,8 @@ describe('Migros (synthetic responses shaped like the website requests)', () => 
             slug: { de: 'snacks-sussigkeiten', en: 'snacks-sweets' },
           },
         };
+      if (url.includes('categories-breadcrumb?slug=alte-kategorie'))
+        return { status: 404, body: { error: 'Not Found', status: 404 } };
       if (url.includes('/category/7494736/search'))
         return {
           body: {
@@ -331,6 +338,7 @@ describe('Migros (synthetic responses shaped like the website requests)', () => 
     ]);
     const crumb = fake.requests().find((c) => c.url.includes('slug=snacks-sussigkeiten'));
     expect(crumb?.headers['migros-language']).toBe('de');
+    expect(crumb?.headers.leshopch).toBeUndefined(); // the website sends no token here
     const search = fake.requests().find((c) => c.url.includes('/category/7494736/search'));
     expect(JSON.parse(search?.body ?? '{}')).toMatchObject({ from: 0, limit: 1, language: 'de' });
     // Nothing under /shopping-list, which robots.txt closes to tools.
@@ -340,6 +348,18 @@ describe('Migros (synthetic responses shaped like the website requests)', () => 
       '7494732',
       '7494736',
     ]);
+  });
+
+  it('says so when the sitemap has no category page the lookup knows', async () => {
+    const { ctx } = fakeContext(
+      (url): FakeResponse =>
+        url.endsWith('/sitemap.xml')
+          ? { body: '<loc>https://www.migros.ch/en/category/gone</loc>' }
+          : { status: 404, body: { error: 'Not Found' } },
+    );
+    await expect(migros.categories(ctx)).rejects.toThrow(
+      /answered 404 for every category page in the sitemap \(en: gone…\)/,
+    );
   });
 
   it('asks the category search for 100 products at a time, without sponsored ones', async () => {

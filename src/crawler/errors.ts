@@ -8,9 +8,11 @@ function hostOf(url: string): string {
   }
 }
 
+/** Path and query of a URL (the query shortened): which request failed, e.g. "/x?slug=y". */
 function pathOf(url: string): string {
   try {
-    return new URL(url).pathname;
+    const { pathname, search } = new URL(url);
+    return pathname + (search.length > 80 ? `${search.slice(0, 79)}…` : search);
   } catch {
     return '';
   }
