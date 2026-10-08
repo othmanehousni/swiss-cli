@@ -13,19 +13,21 @@ import { normalizeEach, parseEnvelope, uniqueStrings, zurichDateToIso } from './
  * Migros — the JSON APIs behind migros.ch.
  *
  * EXPERIMENTAL: migros.ch blocks the cloud network this tool is built on, so this
- * provider cannot be tested from there. The category list and the category search
- * are the requests the migros.ch website itself makes (seen in a browser in
+ * provider cannot be tested from there. The breadcrumb, category search and product
+ * cards requests are the ones the migros.ch website makes (seen in a browser in
  * October 2026); they replaced the onesearch storemap and category search, which
- * now answer 404. The product fields follow migros-api-wrapper (MIT,
- * github.com/aliyss/migros-api-wrapper).
+ * now answer 404. The website's own category list sits under /shopping-list, which
+ * robots.txt closes to tools, so the categories come from the sitemap instead.
+ * The product fields follow migros-api-wrapper (MIT, github.com/aliyss/migros-api-wrapper).
  *
- * Flow: guest token -> top-level categories, then their subcategories (each
- * category search lists them) -> product uids per category, 100 at a time ->
- * product cards (name, price), 100 per request -> product detail (optional).
+ * Flow: sitemap (category pages) -> breadcrumb (id and names of each top-level
+ * category) -> category search (its subcategories; then its product uids, 100 at
+ * a time) -> product cards (name, price), 100 per request -> product detail (optional).
  */
 const BASE = 'https://www.migros.ch';
 const GUEST_TOKEN = `${BASE}/authentication/public/v1/api/guest?authorizationNotRequired=true`;
-const CATEGORIES = `${BASE}/shopping-list/public/v1/categories`;
+const SITEMAP = `${BASE}/sitemap.xml`;
+const BREADCRUMB = `${BASE}/product-display/public/v1/categories-breadcrumb`;
 const PRODUCT_CARDS = `${BASE}/product-display/public/v4/product-cards`;
 const PRODUCT_DETAIL = `${BASE}/product-display/public/v2/product-detail`;
 /** The website asks for 100 products per page and per product-cards request. */
@@ -241,13 +243,36 @@ export function normalizeMigrosProduct(raw: RawProduct): NormalizedProduct | nul
   };
 }
 
-/** Top-level categories, named in every language: {"id": 7494732, "name": {"de": "…", "en": "…"}}. */
-const TopCategories = z.array(
-  z.object({
-    id: z.union([z.number(), z.string()]),
-    name: z.union([z.string(), z.record(z.string(), z.string())]),
-  }),
-);
+function safeDecode(text: string): string {
+  try {
+    return decodeURIComponent(text);
+  } catch {
+    return text;
+  }
+}
+
+/**
+ * The top-level category pages the sitemap lists, e.g. ".../de/category/snacks-sussigkeiten"
+ * (deeper pages count for their first part), and the language of those addresses.
+ */
+export function topCategorySlugs(sitemap: string): { lang: string; slugs: string[] } {
+  const byLang = new Map<string, Set<string>>();
+  const page = /<loc>\s*https:\/\/www\.migros\.ch\/(de|fr|it|en)\/category\/([^<?#\s]+)\s*<\/loc>/g;
+  for (const [, lang = '', path = ''] of sitemap.matchAll(page)) {
+    const slug = safeDecode(path.replace(/&amp;/g, '&')).split('/')[0];
+    if (!slug) continue;
+    if (!byLang.has(lang)) byLang.set(lang, new Set());
+    byLang.get(lang)?.add(slug);
+  }
+  const lang = byLang.has('de') ? 'de' : ([...byLang.keys()][0] ?? 'de');
+  return { lang, slugs: [...(byLang.get(lang) ?? [])] };
+}
+
+/** A category by its page address: {"id": "7494736", "name": {"de": "…", "en": "…"}, ...}. */
+const Breadcrumb = z.object({
+  id: z.union([z.number(), z.string()]),
+  name: z.union([z.string(), z.record(z.string(), z.string())]),
+});
 
 /** The subcategories a category search lists next to its products. */
 const SearchSubcategories = z.object({
@@ -313,21 +338,28 @@ export const migros: Provider = {
     website: 'https://www.migros.ch',
     coverage:
       'Full assortment with prices as shown on migros.ch (experimental: not tested live yet, see doctor).',
-    unavailable:
-      "migros.ch's robots.txt does not allow the category list this tool reads, so the Migros support needs another way to find the categories.",
     rotating: false,
     verified: false,
     requestsPerSecond: 1,
   },
 
   async categories(ctx): Promise<Category[]> {
-    const body = await call(ctx, (headers) => ctx.http.getJson(CATEGORIES, { headers }));
-    const top = parseEnvelope(TopCategories, body, CATEGORIES, 'Migros categories');
+    const { lang, slugs } = topCategorySlugs(await ctx.http.getText(SITEMAP));
+    if (slugs.length === 0) {
+      throw new UnexpectedResponseError(SITEMAP, 'the sitemap lists no category pages');
+    }
     const nodes: TreeNode[] = [];
-    for (const category of top) {
+    for (const slug of slugs) {
+      // The address in the sitemap's language gives the id and the names in every language.
+      const url = `${BREADCRUMB}?slug=${encodeURIComponent(slug)}`;
+      const body = await call(ctx, (headers) =>
+        ctx.http.getJson(url, {
+          headers: { ...headers, 'migros-language': lang, 'Accept-Language': lang },
+        }),
+      );
+      const category = parseEnvelope(Breadcrumb, body, url, 'Migros category');
       const id = String(category.id);
-      const name = localName(category.name, ctx.lang);
-      if (!name) continue;
+      const name = localName(category.name, ctx.lang) ?? slug;
       // A search for one product also lists the category's subcategories.
       const search = parseEnvelope(
         SearchSubcategories,

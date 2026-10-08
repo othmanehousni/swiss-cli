@@ -4,7 +4,7 @@ import { resolveCategories } from '../../src/providers/categories.js';
 import { coop } from '../../src/providers/coop.js';
 import { denner } from '../../src/providers/denner.js';
 import { lidl } from '../../src/providers/lidl.js';
-import { migros, parseCategorySearch } from '../../src/providers/migros.js';
+import { migros, parseCategorySearch, topCategorySlugs } from '../../src/providers/migros.js';
 import { fakeContext, fixture } from '../helpers/context.js';
 import type { FakeResponse } from '../helpers/fake-fetch.js';
 
@@ -281,37 +281,64 @@ describe('Migros (synthetic responses shaped like the website requests)', () => 
     expect(page.next).toBeNull();
   });
 
-  it('builds the category tree from the category list and the category search', async () => {
+  const sitemap = `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url><loc>https://www.migros.ch/de</loc></url>
+<url><loc>https://www.migros.ch/de/brand/a-vogel</loc></url>
+<url><loc>https://www.migros.ch/de/category/fruchte-gemuse</loc></url>
+<url><loc>https://www.migros.ch/de/category/snacks-sussigkeiten</loc></url>
+<url><loc>https://www.migros.ch/de/category/snacks-sussigkeiten/guetzli</loc></url>
+<url><loc>https://www.migros.ch/fr/category/snacks-confiseries</loc></url>
+</urlset>`;
+
+  it('finds the top-level category pages in the sitemap', () => {
+    expect(topCategorySlugs(sitemap)).toEqual({
+      lang: 'de',
+      slugs: ['fruchte-gemuse', 'snacks-sussigkeiten'],
+    });
+    expect(topCategorySlugs('<urlset></urlset>')).toEqual({ lang: 'de', slugs: [] });
+  });
+
+  it('builds the category tree from the sitemap, the breadcrumb and the search', async () => {
     const { ctx, fake } = fakeContext((url): FakeResponse => {
-      if (url.endsWith('/shopping-list/public/v1/categories'))
-        return {
-          body: [
-            { id: 7494732, name: { de: 'Früchte & Gemüse', en: 'Fruits & vegetables' } },
-            { id: 7494734, name: { de: 'Snacks & Süsswaren', en: 'Snacks & sweets' } },
-          ],
-        };
-      if (url.includes('/category/7494734/search'))
+      if (url.endsWith('/sitemap.xml')) return { body: sitemap };
+      if (url.includes('categories-breadcrumb?slug=fruchte-gemuse'))
+        return { body: { id: '7494732', name: { de: 'Früchte & Gemüse', en: 'Fruits' } } };
+      if (url.includes('categories-breadcrumb?slug=snacks-sussigkeiten'))
         return {
           body: {
-            categories: [{ id: 7494781, name: 'Guetzli', slug: 'biscuits' }],
-            filters: [{ count: 14, id: 'promotion', label: 'Aktionen', type: 'SINGLE' }],
-            productIds: [100002880],
+            id: '7494736',
+            name: { de: 'Snacks & Süssigkeiten', en: 'Snacks & sweets' },
+            nbSubLevels: 3,
+            parents: [],
+            slug: { de: 'snacks-sussigkeiten', en: 'snacks-sweets' },
           },
         };
-      return { body: { categories: [], filters: [], productIds: [] } };
+      if (url.includes('/category/7494736/search'))
+        return {
+          body: {
+            categories: [{ id: 7494781, name: 'Guetzli', slug: 'guetzli' }],
+            filters: [],
+            items: [{ id: 100002880, type: 'PRODUCT' }],
+          },
+        };
+      return { body: { categories: [], filters: [], items: [] } };
     });
     const categories = await migros.categories(ctx);
     expect(categories.map((c) => [c.id, c.parentId, c.path.join(' > ')])).toEqual([
       ['7494732', null, 'Früchte & Gemüse'],
-      ['7494734', null, 'Snacks & Süsswaren'],
-      ['7494781', '7494734', 'Snacks & Süsswaren > Guetzli'],
+      ['7494736', null, 'Snacks & Süssigkeiten'],
+      ['7494781', '7494736', 'Snacks & Süssigkeiten > Guetzli'],
     ]);
-    const search = fake.requests().find((c) => c.url.includes('/category/7494734/search'));
+    const crumb = fake.requests().find((c) => c.url.includes('slug=snacks-sussigkeiten'));
+    expect(crumb?.headers['migros-language']).toBe('de');
+    const search = fake.requests().find((c) => c.url.includes('/category/7494736/search'));
     expect(JSON.parse(search?.body ?? '{}')).toMatchObject({ from: 0, limit: 1, language: 'de' });
+    // Nothing under /shopping-list, which robots.txt closes to tools.
+    expect(fake.requests().some((c) => c.url.includes('/shopping-list'))).toBe(false);
     // A full crawl reads the top-level categories; their searches include everything below.
     expect(migros.sources(categories, null).map((s) => s.params.categoryId)).toEqual([
       '7494732',
-      '7494734',
+      '7494736',
     ]);
   });
 
