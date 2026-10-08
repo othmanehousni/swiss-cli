@@ -147,7 +147,7 @@ describe('swiss-grocery (command line)', { timeout: 30_000 }, () => {
     const status = Object.fromEntries(
       JSON.parse(stdout).map((s: { id: string; status: string }) => [s.id, s.status]),
     );
-    expect(status).toMatchObject({ aldi: 'ready', coop: 'ready', migros: 'experimental' });
+    expect(status).toMatchObject({ aldi: 'ready', coop: 'ready', migros: 'ready' });
   });
 
   it('prints a Supabase schema that includes the grants', () => {

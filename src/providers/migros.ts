@@ -12,8 +12,8 @@ import { normalizeEach, parseEnvelope, uniqueStrings, zurichDateToIso } from './
 /**
  * Migros — the JSON APIs behind migros.ch.
  *
- * EXPERIMENTAL: migros.ch blocks the cloud network this tool is built on, so this
- * provider cannot be tested from there. The breadcrumb, category search and product
+ * Verified October 2026 from a home connection (migros.ch blocks many cloud networks,
+ * including the one this tool is built on). The breadcrumb, category search and product
  * cards requests are the ones the migros.ch website makes (seen in a browser in
  * October 2026); they replaced the onesearch storemap and category search, which
  * now answer 404. The website's own category list sits under /shopping-list, which
@@ -340,10 +340,9 @@ export const migros: Provider = {
     id: 'migros',
     name: 'Migros',
     website: 'https://www.migros.ch',
-    coverage:
-      'Full assortment with prices as shown on migros.ch (experimental: not tested live yet, see doctor).',
+    coverage: 'Full assortment with prices as shown on migros.ch.',
     rotating: false,
-    verified: false,
+    verified: true,
     requestsPerSecond: 1,
   },
 
