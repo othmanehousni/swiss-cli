@@ -159,4 +159,12 @@ describe('schemaSql', () => {
     expect(created).toBeGreaterThan(-1);
     expect(granted).toBeGreaterThan(created);
   });
+
+  it('gives each store its own view', () => {
+    const sql = schemaSql();
+    for (const store of ['aldi', 'coop', 'denner', 'lidl', 'migros']) {
+      expect(sql).toContain(`create or replace view public.${store}_products`);
+      expect(sql).toContain(`from public.current_prices where store = '${store}';`);
+    }
+  });
 });

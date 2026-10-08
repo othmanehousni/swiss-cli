@@ -390,6 +390,21 @@ $ swiss-grocery sync            # first time: everything; afterwards: only chang
 $ swiss-grocery update && swiss-grocery sync
 ```
 
+`fetch` and `update` only fill the database on your computer; `sync` is what copies it
+to Supabase.
+
+**4. Browse it.** In the Supabase *Table Editor* you find:
+
+| Name | What it holds |
+|---|---|
+| `aldi_products`, `coop_products`, `denner_products`, `lidl_products`, `migros_products` | one per shop: its current products with their current price |
+| `current_prices` | the same for every shop together, with a `store` column |
+| `products`, `prices`, `price_history` | the underlying tables (see [The data](#the-data)) |
+
+The per-shop entries are *views*: they read the shared tables, so nothing is stored
+twice and they always show the latest sync. Comparing shops stays a simple query, e.g.
+`select store, name, price, unit_price from current_prices where name ilike '%milch%' order by unit_price;`
+
 ---
 
 ## Settings
