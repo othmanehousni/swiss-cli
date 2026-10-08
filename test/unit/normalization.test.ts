@@ -53,6 +53,29 @@ describe('parseQuantity', () => {
   });
 });
 
+describe('parseQuantity in French and Italian', () => {
+  it.each([
+    ['4 pièces de 125 g', { amount: 500, unit: 'g', packCount: 4 }],
+    ['4 pces à 125g', { amount: 500, unit: 'g', packCount: 4 }],
+    ['6 boîtes de 300 g', { amount: 1800, unit: 'g', packCount: 6 }],
+    ['2 vasetti da 150 g', { amount: 300, unit: 'g', packCount: 2 }],
+    ['le kg', { amount: 1000, unit: 'g', packCount: 1 }],
+    ['al kg', { amount: 1000, unit: 'g', packCount: 1 }],
+    ['la pièce', { amount: 1, unit: 'piece', packCount: 1 }],
+    ['12 sachets', { amount: 12, unit: 'piece', packCount: 1 }],
+    ['30 capsules', { amount: 30, unit: 'piece', packCount: 1 }],
+    ['1 sachet de 50 g', { amount: 50, unit: 'g', packCount: 1 }],
+  ])('%s', (text, expected) => {
+    expect(parseQuantity(text)).toEqual(expected);
+  });
+
+  it('does not read "le" inside a word as "per"', () => {
+    expect(parseQuantity('bouteille kg')).toBeNull();
+    expect(parsePriceBasis('bouteille 1 l')).toBeNull();
+    expect(parsePriceBasis('les 100 g')).toEqual({ amount: 100, unit: 'g', packCount: 1 });
+  });
+});
+
 describe('parsePriceBasis', () => {
   it('finds the amount a weight-based price refers to', () => {
     // Denner prices meat per 100 g although the pack is about 800 g.

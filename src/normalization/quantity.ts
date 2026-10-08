@@ -25,18 +25,26 @@ const UNITS: Record<string, [QuantityUnit, number]> = {
 // Longest alternatives first so "kg" is not read as "k" + "g".
 const UNIT_RE = 'kilogramm|kilo|kg|gramm|grm|gr|mg|g|liter|litre|litro|litri|ltr|lt|ml|cl|dl|l';
 const END = '(?![a-zäöüéèàç])';
+/** A word starts here: "le kg" counts, the "le" at the end of "bouteille" does not. */
+const START = '(?<![a-zäöüéèàç])';
 const NUM = '(\\d+(?:\\.\\d+)?)';
-const PIECES =
-  'stück|stueck|stk\\.?|st\\.?|pcs?\\.?|pièces?|pieces?|pezzi|pz\\.?|paar|paire?s?|bund|rollen|rolle|rouleaux|beutel|tabs|tabletten|kapseln|portionen|portion|teile|blatt|scheiben|eier|dosen|flaschen|sets?|packungen|packung|waschgänge|waschgaenge|wg';
+/** Containers and pieces in German, French and Italian ("4 Stück", "6 boîtes", "2 bottiglie"). */
+const CONTAINERS =
+  'stück|stueck|stk\\.?|st\\.?|pcs?\\.?|pces?\\.?|pièces?|pieces?|pezzi|pz\\.?|dosen|flaschen|beutel|packungen|portionen|scheiben|boîtes?|boites?|sachets?|bouteilles?|canettes?|pots?|barquettes?|tranches?|portions?|bottiglie|lattine|bustine|confezioni|vasetti|fette';
+const PIECES = `${CONTAINERS}|paar|paire?s?|bund|rollen|rolle|rouleaux|tabs|tabletten|kapseln|capsules?|dosettes?|portion|teile|blatt|feuilles?|lingettes?|eier|sets?|packung|waschgänge|waschgaenge|wg`;
 
+// "6 x 1,5 l", "4 Stück à 125 g", "4 pièces de 125 g", "2 vasetti da 150 g"
 const MULTIPACK = new RegExp(
-  `(\\d+)\\s*(?:x|stück|stueck|stk\\.?|st\\.?|pcs?\\.?)\\s*(?:à\\s*|a\\s+|je\\s+)?${NUM}\\s*(${UNIT_RE})${END}`,
+  `(\\d+)\\s*(?:x|${CONTAINERS})\\s*(?:à\\s*|a\\s+|je\\s+|zu\\s+|de\\s+|d'|da\\s+)?${NUM}\\s*(${UNIT_RE})${END}`,
 );
 const SINGLE = new RegExp(`${NUM}\\s*(?:unit\\.)?\\s*(${UNIT_RE})${END}`);
-const SOLD_PER = new RegExp(`(?:per|pro|je|par|/)\\s*(?:1\\s*)?(kg|kilo|l|liter|litre)${END}`);
+// Sold by weight or volume: "per kg", "le kg", "au kg", "al kg", "/l".
+const SOLD_PER = new RegExp(
+  `(?:${START}(?:per|pro|je|par|le|au|al)\\s*|/\\s*)(?:1\\s*)?(kg|kilo|l|liter|litre)${END}`,
+);
 const PIECE_COUNT = new RegExp(`(\\d+)\\s*(?:${PIECES})${END}`);
 const PACK_COUNT = /(\d+)\s*er[\s-]?pack/;
-const PER_PIECE = new RegExp(`(?:per|pro|je|par)\\s+(?:${PIECES})${END}`);
+const PER_PIECE = new RegExp(`${START}(?:per|pro|je|par|la|al)\\s+(?:${PIECES})${END}`);
 
 function round(value: number): number {
   return Math.round(value * 1000) / 1000;
@@ -95,7 +103,10 @@ export function parseQuantity(text: string | null | undefined): Quantity | null 
   return null;
 }
 
-const PRICE_BASIS = new RegExp(`(?:per|pro|je|par|/)\\s*${NUM}?\\s*(${UNIT_RE})${END}`);
+// "per 100 g", "pro kg", "les 100 g", "pour 100 g", "al kg", "/100 g"
+const PRICE_BASIS = new RegExp(
+  `(?:${START}(?:per|pro|je|par|pour|les|le|au|al)\\s*|/\\s*)${NUM}?\\s*(${UNIT_RE})${END}`,
+);
 
 /**
  * The amount a price refers to when a store prices by weight or volume,
