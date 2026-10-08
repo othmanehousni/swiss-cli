@@ -11,6 +11,7 @@ import {
   SORT_KEYS,
   type SortKey,
   searchProducts,
+  storeSummaries,
 } from '../storage/queries.js';
 import {
   formatChf,
@@ -51,14 +52,16 @@ const SORT_HELP: Record<SortKey, string> = {
 const SEARCH_EXAMPLES = `
 Examples:
   $ swiss-grocery search "coca cola"
-  $ swiss-grocery search milch --sort unit-price         compare price per litre
-  $ swiss-grocery search käse --store migros,coop        only some stores
-  $ swiss-grocery search schokolade --promo              only promotions
-  $ swiss-grocery search kaffee --fields brand,category,url
-  $ swiss-grocery search bier --json > bier.json         for scripts
+  $ swiss-grocery search lait --sort unit-price          compare price per litre
+  $ swiss-grocery search fromage --store migros,coop     only some stores
+  $ swiss-grocery search chocolat --promo                only promotions
+  $ swiss-grocery search café --fields brand,category,url
+  $ swiss-grocery search bière --json > biere.json       for scripts
 
 Tips:
-  • Every word must match; accents are optional ("kase" finds "Käse", so does "kaese").
+  • Every word must match; accents are optional ("cafe" finds "Café", "creme" finds "Crème").
+  • Search in the language the stores were fetched in (German unless you chose --lang
+    or SWISS_GROCERY_LANG, e.g. "milch" in German, "lait" in French).
   • Prices are compared per kg, per litre or per piece in the "Per unit" column.
   • See everything about one product, including its price history: swiss-grocery show <ID>`;
 
@@ -136,6 +139,12 @@ export function registerQueryCommands(program: Command): void {
             out.hint('Check the spelling or use fewer words (every word must match).');
             if (opts.store || opts.promo || opts.category)
               out.hint('Remove --store / --promo / --category to search everywhere.');
+            const langs = storeSummaries(app.db())
+              .filter((s) => s.products > 0)
+              .map((s) => `${getProvider(s.store).info.name} ${app.langFor(s.store)}`);
+            if (langs.length > 0) {
+              out.hint(`Search in the language of the product names (${langs.join(', ')}).`);
+            }
             out.hint('Fetch more stores to widen the search: swiss-grocery stores');
             return;
           }

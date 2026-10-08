@@ -13,13 +13,15 @@ import { Output } from './ui/output.js';
 const QUICK_START = `
 Quick start:
   1. swiss-grocery fetch aldi          download Aldi Suisse's products (about a minute)
-  2. swiss-grocery search "milch"      find products and compare prices
+  2. swiss-grocery search "lait"       find products and compare prices
   3. swiss-grocery update              later on: refresh prices and promotions
 
+Product names come in German unless you choose: for French, put SWISS_GROCERY_LANG=fr
+in your .env file (or add --lang fr), then search in French as above.
 Everything is stored on your computer (see where with: swiss-grocery status).
 Help for any command: swiss-grocery <command> --help`;
 
-// `swiss-grocery search milch | head` closes the pipe early; that is not an error.
+// `swiss-grocery search lait | head` closes the pipe early; that is not an error.
 for (const stream of [process.stdout, process.stderr]) {
   stream.on('error', (error: NodeJS.ErrnoException) => {
     if (error.code === 'EPIPE') process.exit(0);

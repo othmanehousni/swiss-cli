@@ -4,6 +4,7 @@ import { type CrawlProgress, type CrawlResult, crawlStore } from '../crawler/cra
 import type { StoreId } from '../normalization/types.js';
 import { resolveCategories } from '../providers/categories.js';
 import { getProvider } from '../providers/index.js';
+import type { Lang } from '../providers/types.js';
 import { saveCategories } from '../storage/products.js';
 import { storeSummaries } from '../storage/queries.js';
 import { formatCount, formatDuration } from '../ui/format.js';
@@ -116,6 +117,9 @@ function reportResult(app: App, name: string, result: CrawlResult): void {
   }
 }
 
+/** "Milk" in each product language, for the suggested first search. */
+const SAMPLE_WORD: Record<Lang, string> = { de: 'milch', fr: 'lait', it: 'latte' };
+
 async function runCrawl(app: App, request: CrawlRequest): Promise<boolean> {
   const { out } = app;
   const db = app.db();
@@ -221,8 +225,10 @@ async function runCrawl(app: App, request: CrawlRequest): Promise<boolean> {
   } else if (outcomes.some((o) => o.status === 'completed' || o.status === 'failed')) {
     out.info();
     out.info(out.c.dim(`Saved to ${app.dbPath}`));
+    const [first] = request.stores;
+    const word = first ? SAMPLE_WORD[app.langFor(first)] : SAMPLE_WORD.de;
     out.info(
-      `Next: ${out.c.cyan('swiss-grocery search "milch"')}  ·  ${out.c.cyan('swiss-grocery status')}`,
+      `Next: ${out.c.cyan(`swiss-grocery search "${word}"`)}  ·  ${out.c.cyan('swiss-grocery status')}`,
     );
   }
   if (outcomes.some((o) => o.status === 'interrupted')) process.exitCode = 130; // conventional for Ctrl+C
