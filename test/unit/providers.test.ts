@@ -136,17 +136,21 @@ describe('Lidl (real API fixtures)', () => {
 });
 
 describe('Denner (real API fixtures)', () => {
-  const route = (url: string, body?: string) => {
+  const route = (url: string) => {
     if (url.includes('/api/product/')) return { body: fixture('denner-details.json') };
-    const pageId = body ? JSON.parse(body).pageId : 12;
-    return { body: fixture(pageId === 14 ? 'denner-wine.json' : 'denner-promotions.json') };
+    return {
+      body: fixture(
+        url.endsWith('/nuxt-api/wines') ? 'denner-wine.json' : 'denner-promotions.json',
+      ),
+    };
   };
 
   it('builds promotion and wine categories from facets', async () => {
-    const { ctx } = fakeContext((url, call) => route(url, call.body));
+    const { ctx } = fakeContext((url) => route(url));
     const categories = await denner.categories(ctx);
     expect(categories.filter((c) => c.parentId === null).map((c) => c.id)).toEqual([
       'food',
+      'beverages',
       'non_food',
       'wine',
     ]);
@@ -154,59 +158,111 @@ describe('Denner (real API fixtures)', () => {
       'Lebensmittel',
       'Früchte und Gemüse',
     ]);
-    const sources = denner.sources(categories, ['food', '5479471']);
-    expect(sources[0]?.params).toMatchObject({ page: '12', filter: 'category' });
-    expect(sources[0]?.params.values?.split(',')).toContain('1144363');
-    expect(sources[1]?.params).toEqual({ page: '14', filter: 'wine_type', values: '5479471' });
-    expect(resolveCategories(denner, categories, ['food']).ids).toEqual(['food', 'wine']);
+    // The API filters one category at a time: a group becomes one source per category.
+    const sources = denner.sources(categories, ['food', '1144363', 'Schaumwein']);
+    const food = categories.filter((c) => c.parentId === 'food');
+    expect(sources).toHaveLength(food.length + 1);
+    expect(sources[0]?.params).toEqual({
+      list: 'promotions',
+      facet: 'type_food',
+      value: '1144363',
+    });
+    expect(sources.at(-1)?.params).toEqual({ list: 'wine', wineType: 'Schaumwein' });
+    expect(resolveCategories(denner, categories, ['food']).ids).toEqual([
+      'food',
+      'beverages',
+      'wine',
+    ]);
   });
 
   it('normalizes promotions: stable ids, per-100 g prices and inclusive end dates', async () => {
-    const { ctx, fake } = fakeContext((url, call) => route(url, call.body));
+    const { ctx, fake } = fakeContext((url) => route(url));
     const page = await denner.fetchPage(
       ctx,
-      { key: 'promotions', label: 'P', params: { page: '12' } },
+      { key: 'promotions', label: 'P', params: { list: 'promotions' } },
       null,
     );
+    expect(fake.requests()[0]?.url).toBe('https://www.denner.ch/nuxt-api/promotions');
     expect(JSON.parse(fake.requests()[0]?.body ?? '{}')).toMatchObject({
-      pageId: 12,
-      region: 'de_CH',
+      lang: 'de',
+      promoFlag: 'promo_current_week',
+      page: 1,
+      hitsPerPage: 100,
+      includeHighlights: true,
     });
-    expect(page.next).toBe(2); // the weekly specials block has a second page
-    const satsumas = page.products.find((p) => p.name === 'Satsumas');
-    expect(satsumas).toMatchObject({
+    expect(page).toMatchObject({ next: 2, total: 280, skipped: 0 });
+    // Seven weekly promotions and one weekend offer; "20% auf alle Weine" is not a product.
+    expect(page.products).toHaveLength(8);
+    expect(page.products.find((p) => p.name === 'Satsumas')).toMatchObject({
       storeProductId: '1006226',
+      brand: null, // Denner publishes no brand; it is recognised from names after the crawl
       price: 1.49,
       regularPrice: 1.95,
       promoLabel: '-23%',
       unitPrice: 1.49,
       unitPriceBasis: 'kg',
-      validUntil: '2026-10-07T21:59:59.000Z', // "until 07.10." means through the end of that day
+      validUntil: '2026-10-28T22:59:59.000Z', // "until 28.10." means through the end of that day
       url: 'https://www.denner.ch/de/aktionen/satsumas~p1006226',
     });
-    const beef = page.products.find((p) => p.name.startsWith('Black Angus'));
-    expect(beef).toMatchObject({
-      price: 2.95,
-      unitPrice: 29.5,
+    expect(page.products.find((p) => p.storeProductId === '1133887')).toMatchObject({
+      price: 6.95,
+      unitPrice: 69.5, // priced per 100 g
       unitPriceBasis: 'kg',
-      promoLabel: '½ PREIS',
     });
+    const malbec = page.products.find((p) => p.storeProductId === '1026795');
+    expect(malbec?.promoLabel).toBe('½ PREIS');
     // The footnote says the "statt" price is a competitor's price; it is kept as a label.
-    expect(beef?.labels).toContain('Konkurrenzvergleich');
+    expect(malbec?.labels).toContain('Konkurrenzvergleich');
+    expect(page.products.find((p) => p.storeProductId === '1020098')?.promoLabel).toBe(
+      '-20% ab 2 Stück',
+    );
+    expect(page.products.find((p) => p.storeProductId === '1008826')?.validUntil).toBe(
+      '2026-10-25T22:59:59.000Z', // the weekend offer; winter time from that day
+    );
+  });
+
+  it('asks for one category or wine type, and resumes sources saved by older versions', async () => {
+    const { ctx, fake } = fakeContext((url) => route(url));
+    await denner.fetchPage(
+      ctx,
+      {
+        key: 'c',
+        label: 'C',
+        params: { list: 'promotions', facet: 'type_food', value: '1144363' },
+      },
+      2,
+    );
+    expect(JSON.parse(fake.requests()[0]?.body ?? '{}')).toMatchObject({
+      facetName: 'type_food',
+      facetValue: '1144363',
+      page: 2,
+      includeHighlights: false,
+    });
+    await denner.fetchPage(
+      ctx,
+      { key: 'w', label: 'W', params: { list: 'wine', wineType: 'Rosé' } },
+      null,
+    );
+    expect(JSON.parse(fake.requests()[1]?.body ?? '{}')).toMatchObject({
+      selection: { values: { wine_type: ['Rosé'] }, unitPrice: null },
+    });
+    await denner.fetchPage(ctx, { key: 'wine', label: 'W', params: { page: '14' } }, null);
+    expect(fake.requests()[2]?.url).toBe('https://www.denner.ch/nuxt-api/wines');
   });
 
   it('prices wine boxes per litre and reads wine details', async () => {
-    const { ctx } = fakeContext((url, call) => route(url, call.body));
+    const { ctx } = fakeContext((url) => route(url));
     const page = await denner.fetchPage(
       ctx,
-      { key: 'wine', label: 'W', params: { page: '14' } },
+      { key: 'wine', label: 'W', params: { list: 'wine' } },
       null,
     );
+    expect(page).toMatchObject({ next: 2, total: 565 });
     expect(page.products[0]).toMatchObject({
-      storeProductId: '1027166',
-      price: 89.7,
+      storeProductId: '1027134',
+      price: 101.7,
       quantity: { amount: 4500, unit: 'ml', packCount: 6 },
-      unitPrice: 19.9333,
+      unitPrice: 22.6,
       categoryPath: ['Wein', 'Schaumwein'],
     });
     const details = await denner.fetchDetails?.(ctx, {
