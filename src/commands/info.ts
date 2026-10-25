@@ -240,6 +240,7 @@ export function registerInfoCommands(program: Command): void {
             value: (s) => formatPercent(s.withUnitPrice, s.products),
             align: 'right',
           },
+          { header: 'Brand', value: (s) => formatPercent(s.withBrand, s.products), align: 'right' },
           {
             header: 'Details',
             value: (s) =>
@@ -250,7 +251,7 @@ export function registerInfoCommands(program: Command): void {
         out.print();
         out.print(
           out.c.dim(
-            '  Price / Unit price / Details: share of products that have them (data completeness).',
+            '  Price / Unit price / Brand / Details: share of products that have them (data completeness).',
           ),
         );
         out.print(

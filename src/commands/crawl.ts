@@ -220,8 +220,10 @@ async function runCrawl(app: App, request: CrawlRequest): Promise<boolean> {
     }
   });
 
+  // One spelling per brand across stores, and brands recognised in names (Denner, Coop wines).
+  const brands = app.refreshBrands();
   if (out.options.json) {
-    out.json({ database: app.dbPath, stores: outcomes });
+    out.json({ database: app.dbPath, stores: outcomes, brands });
   } else if (outcomes.some((o) => o.status === 'completed' || o.status === 'failed')) {
     out.info();
     out.info(out.c.dim(`Saved to ${app.dbPath}`));

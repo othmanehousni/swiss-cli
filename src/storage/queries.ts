@@ -1,3 +1,4 @@
+import { brandKey } from '../normalization/brands.js';
 import { searchKey } from '../normalization/text.js';
 import { STORE_IDS, type StoreId } from '../normalization/types.js';
 import type { Database, SqlParams } from './database.js';
@@ -9,6 +10,8 @@ export interface ProductRow {
   store_product_id: string;
   name: string;
   brand: string | null;
+  /** 'store': published by the store; 'name': recognised from the product name. */
+  brand_source: 'store' | 'name' | null;
   category_path: string | null;
   size_text: string | null;
   quantity_amount: number | null;
@@ -35,7 +38,7 @@ export interface ProductRow {
 }
 
 const PRODUCT_COLUMNS = `
-  p.id, p.store, p.store_product_id, p.name, p.brand, p.category_path, p.size_text,
+  p.id, p.store, p.store_product_id, p.name, p.brand, p.brand_source, p.category_path, p.size_text,
   p.quantity_amount, p.quantity_unit, p.pack_count, p.labels, p.url, p.image_url, p.gtin,
   p.details, p.details_fetched_at, p.first_seen_at, p.last_seen_at, p.removed_at,
   pr.price, pr.regular_price, pr.loyalty_price, pr.promo_label, pr.valid_from,
@@ -62,6 +65,11 @@ export interface ProductFilter {
   includeRemoved?: boolean;
   /** Matches anywhere in the category path (accent-insensitive). */
   category?: string;
+  /**
+   * Any of these brands (accents and case optional). A brand also matches the brands
+   * that start with it: "coca-cola" includes "Coca-Cola Zero".
+   */
+  brands?: string[];
 }
 
 function filterSql(filter: ProductFilter, where: string[], params: SqlParams): void {
@@ -77,6 +85,15 @@ function filterSql(filter: ProductFilter, where: string[], params: SqlParams): v
   if (filter.category) {
     where.push('p.category_path LIKE $category');
     params.category = `%${filter.category}%`;
+  }
+  const brands = (filter.brands ?? []).map(brandKey).filter(Boolean);
+  if (brands.length > 0) {
+    const any = brands.map((key, i) => {
+      params[`brand${i}`] = key;
+      params[`brandStart${i}`] = `${key} %`;
+      return `p.brand_key = $brand${i} OR p.brand_key LIKE $brandStart${i}`;
+    });
+    where.push(`(${any.join(' OR ')})`);
   }
 }
 

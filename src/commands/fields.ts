@@ -37,6 +37,11 @@ export const FIELDS: Field[] = [
   },
   { key: 'name', description: 'product name', value: (r) => r.name },
   { key: 'brand', description: 'brand', value: (r) => r.brand },
+  {
+    key: 'brand_source',
+    description: 'where the brand comes from: store (its brand field) or name (recognised in it)',
+    value: (r) => r.brand_source,
+  },
   { key: 'size', description: 'size as printed by the store', value: size },
   {
     key: 'price',

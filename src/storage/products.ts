@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { brandKey } from '../normalization/brands.js';
 import { searchKey } from '../normalization/text.js';
 import {
   type Category,
@@ -61,6 +62,8 @@ export function saveProducts(
       storeId: p.storeProductId,
       name: p.name,
       brand: p.brand,
+      brandSource: p.brand ? 'store' : null,
+      brandKey: p.brand ? brandKey(p.brand) : null,
       category: p.categoryPath.length > 0 ? p.categoryPath.join(' > ') : null,
       size: p.sizeText,
       amount: p.quantity?.amount ?? null,
@@ -77,18 +80,23 @@ export function saveProducts(
 
     if (!existing) {
       db.run(
-        `INSERT INTO products (id, store, store_product_id, name, brand, category_path, size_text,
-           quantity_amount, quantity_unit, pack_count, labels, url, image_url, source_ref,
-           search_text, content_hash, first_seen_at, last_seen_at, updated_at)
-         VALUES ($id, $store, $storeId, $name, $brand, $category, $size, $amount, $unit, $pack,
-           $labels, $url, $image, $ref, $search, $hash, $now, $now, $now)`,
+        `INSERT INTO products (id, store, store_product_id, name, brand, brand_source, brand_key,
+           category_path, size_text, quantity_amount, quantity_unit, pack_count, labels, url,
+           image_url, source_ref, search_text, content_hash, first_seen_at, last_seen_at, updated_at)
+         VALUES ($id, $store, $storeId, $name, $brand, $brandSource, $brandKey, $category, $size,
+           $amount, $unit, $pack, $labels, $url, $image, $ref, $search, $hash, $now, $now, $now)`,
         values,
       );
       result.inserted++;
     } else if (existing.content_hash !== hash || existing.removed_at !== null) {
       const { store: _store, storeId: _storeId, ...changes } = values;
+      // A brand recognised in the name stays until the brand pass looks at the product again.
       db.run(
-        `UPDATE products SET name = $name, brand = $brand, category_path = $category,
+        `UPDATE products SET name = $name,
+           brand = CASE WHEN $brand IS NULL AND brand_source = 'name' THEN brand ELSE $brand END,
+           brand_key = CASE WHEN $brand IS NULL AND brand_source = 'name' THEN brand_key ELSE $brandKey END,
+           brand_source = CASE WHEN $brand IS NULL AND brand_source = 'name' THEN 'name' ELSE $brandSource END,
+           category_path = $category,
            size_text = $size, quantity_amount = $amount, quantity_unit = $unit, pack_count = $pack,
            labels = $labels, url = $url, image_url = $image, source_ref = $ref,
            search_text = $search, content_hash = $hash, last_seen_at = $now,

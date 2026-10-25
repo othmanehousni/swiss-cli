@@ -20,6 +20,8 @@ function bind(params: SqlParams | undefined): Record<string, SqlValue> {
 export class Database {
   private readonly statements = new Map<string, StatementSync>();
   private depth = 0;
+  /** The schema version an older database had before `open` upgraded it, else null. */
+  upgradedFrom: number | null = null;
 
   private constructor(
     private readonly db: DatabaseSync,
@@ -49,6 +51,7 @@ export class Database {
           'Please update the tool (npm install -g swiss-grocery@latest).',
       );
     }
+    if (version > 0 && version < MIGRATIONS.length) this.upgradedFrom = version;
     for (let i = version; i < MIGRATIONS.length; i++) {
       this.transaction(() => {
         this.db.exec(MIGRATIONS[i] as string);

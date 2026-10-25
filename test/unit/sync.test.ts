@@ -17,7 +17,7 @@ beforeEach(() => {
   db = Database.open(':memory:');
   saveProducts(
     db,
-    [makeProduct(), makeProduct({ storeProductId: '2', name: 'Milch' })],
+    [makeProduct(), makeProduct({ storeProductId: '2', name: 'Milch', brand: 'Emmi' })],
     '2026-10-01T08:00:00.000Z',
   );
 });
@@ -46,8 +46,13 @@ describe('syncToSupabase', () => {
     expect(headers.apikey).toBe('sb_secret_abc');
     expect(headers.Authorization).toBeUndefined(); // new-style keys are not JWTs
     expect(headers.Prefer).toBe('resolution=merge-duplicates,return=minimal');
-    const product = JSON.parse(posts[0]?.body ?? '[]')[0];
-    expect(product).toMatchObject({ id: 'aldi:288415', labels: [], details: null });
+    const [butter, milk] = JSON.parse(posts[0]?.body ?? '[]');
+    expect(butter).toMatchObject({ id: 'aldi:288415', labels: [], details: null, brand: null });
+    expect(milk).toMatchObject({ brand: 'Emmi', brand_source: 'store', brand_key: 'emmi' });
+    // Reading the newest columns first tells whether the tables are up to date.
+    expect(fake.calls[0]?.url).toBe(
+      'https://project.supabase.co/rest/v1/products?select=id,brand_source,brand_key&limit=1',
+    );
   });
 
   it('sends a legacy service_role key as a bearer token too', async () => {
@@ -101,6 +106,17 @@ describe('explainSupabaseError', () => {
       'your key has no access to the swiss-grocery tables (permission denied for table products)',
     );
     expect(diagnosis.hints.join(' ')).toContain('swiss-grocery sync --print-schema');
+  });
+
+  it('asks for the new schema when the tables are from an older version', () => {
+    const diagnosis = explainSupabaseError(
+      error(400, { code: '42703', message: 'column products.brand_key does not exist' }),
+    );
+    expect(diagnosis.message).toBe(
+      'your Supabase tables are from an older version of swiss-grocery (column products.brand_key does not exist)',
+    );
+    expect(diagnosis.hints.join(' ')).toContain('swiss-grocery sync --print-schema');
+    expect(schemaSql()).toContain('add column if not exists brand_key text');
   });
 
   it('passes on other Supabase errors with their code and hint', () => {

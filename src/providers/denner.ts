@@ -16,6 +16,8 @@ import {
  * Denner — the JSON API behind denner.ch (verified October 2026; it replaced the
  * Prediggo search API, which now answers 405). denner.ch publishes its current
  * promotions and its wine shop with prices, nothing else.
+ * Denner publishes no brand field: brands are recognised from the product names
+ * after each crawl (see storage/brands.ts), e.g. "Feldschlösschen Bier Original".
  */
 const SITE = 'https://www.denner.ch';
 const PROMOTIONS = `${SITE}/nuxt-api/promotions`;
@@ -234,6 +236,7 @@ export const denner: Provider = {
       'denner.ch does not publish its full grocery assortment.',
     rotating: true,
     verified: true,
+    brandInName: true,
     requestsPerSecond: 2,
   },
 

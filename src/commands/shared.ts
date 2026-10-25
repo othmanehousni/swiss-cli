@@ -17,7 +17,9 @@ import {
 import { HttpClient } from '../crawler/http.js';
 import { RetryAfterTooLongError } from '../crawler/retry.js';
 import { isStoreId, STORE_IDS, type StoreId } from '../normalization/types.js';
+import { getProvider } from '../providers/index.js';
 import { LANGS, type Lang, type Provider, type ProviderContext } from '../providers/types.js';
+import { type BrandRefresh, brandsNeedRefresh, refreshBrands } from '../storage/brands.js';
 import { Database } from '../storage/database.js';
 import { Output } from '../ui/output.js';
 
@@ -79,8 +81,24 @@ export class App {
   }
 
   db(): Database {
-    this.database ??= Database.open(this.dbPath);
+    if (!this.database) {
+      this.database = Database.open(this.dbPath);
+      // After an upgrade, existing products get their brand keys and recognised brands.
+      const { upgradedFrom } = this.database;
+      if ((upgradedFrom !== null && upgradedFrom < 3) || brandsNeedRefresh(this.database)) {
+        this.refreshBrands();
+      }
+    }
     return this.database;
+  }
+
+  /** Recomputes brands from what every store publishes (after a crawl). */
+  refreshBrands(): BrandRefresh {
+    const stores = STORE_IDS.map((id) => {
+      const { name, brandInName } = getProvider(id).info;
+      return { id, name, brandInName: brandInName === true };
+    });
+    return refreshBrands(this.db(), stores, new Date().toISOString());
   }
 
   close(): void {
@@ -115,6 +133,20 @@ const STORE_ALIASES: Record<string, StoreId> = {
   'lidl-suisse': 'lidl',
   lidlsuisse: 'lidl',
 };
+
+/** `--brand "coca-cola,rivella"` -> ["coca-cola", "rivella"]. */
+export function parseBrands(value: string): string[] {
+  const brands = value
+    .split(',')
+    .map((b) => b.trim())
+    .filter(Boolean);
+  if (brands.length === 0) {
+    throw new UserError('--brand needs a brand name, e.g. --brand lindt.', [
+      'See the brands in your database with: swiss-grocery brands',
+    ]);
+  }
+  return brands;
+}
 
 /** Parses store names: "migros", "aldi,lidl", "all". Suggests a fix for typos. */
 export function parseStores(values: string[], { allowAll = true } = {}): StoreId[] {

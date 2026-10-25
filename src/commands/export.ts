@@ -11,7 +11,7 @@ import {
 } from '../storage/queries.js';
 import { formatBytes, formatCount } from '../ui/format.js';
 import { DEFAULT_EXPORT_FIELDS, parseFields } from './fields.js';
-import { App, type GlobalOptions, parseStores, UserError } from './shared.js';
+import { App, type GlobalOptions, parseBrands, parseStores, UserError } from './shared.js';
 
 type Format = 'csv' | 'json' | 'jsonl';
 type Value = string | number | null;
@@ -80,6 +80,7 @@ Examples:
   $ swiss-grocery export products.csv                       all products (opens in Excel)
   $ swiss-grocery export migros.json --store migros
   $ swiss-grocery export deals.csv --promo                  only promotions
+  $ swiss-grocery export lindt.csv --brand lindt            only one brand
   $ swiss-grocery export full.csv --fields all              every field, incl. ingredients
   $ swiss-grocery export history.csv --history              the full price history
   $ swiss-grocery export - --format jsonl | head            to the terminal / another program
@@ -98,6 +99,7 @@ export function registerExportCommand(program: Command): void {
     .option('-s, --store <stores>', 'only these stores, comma-separated')
     .option('-p, --promo', 'only products on promotion')
     .option('-c, --category <text>', 'only products whose category contains this text')
+    .option('-b, --brand <brands>', 'only these brands, comma-separated (see `brands`)')
     .option(
       '-f, --fields <list>',
       `columns to include (default: ${DEFAULT_EXPORT_FIELDS.join(',')}) or "all"`,
@@ -141,6 +143,7 @@ export function registerExportCommand(program: Command): void {
             onlyPromotions: opts.promo === true,
             includeRemoved: opts.includeRemoved === true,
             ...(opts.category ? { category: String(opts.category) } : {}),
+            ...(opts.brand ? { brands: parseBrands(String(opts.brand)) } : {}),
           };
 
           const toStdout = file === '-';

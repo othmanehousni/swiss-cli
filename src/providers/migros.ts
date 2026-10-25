@@ -90,7 +90,13 @@ const RawProduct = z.object({
   uid: z.union([z.number(), z.string()]).nullish(),
   migrosId: z.union([z.string(), z.number()]).nullish(),
   name: z.string().nullish(),
+  /** "Kiri · Cheese Spread": the brand and the name. */
   title: z.string().nullish(),
+  /**
+   * Product cards: the brand as text ("Kiri"); product details: an object with a name.
+   * Read leniently: an unexpected shape loses the brand, not the product.
+   */
+  brand: z.unknown().optional(),
   versioning: z.string().nullish(),
   offer: z
     .object({
@@ -195,6 +201,23 @@ export function parseCategorySearch(
   );
 }
 
+/** The brand of a product card, or of the product details. */
+export function migrosBrand(raw: RawProduct, name: string): string | null {
+  const field = raw.brand as { name?: unknown } | string | null | undefined;
+  const brand = typeof field === 'string' ? field : field?.name;
+  const fromCard =
+    (typeof brand === 'string' ? nonEmpty(brand) : null) ??
+    nonEmpty(raw.productInformation?.mainInformation?.brand?.name);
+  if (fromCard) return fromCard;
+  // The title puts the brand before the name: "Kiri · Cheese Spread".
+  const title = nonEmpty(raw.title);
+  const separator = title?.lastIndexOf(' · ') ?? -1;
+  if (title && separator > 0 && title.slice(separator + 3).trim() === name) {
+    return nonEmpty(title.slice(0, separator));
+  }
+  return null;
+}
+
 export function normalizeMigrosProduct(raw: RawProduct): NormalizedProduct | null {
   const id = raw.migrosId != null ? String(raw.migrosId) : raw.uid != null ? String(raw.uid) : null;
   const name = nonEmpty(raw.name) ?? nonEmpty(raw.title);
@@ -223,7 +246,7 @@ export function normalizeMigrosProduct(raw: RawProduct): NormalizedProduct | nul
     store: 'migros',
     storeProductId: id,
     name,
-    brand: nonEmpty(info?.brand?.name),
+    brand: migrosBrand(raw, name),
     categoryPath: uniqueStrings((raw.breadcrumb ?? []).map((b) => b.name)),
     sizeText: nonEmpty(offer?.quantity) ?? nonEmpty(raw.versioning),
     quantity,

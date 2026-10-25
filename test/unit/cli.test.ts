@@ -18,6 +18,7 @@ const T1 = '2026-10-01T08:00:00.000Z';
 let dir: string;
 let dbPath: string;
 let emptyDbPath: string;
+let brandsDbPath: string;
 
 function run(env: Record<string, string>, db: string, args: string[]) {
   const result = spawnSync(
@@ -74,6 +75,38 @@ beforeAll(() => {
     T1,
   );
   db.close();
+
+  // Coop and Aldi publish the brand; Denner does not, but its names start with it.
+  brandsDbPath = join(dir, 'brands.db');
+  const brands = Database.open(brandsDbPath);
+  saveProducts(
+    brands,
+    [
+      makeProduct({
+        store: 'coop',
+        storeProductId: '1',
+        name: 'Feldschlösschen Original 6x50cl',
+        brand: 'Feldschlösschen',
+      }),
+      makeProduct({
+        store: 'coop',
+        storeProductId: '2',
+        name: 'Feldschlösschen Weizen 6x50cl',
+        brand: 'Feldschlösschen',
+      }),
+      makeProduct({ store: 'aldi', storeProductId: '3', name: 'Lager', brand: 'FELDSCHLÖSSCHEN' }),
+      makeProduct({
+        store: 'denner',
+        storeProductId: '1027701',
+        name: 'Feldschlösschen Bier Original',
+      }),
+      makeProduct({ store: 'denner', storeProductId: '1006226', name: 'Satsumas' }),
+    ],
+    T1,
+  );
+  // As stored by a version without brand keys: the next command fills them in.
+  brands.run('UPDATE products SET brand_key = NULL');
+  brands.close();
 }, 30_000);
 
 afterAll(() => rmSync(dir, { recursive: true, force: true }));
@@ -95,7 +128,7 @@ describe('swiss-grocery (command line)', { timeout: 30_000 }, () => {
     const { code, stdout, stderr } = cli(dbPath, 'search', 'kase', 'butter', '--json');
     expect(code).toBe(0);
     expect(stderr).toBe('');
-    expect(JSON.parse(stdout)).toEqual({ query: 'kase butter', total: 0, results: [] });
+    expect(JSON.parse(stdout)).toEqual({ query: 'kase butter', brands: [], total: 0, results: [] });
 
     const coke = JSON.parse(cli(dbPath, 'search', 'coca', 'cola', '--json').stdout);
     expect(coke.total).toBe(1);
@@ -108,6 +141,41 @@ describe('swiss-grocery (command line)', { timeout: 30_000 }, () => {
     const product = JSON.parse(stdout);
     expect(product).toMatchObject({ id: 'aldi:288415', name: 'Butter', price: 3.85 });
     expect(product.history).toHaveLength(1);
+  });
+
+  it('lists brands, finds every product of one and shows where a brand comes from', () => {
+    const list = cli(brandsDbPath, 'brands');
+    expect(list.code).toBe(0);
+    expect(list.stdout).toMatch(/Feldschlösschen\s+4\s+Coop 2 · Aldi 1 · Denner 1/);
+    expect(list.stdout).not.toContain('FELDSCHLÖSSCHEN');
+    expect(list.stderr).toContain('search --brand "Feldschlösschen"');
+
+    const json = JSON.parse(cli(brandsDbPath, 'brands', 'feld', '--json').stdout);
+    expect(json).toMatchObject({ total: 1, brands: [{ brand: 'Feldschlösschen', fromNames: 1 }] });
+
+    const found = JSON.parse(
+      cli(
+        brandsDbPath,
+        'search',
+        '--brand',
+        'feldschlosschen',
+        '--json',
+        '--fields',
+        'brand_source',
+      ).stdout,
+    );
+    expect(found.total).toBe(4);
+    expect(found.results.find((r: { id: string }) => r.id === 'denner:1027701')).toMatchObject({
+      brand: 'Feldschlösschen',
+      brand_source: 'name',
+    });
+
+    const show = cli(brandsDbPath, 'show', 'denner:1027701');
+    expect(show.stdout).toMatch(/Brand\s+Feldschlösschen \(recognised from the name\)/);
+
+    const nothing = cli(brandsDbPath, 'search');
+    expect(nothing.code).toBe(2);
+    expect(occurrences(nothing.stderr, 'Tell swiss-grocery what to look for.')).toBe(1);
   });
 
   it('exports CSV into a folder that does not exist yet', () => {

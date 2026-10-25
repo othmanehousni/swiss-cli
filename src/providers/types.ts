@@ -46,6 +46,11 @@ export interface StoreInfo {
   rotating: boolean;
   /** false = the store blocked the build environment, so this provider is untested. */
   verified: boolean;
+  /**
+   * Product names start with the brand ("Feldschlösschen Bier Original"), so products
+   * without a brand field get the published brand their name starts with.
+   */
+  brandInName?: boolean;
   /** Set when the store is known not to work right now: why, in plain words. */
   unavailable?: string;
   /** Polite default request rate. */

@@ -221,6 +221,7 @@ $ swiss-grocery search "coca cola"
 $ swiss-grocery search lait --sort unit-price           # cheapest per litre first
 $ swiss-grocery search fromage --store migros,coop      # only some stores
 $ swiss-grocery search chocolat --promo                 # only promotions
+$ swiss-grocery search chocolat --brand lindt,cailler   # only these brands
 $ swiss-grocery search café --fields brand,category,url
 ```
 
@@ -228,14 +229,53 @@ Every word must match, accents are optional (`cafe` finds "Café", `creme` finds
 and brands are searched too. Search in the language the stores were downloaded in. Sort orders: `relevance` (default), `price`, `unit-price`,
 `discount`, `name`, `store`.
 
+### Brands
+
+Every product has a `brand` field, written the same way in every store, so one brand can
+be compared across shops:
+
+```console
+$ swiss-grocery brands                          # the biggest brands, with products per store
+$ swiss-grocery brands --store denner           # the brands of one store
+$ swiss-grocery brands cola                     # brands whose name contains "cola"
+$ swiss-grocery search --brand feldschlösschen  # every product of a brand, in every store
+$ swiss-grocery export lindt.csv --brand lindt
+```
+
+`--brand` ignores case, accents and how umlauts are typed (`feldschlösschen`,
+`Feldschloesschen` and `feldschlosschen` are the same), and also matches the brands that
+start with it (`--brand coca-cola` includes "Coca-Cola Zero"). Several brands: commas.
+
+Where the brand comes from, read from each store's own API:
+
+| Store | Brand |
+|---|---|
+| Migros | the brand of each product card (`brand`, e.g. "M-Classic", "Kiri") |
+| Coop | the brand Coop gives each product (`originText`), except for wines, where that field holds the origin ("Frankreich, 2022"), not a brand |
+| Aldi Suisse | the brand Aldi gives each product (`brandName`) |
+| Lidl Suisse | the brand Lidl gives each product (`brand.name`); gift cards and plants have none |
+| Denner | none in the API: recognised in the product name (see below) |
+
+Denner product names, and Coop's wine names, start with the brand ("Feldschlösschen Bier
+Original", "Naturaplan Bio Chianti…"). For those products the brand is **recognised in the
+name**, using only brands the stores themselves publish: a brand counts when the names of
+its products usually start with it, or when several stores sell it. Bottle sizes in wine
+names ("Magnum Chianti…") and generic words ("Bio", "Original") never count, and Denner's
+own products ("Denner Lachsfilets") get the brand Denner. A product whose name starts with
+no known brand keeps an empty brand rather than a guess. The field `brand_source` says
+which way each brand was found: `store` or `name` (`--fields brand,brand_source`).
+
+Brands are brought up to date after every `fetch` and `update`, so a brand another store
+publishes later is recognised in Denner's names too.
+
 ### Look at one product
 
 ```console
 $ swiss-grocery show coop:4446520
 ```
 
-Shows the price, offer, size, labels, barcode, link, details (if fetched) and the full
-**price history**.
+Shows the price, offer, brand, size, labels, barcode, link, details (if fetched) and the
+full **price history**.
 
 ### Export
 
@@ -243,6 +283,7 @@ Shows the price, offer, size, labels, barcode, link, details (if fetched) and th
 $ swiss-grocery export products.csv                    # all products
 $ swiss-grocery export coop.json --store coop
 $ swiss-grocery export deals.csv --promo               # only promotions
+$ swiss-grocery export lindt.csv --brand lindt         # only one brand
 $ swiss-grocery export full.csv --fields all           # every field, incl. ingredients
 $ swiss-grocery export history.csv --history           # the whole price history
 ```
@@ -286,9 +327,10 @@ Sizes are normalized in every language, so that `6 x 1,5 l`, `75 cl`, `2,5 dl`,
 |---|---|
 | `fetch <stores…>` | Download products and prices (`--category`, `--details`, `--limit`, `--fresh`, `--rate`) |
 | `update [stores…]` | Refresh prices and promotions, find new and removed products (`--details`) |
-| `search <words…>` | Find and compare products (`--store`, `--sort`, `--promo`, `--category`, `--limit`, `--fields`, `--json`) |
+| `search [words…]` | Find and compare products (`--store`, `--brand`, `--sort`, `--promo`, `--category`, `--limit`, `--fields`, `--json`) |
 | `show <id>` | Everything about one product, including its price history |
-| `export <file>` | Save to CSV / JSON / JSON Lines (`--store`, `--promo`, `--fields`, `--history`, `--delimiter`) |
+| `brands [words…]` | The brands in your database, with their products per store (`--store`, `--limit`, `--all`, `--json`) |
+| `export <file>` | Save to CSV / JSON / JSON Lines (`--store`, `--brand`, `--promo`, `--fields`, `--history`, `--delimiter`) |
 | `stores` | Supported stores and what each one publishes |
 | `categories <store>` | A store's categories, for `--category` |
 | `fields` | Fields available to `--fields` |
@@ -311,7 +353,7 @@ Options for every command: `--lang de|fr|it` (product language, for every store)
    http.ts         robots.txt → per-store rate limit → request → retry with backoff
    rate-limiter.ts retry.ts  pagination.ts  checkpoint.ts (resume)  crawler.ts
         │
- normalization/    store-specific → common schema: sizes, unit prices, validation
+ normalization/    store-specific → common schema: sizes, unit prices, brands, validation
         │
  storage/          SQLite: products, prices, price_history (+ crawl progress)
         │
@@ -361,10 +403,12 @@ The database is a single SQLite file (see where with `swiss-grocery status`; cha
 with `--db` or `SWISS_GROCERY_DB`). Main tables:
 
 **products** — one row per store product. `id` is `<store>:<store product number>`,
-e.g. `coop:4446520`. Name, brand, category path, size as printed (`size_text`) and
-normalized (`quantity_amount` in g/ml/pieces, `quantity_unit`, `pack_count`), labels,
-URL, image, barcode (`gtin`), `details` (JSON), and `first_seen_at`, `last_seen_at`,
-`removed_at`.
+e.g. `coop:4446520`. Name, `brand` (one spelling in every store), `brand_source` (`store`:
+published by the store, `name`: recognised in the name, see [Brands](#brands)),
+`brand_key` (the brand in lowercase without accents or umlauts, e.g. `nestle`, for
+filtering), category path, size as printed (`size_text`) and normalized
+(`quantity_amount` in g/ml/pieces, `quantity_unit`, `pack_count`), labels, URL, image,
+barcode (`gtin`), `details` (JSON), and `first_seen_at`, `last_seen_at`, `removed_at`.
 
 **prices** — the current price of each product: `price`, `regular_price` (before a
 promotion), `loyalty_price` (app/card price), `promo_label`, `valid_from`/`valid_until`,
@@ -435,6 +479,12 @@ to Supabase.
 The per-shop entries are *views*: they read the shared tables, so nothing is stored
 twice and they always show the latest sync. Comparing shops stays a simple query, e.g.
 `select store, name, price, unit_price from current_prices where name ilike '%lait%' order by unit_price;`
+Every product of a brand, in every shop:
+`select store, name, brand_source from products where brand_key = 'feldschlosschen';`
+
+**Updating from an older version** (before brands had `brand_source` and `brand_key`):
+run the schema once more (step 1); it adds the new columns and keeps your data. The next
+`sync` then sends every product again, with its brand.
 
 ---
 
@@ -470,7 +520,7 @@ $ swiss-grocery sync --to firebase    # or just `sync`: every target you set up
 
 ```
 stores/migros                     { store: "migros", name: "Migros" }
-stores/migros/products/100014192  { name, brand, category_path, size_text, price,
+stores/migros/products/100014192  { name, brand, brand_source, brand_key, category_path, size_text, price,
                                     regular_price, promo_label, unit_price, labels,
                                     details, price_history: [ … ], removed_at, … }
 ```
@@ -480,7 +530,8 @@ every shop at once, use a collection group query on `products`.
 
 **Costs and the daily limit.** Firestore counts every document written; the free plan
 allows 20,000 writes a day. Each sync only writes products whose details or price changed,
-so daily updates stay small. The first sync of a large store can exceed the limit: it then
+so daily updates stay small (after an upgrade that adds fields, such as `brand_source`,
+the next sync writes every product once). The first sync of a large store can exceed the limit: it then
 stops with "Firestore has used up its write quota for today", and running `sync` again the
 next day continues where it stopped.
 
@@ -527,6 +578,11 @@ the message so the store's provider can be updated.
 table products)".** Your tables were created without the permission Supabase stopped
 adding by itself in 2026. Run the schema again (`swiss-grocery sync --print-schema`, then
 SQL Editor → Run). It keeps your data.
+
+**Supabase: "your Supabase tables are from an older version of swiss-grocery".** A newer
+version added columns (for example `brand_key`). Run the schema again
+(`swiss-grocery sync --print-schema`, then SQL Editor → Run), then `swiss-grocery sync`.
+It keeps your data.
 
 **Supabase: "Supabase rejected the key".** Copy the **secret** key (`sb_secret_…`) again from
 *Project Settings → API Keys*, and check that `SUPABASE_URL` is the same project. The

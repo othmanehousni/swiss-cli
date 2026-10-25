@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { Command, Option } from 'commander';
+import { registerBrandsCommand } from './commands/brands.js';
 import { registerCrawlCommands } from './commands/crawl.js';
 import { registerExportCommand } from './commands/export.js';
 import { registerInfoCommands } from './commands/info.js';
@@ -57,6 +58,7 @@ const program = new Command()
 
 registerCrawlCommands(program);
 registerQueryCommands(program);
+registerBrandsCommand(program);
 registerExportCommand(program);
 registerInfoCommands(program);
 registerSyncCommand(program);

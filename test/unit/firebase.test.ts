@@ -141,7 +141,11 @@ describe('toValue', () => {
 
 describe('syncToFirebase', () => {
   it('sends every product into an empty database, grouped by store', async () => {
-    saveProducts(db, [makeProduct(), makeProduct({ store: 'coop', storeProductId: '42' })], T1);
+    saveProducts(
+      db,
+      [makeProduct(), makeProduct({ store: 'coop', storeProductId: '42', brand: 'Naturaplan' })],
+      T1,
+    );
     const { fake, commits } = firestore();
     const result = await syncToFirebase(db, config, { fetch: fake.fetch });
     expect(result).toMatchObject({ products: 2, since: null, resumed: false });
@@ -159,6 +163,11 @@ describe('syncToFirebase', () => {
     expect(butter.name).toEqual({ stringValue: 'Butter' });
     expect(butter.price).toEqual({ doubleValue: 3.85 });
     expect(butter.first_seen_at).toEqual({ timestampValue: T1 });
+    expect(butter.brand).toEqual({ nullValue: null });
+    const coop = commits[0]?.writes[3]?.update.fields as Record<string, Record<string, unknown>>;
+    expect(coop.brand).toEqual({ stringValue: 'Naturaplan' });
+    expect(coop.brand_source).toEqual({ stringValue: 'store' });
+    expect(coop.brand_key).toEqual({ stringValue: 'naturaplan' });
     expect(butter.price_history?.arrayValue).toMatchObject({ values: [{ mapValue: {} }] });
     const commitCall = fake.calls.find((c) => c.url.endsWith(':commit'));
     expect(commitCall?.headers.Authorization).toBe('Bearer token-1');

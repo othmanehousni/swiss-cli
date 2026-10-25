@@ -99,6 +99,9 @@ function postgrestError(body: string): { code: string; message: string; hint: st
   }
 }
 
+/** Reading the newest columns also tells whether the tables are up to date. */
+const PROBE_COLUMNS = 'id,brand_source,brand_key';
+
 const SCHEMA_HINTS = [
   'Print the SQL with: swiss-grocery sync --print-schema',
   'Run it in Supabase: SQL Editor -> New query -> paste -> Run (safe to run again, it keeps your data).',
@@ -126,6 +129,13 @@ export function explainSupabaseError(error: unknown): Diagnosis {
         ok: false,
         message: 'the swiss-grocery tables do not exist in this project yet',
         hints: SCHEMA_HINTS,
+      };
+    }
+    if (code === '42703' || code === 'PGRST204') {
+      return {
+        ok: false,
+        message: `your Supabase tables are from an older version of swiss-grocery (${detail || 'a column is missing'})`,
+        hints: ['The new columns are in the schema; adding them keeps your data.', ...SCHEMA_HINTS],
       };
     }
     if (code === 'PGRST106') {
@@ -174,7 +184,7 @@ export async function checkSupabase(config: SupabaseConfig, fetch?: FetchLike): 
   const problem = keyProblem(config.key);
   if (problem) return problem;
   try {
-    await client(fetch).request(`${config.url}/rest/v1/products?select=id&limit=1`, {
+    await client(fetch).request(`${config.url}/rest/v1/products?select=${PROBE_COLUMNS}&limit=1`, {
       headers: authHeaders(config),
     });
     return { ok: true, message: 'connected, tables found', hints: [] };
@@ -213,9 +223,12 @@ export async function syncToSupabase(
   // Always check the connection first: it validates the key and the tables even
   // when nothing changed, and an empty remote copy (new or recreated tables) gets everything.
   options.onProgress?.('Connecting to Supabase…');
-  const probe = await http.request(`${config.url}/rest/v1/products?select=id&limit=1`, {
-    headers: authHeaders(config),
-  });
+  const probe = await http.request(
+    `${config.url}/rest/v1/products?select=${PROBE_COLUMNS}&limit=1`,
+    {
+      headers: authHeaders(config),
+    },
+  );
   const remoteEmpty = (JSON.parse(probe.body) as unknown[]).length === 0;
   const since =
     options.full || remoteEmpty
@@ -227,7 +240,8 @@ export async function syncToSupabase(
 
   const products = db
     .all<Record<string, unknown> & { labels: string; details: string | null }>(
-      `SELECT id, store, store_product_id, name, brand, category_path, size_text, quantity_amount,
+      `SELECT id, store, store_product_id, name, brand, brand_source, brand_key, category_path,
+         size_text, quantity_amount,
          quantity_unit, pack_count, labels, url, image_url, gtin, details, details_fetched_at,
          first_seen_at, last_seen_at, removed_at, updated_at
        FROM products WHERE $since IS NULL OR updated_at > $since`,

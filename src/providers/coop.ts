@@ -30,7 +30,9 @@ const RawProduct = z.object({
   code: z.string(),
   title: z.string().nullish(),
   name: z.string().nullish(),
-  originText: z.string().nullish(), // the brand, e.g. "Naturaplan", "Evian"
+  // The brand ("Naturaplan", "Evian"), except for wines: their origin ("Frankreich, 2022").
+  originText: z.string().nullish(),
+  wine: z.boolean().nullish(),
   price: z.object({ value: z.number().nullish() }).nullish(),
   originalPrice: z.object({ value: z.number().nullish() }).nullish(), // only during promotions
   content: z.union([z.string(), z.number()]).nullish(),
@@ -123,7 +125,7 @@ export function normalizeCoopProduct(raw: RawProduct, lang: Lang = 'de'): Normal
     store: 'coop',
     storeProductId: raw.code,
     name,
-    brand: nonEmpty(raw.originText),
+    brand: raw.wine ? null : nonEmpty(raw.originText),
     categoryPath: uniqueStrings([raw.primaryCategory?.name]),
     sizeText,
     quantity,
@@ -166,6 +168,7 @@ export const coop: Provider = {
       'Full online supermarket: groceries (about 11,000 products) and the wine shop (about 5,000 wines).',
     rotating: false,
     verified: true,
+    brandInName: true,
     requestsPerSecond: 1,
   },
 

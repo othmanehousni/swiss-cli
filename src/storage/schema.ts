@@ -125,4 +125,18 @@ export const MIGRATIONS: string[] = [
     after_id   TEXT NOT NULL      -- the last product already sent
   );
   `,
+  /* 3: where each brand comes from, and a key to filter brands by */ `
+  ALTER TABLE products ADD COLUMN brand_source TEXT
+    CHECK (brand_source IN ('store', 'name'));  -- published by the store / recognised in the name
+  ALTER TABLE products ADD COLUMN brand_key TEXT; -- lowercase, accent-free brand (set by the brand pass)
+  -- Coop's wine shop gives the origin where other products give the brand
+  -- ("Frankreich, 2022", or just "Frankreich"): those are not brands.
+  UPDATE products SET brand = NULL, updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
+  WHERE store = 'coop' AND (
+    brand GLOB '*, [12][0-9][0-9][0-9]'
+    OR brand IN (SELECT DISTINCT substr(brand, 1, length(brand) - 6) FROM products
+                 WHERE store = 'coop' AND brand GLOB '*, [12][0-9][0-9][0-9]'));
+  UPDATE products SET brand_source = 'store' WHERE brand IS NOT NULL;
+  CREATE INDEX products_brand ON products (brand_key) WHERE brand_key IS NOT NULL;
+  `,
 ];

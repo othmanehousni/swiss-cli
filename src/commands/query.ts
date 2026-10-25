@@ -23,7 +23,14 @@ import {
 } from '../ui/format.js';
 import type { Column } from '../ui/output.js';
 import { FIELDS, parseFields, rowToObject } from './fields.js';
-import { App, type GlobalOptions, parsePositiveInt, parseStores, UserError } from './shared.js';
+import {
+  App,
+  type GlobalOptions,
+  parseBrands,
+  parsePositiveInt,
+  parseStores,
+  UserError,
+} from './shared.js';
 
 /** Name with the brand in front, unless the name already starts with or contains it. */
 function displayName(row: ProductRow): string {
@@ -55,6 +62,8 @@ Examples:
   $ swiss-grocery search lait --sort unit-price          compare price per litre
   $ swiss-grocery search fromage --store migros,coop     only some stores
   $ swiss-grocery search chocolat --promo                only promotions
+  $ swiss-grocery search chocolat --brand lindt,cailler  only these brands
+  $ swiss-grocery search --brand rivella                 everything of one brand
   $ swiss-grocery search café --fields brand,category,url
   $ swiss-grocery search bière --json > biere.json       for scripts
 
@@ -72,8 +81,9 @@ export function registerQueryCommands(program: Command): void {
     .description(
       'Search your local database (fetch stores first) and compare prices across stores.',
     )
-    .argument('<words...>', 'what to look for, e.g. "coca cola"')
+    .argument('[words...]', 'what to look for, e.g. "coca cola"')
     .option('-s, --store <stores>', 'only these stores, comma-separated (e.g. migros,coop)')
+    .option('-b, --brand <brands>', 'only these brands, comma-separated (see `brands`)')
     .option('--sort <order>', `order of results: ${SORT_KEYS.join(', ')}`, 'relevance')
     .option('-p, --promo', 'only products on promotion')
     .option('-c, --category <text>', 'only products whose category contains this text')
@@ -91,6 +101,14 @@ export function registerQueryCommands(program: Command): void {
         try {
           ensureData(app);
           const query = words.join(' ').trim();
+          const brands = opts.brand ? parseBrands(String(opts.brand)) : [];
+          if (!query && brands.length === 0) {
+            throw new UserError('Tell swiss-grocery what to look for.', [
+              'For example: swiss-grocery search lait',
+              'Or everything of one brand: swiss-grocery search --brand lindt',
+            ]);
+          }
+          const what = query || brands.join(', ');
           const sort = String(opts.sort ?? 'relevance') as SortKey;
           if (!SORT_KEYS.includes(sort)) {
             throw new UserError(`Unknown sort order "${sort}".`, [
@@ -109,6 +127,7 @@ export function registerQueryCommands(program: Command): void {
             onlyPromotions: opts.promo === true,
             includeRemoved: opts.includeRemoved === true,
             ...(opts.category ? { category: String(opts.category) } : {}),
+            ...(brands.length > 0 ? { brands } : {}),
           });
 
           if (opts.json) {
@@ -129,16 +148,17 @@ export function registerQueryCommands(program: Command): void {
               'url',
             ]);
             const all = [...fields, ...extra.filter((f) => !fields.includes(f))];
-            app.out.json({ query, total, results: rows.map((r) => rowToObject(r, all)) });
+            app.out.json({ query, brands, total, results: rows.map((r) => rowToObject(r, all)) });
             return;
           }
 
           const { out } = app;
           if (rows.length === 0) {
-            out.info(`No products match "${query}".`);
-            out.hint('Check the spelling or use fewer words (every word must match).');
-            if (opts.store || opts.promo || opts.category)
-              out.hint('Remove --store / --promo / --category to search everywhere.');
+            out.info(`No products match "${what}".`);
+            if (query) out.hint('Check the spelling or use fewer words (every word must match).');
+            if (brands.length > 0) out.hint('Check the brand names with: swiss-grocery brands');
+            if (opts.store || opts.promo || opts.category || opts.brand)
+              out.hint('Remove --store / --promo / --category / --brand to search everywhere.');
             const langs = storeSummaries(app.db())
               .filter((s) => s.products > 0)
               .map((s) => `${getProvider(s.store).info.name} ${app.langFor(s.store)}`);
@@ -150,7 +170,7 @@ export function registerQueryCommands(program: Command): void {
           }
           out.info();
           out.info(
-            `${out.c.bold(formatCount(total))} product${total === 1 ? '' : 's'} match "${query}" ${out.c.dim(`· ${SORT_HELP[sort]}`)}`,
+            `${out.c.bold(formatCount(total))} product${total === 1 ? '' : 's'} match "${what}" ${out.c.dim(`· ${SORT_HELP[sort]}`)}`,
           );
           out.info();
           const now = Date.now();
@@ -292,6 +312,12 @@ function printProduct(app: App, row: ProductRow, history: ReturnType<typeof pric
     `${promo}${row.unit_price != null ? `   (${formatUnitPrice(row.unit_price, row.unit_price_basis)})` : ''}`,
   );
   line('Offer', formatOffer(row) || null);
+  line(
+    'Brand',
+    row.brand && row.brand_source === 'name'
+      ? `${row.brand} ${out.c.dim('(recognised from the name)')}`
+      : row.brand,
+  );
   line('Size', row.size_text);
   line('Labels', (JSON.parse(row.labels) as string[]).join(', ') || null);
   line('Barcode', row.gtin);
