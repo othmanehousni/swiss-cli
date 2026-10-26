@@ -127,7 +127,7 @@ export function swissProgram(): Command {
   registerNatureCommands(program);
 
   registerStatusCommand(program);
-  registerDoctorCommand(program);
+  registerDoctorCommand(program, { sources: true });
   registerSyncCommand(program);
   return program;
 }

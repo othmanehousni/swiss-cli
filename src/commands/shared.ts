@@ -22,6 +22,7 @@ import { isStoreId, STORE_IDS, type StoreId } from '../normalization/types.js';
 import { getProvider } from '../providers/index.js';
 import { LANGS, type Lang, type Provider, type ProviderContext } from '../providers/types.js';
 import { type BrandRefresh, brandsNeedRefresh, refreshBrands } from '../storage/brands.js';
+import { pruneCache } from '../storage/cache.js';
 import { Database } from '../storage/database.js';
 import { Output } from '../ui/output.js';
 
@@ -87,6 +88,7 @@ export class App {
   db(): Database {
     if (!this.database) {
       this.database = Database.open(this.dbPath);
+      pruneCache(this.database);
       // After an upgrade, existing products get their brand keys and recognised brands.
       const { upgradedFrom } = this.database;
       if ((upgradedFrom !== null && upgradedFrom < 3) || brandsNeedRefresh(this.database)) {

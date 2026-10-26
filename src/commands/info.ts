@@ -1,8 +1,10 @@
 import { accessSync, constants, existsSync, statSync } from 'node:fs';
 import { dirname } from 'node:path';
 import type { Command } from 'commander';
+import { CACHE_SOURCES, DATA_SOURCES } from '../modules/sources.js';
 import { FOOD_ALIASES, resolveCategories } from '../providers/categories.js';
 import { allProviders, getProvider } from '../providers/index.js';
+import { cacheSummary } from '../storage/cache.js';
 import { loadCategories, saveCategories } from '../storage/products.js';
 import { databaseTotals, storeSummaries } from '../storage/queries.js';
 import {
@@ -26,6 +28,7 @@ import {
   type GlobalOptions,
   parseStores,
   providerContext,
+  sourceClient,
   UserError,
 } from './shared.js';
 
@@ -216,8 +219,15 @@ export function registerStatusCommand(program: Command): void {
         const summaries = storeSummaries(db);
         const totals = databaseTotals(db);
         const size = existsSync(app.dbPath) ? statSync(app.dbPath).size : 0;
+        const cache = cacheSummary(db);
         if (opts.json) {
-          app.out.json({ database: app.dbPath, sizeBytes: size, ...totals, stores: summaries });
+          app.out.json({
+            database: app.dbPath,
+            sizeBytes: size,
+            ...totals,
+            stores: summaries,
+            savedAnswers: cache,
+          });
           return;
         }
         const { out } = app;
@@ -280,6 +290,20 @@ export function registerStatusCommand(program: Command): void {
             out.hint(`Continue it with: swiss-grocery ${s.lastRun.kind} ${s.store}`);
           }
         }
+        if (cache.length > 0) {
+          const answers = cache.reduce((sum, g) => sum + g.answers, 0);
+          const bytes = cache.reduce((sum, g) => sum + g.bytes, 0);
+          const what = cache.map((g) => CACHE_SOURCES[g.source] ?? g.source).join(', ');
+          out.print();
+          out.print(
+            `  ${out.c.dim('Saved answers')}  ${formatCount(answers)} (${formatBytes(bytes)}): ${what}`,
+          );
+          out.print(
+            out.c.dim(
+              '  Kept so repeated questions are quick and work offline; old ones are removed by themselves.',
+            ),
+          );
+        }
         if (totals.products === 0)
           out.print(`\n  Get started: ${out.c.cyan('swiss-grocery fetch aldi')}`);
         else out.print(`\n  Keep prices fresh: ${out.c.cyan('swiss-grocery update')}`);
@@ -289,14 +313,19 @@ export function registerStatusCommand(program: Command): void {
     });
 }
 
-/** Checks the setup and tests each store (and data source) from this connection. */
-export function registerDoctorCommand(program: Command): void {
+/** Checks the setup and tests each store (and the public data sources) from this connection. */
+export function registerDoctorCommand(program: Command, { sources = false } = {}): void {
   program
     .command('doctor')
-    .summary('check your setup and whether each store can be reached')
+    .summary(
+      sources
+        ? 'check your setup and whether each store and data source can be reached'
+        : 'check your setup and whether each store can be reached',
+    )
     .description(
-      'Check your setup and test each store from your connection: robots.txt, the category\n' +
-        'list and one page of products (a handful of requests per store).',
+      'Check your setup and test each store from your connection: robots.txt, the category ' +
+        'list and one page of products (a handful of requests per store)' +
+        (sources ? ', then one small request to each public data source.' : '.'),
     )
     .argument('[stores...]', 'stores to test (default: all)')
     .action(async (storeArgs: string[], _opts: unknown, command: Command) => {
@@ -402,6 +431,30 @@ export function registerDoctorCommand(program: Command): void {
             const { message, hints } = explainError(error, app.options.verbose === true);
             out.print(`  ${out.c.red('✖')} ${provider.info.name.padEnd(12)} ${message}`);
             if (hints[0]) out.print(`      ${out.c.cyan('→')} ${hints[0]}`);
+          }
+        }
+        if (sources && storeArgs.length === 0) {
+          out.print();
+          out.print(`  ${out.c.bold('Data sources')} ${out.c.dim('(one small request each)')}`);
+          for (const source of DATA_SOURCES) {
+            const progress = new ProgressLine(out);
+            progress.update(`Testing ${source.name}…`);
+            const started = Date.now();
+            try {
+              await sourceClient(app, source.name, {
+                timeoutMs: 30_000,
+              }).getText(source.url);
+              progress.clear();
+              out.print(
+                `  ${out.c.green('✔')} ${source.name.padEnd(28)} ${out.c.dim(`${source.what} · ${formatDuration(Date.now() - started)}`)}`,
+              );
+            } catch (error) {
+              progress.clear();
+              healthy = false;
+              const { message, hints } = explainError(error, app.options.verbose === true);
+              out.print(`  ${out.c.red('✖')} ${source.name.padEnd(28)} ${message}`);
+              if (hints[0]) out.print(`      ${out.c.cyan('→')} ${hints[0]}`);
+            }
           }
         }
         out.print();

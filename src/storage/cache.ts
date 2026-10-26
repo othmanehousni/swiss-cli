@@ -118,3 +118,53 @@ export function needsRefresh(
   const info = datasetInfo(db, name);
   return !info || now - Date.parse(info.fetchedAt) >= maxAgeMs;
 }
+
+/** Answers that only matter for minutes or hours: forgotten after a day. */
+const SHORT_LIVED = [
+  'transport:',
+  'sharing:',
+  'charging:status',
+  'meteoswiss:now:',
+  'quakes:',
+  'hydro:',
+  'slf:snow:',
+  'slf:bulletin:',
+  'priminfo:https:',
+];
+
+/**
+ * Forgets old answers so the cache does not grow forever: short-lived ones after a
+ * day, the rest (lists of places, stations, regions) after 60 days.
+ */
+export function pruneCache(db: Database, now: number = Date.now()): number {
+  const day = new Date(now - 24 * 3600 * 1000).toISOString();
+  const months = new Date(now - 60 * 24 * 3600 * 1000).toISOString();
+  let removed = 0;
+  for (const prefix of SHORT_LIVED) {
+    removed += db.run('DELETE FROM cache WHERE key LIKE $prefix AND fetched_at < $before', {
+      prefix: `${prefix}%`,
+      before: day,
+    });
+  }
+  removed += db.run('DELETE FROM cache WHERE fetched_at < $before', { before: months });
+  return removed;
+}
+
+export interface CacheGroup {
+  /** "transport", "meteoswiss", ... (the key up to the first colon). */
+  source: string;
+  answers: number;
+  bytes: number;
+  newest: string;
+}
+
+/** What the cache holds, by source. */
+export function cacheSummary(db: Database): CacheGroup[] {
+  return db
+    .all<{ source: string; answers: number; bytes: number; newest: string }>(
+      `SELECT substr(key, 1, instr(key, ':') - 1) AS source, COUNT(*) AS answers,
+         SUM(length(body)) AS bytes, MAX(fetched_at) AS newest
+       FROM cache GROUP BY source ORDER BY bytes DESC`,
+    )
+    .map((r) => ({ source: r.source, answers: r.answers, bytes: r.bytes, newest: r.newest }));
+}

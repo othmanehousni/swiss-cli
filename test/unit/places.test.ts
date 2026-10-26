@@ -243,3 +243,24 @@ describe('cache', () => {
     db.close();
   });
 });
+
+describe('cache upkeep', () => {
+  it('forgets short-lived answers after a day and the rest after 60 days', async () => {
+    const { cacheSummary, pruneCache } = await import('../../src/storage/cache.js');
+    const db = Database.open(':memory:');
+    const now = Date.UTC(2026, 9, 26, 12);
+    const day = 24 * 3600 * 1000;
+    await cached(db, 'transport:old', 1, async () => 1, now - 2 * day);
+    await cached(db, 'transport:new', 1, async () => 2, now - 3600 * 1000);
+    await cached(db, 'meteoswiss:points', 1, async () => 3, now - 10 * day);
+    await cached(db, 'slf:regions', 1, async () => 4, now - 61 * day);
+    expect(pruneCache(db, now)).toBe(2);
+    expect(cacheSummary(db).map((g) => [g.source, g.answers])).toEqual(
+      expect.arrayContaining([
+        ['transport', 1],
+        ['meteoswiss', 1],
+      ]),
+    );
+    db.close();
+  });
+});
