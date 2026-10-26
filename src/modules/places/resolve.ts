@@ -20,6 +20,11 @@ export interface Place {
   municipalityId: number | null;
   municipality: string | null;
   canton: string | null;
+  /**
+   * How it was found: a postcode, a place or municipality name, or swisstopo's
+   * search (addresses, stations, mountains): then the postcode is the nearest one.
+   */
+  kind: 'postcode' | 'name' | 'search';
 }
 
 export interface ResolvedPlace {
@@ -35,8 +40,9 @@ export class PlaceNotFoundError extends Error {
   }
 }
 
-function fromPostcode(row: PostcodeRow, label: string): Place {
+function fromPostcode(row: PostcodeRow, label: string, kind: Place['kind']): Place {
   return {
+    kind,
     label,
     lat: row.lat ?? 0,
     lon: row.lon ?? 0,
@@ -119,8 +125,8 @@ export async function resolvePlace(
     const [first, ...others] = rows;
     if (!first) throw new PlaceNotFoundError(query);
     return {
-      place: fromPostcode(first, placeLabel(first)),
-      alternatives: others.map((r) => fromPostcode(r, placeLabel(r))),
+      place: fromPostcode(first, placeLabel(first), 'postcode'),
+      alternatives: others.map((r) => fromPostcode(r, placeLabel(r), 'postcode')),
     };
   }
 
@@ -131,8 +137,8 @@ export async function resolvePlace(
     const key = looseKey(text);
     const sameName = others.filter((r) => looseKey(r.municipality) === key);
     return {
-      place: fromPostcode(first, placeLabel(first)),
-      alternatives: sameName.slice(0, 5).map((r) => fromPostcode(r, placeLabel(r))),
+      place: fromPostcode(first, placeLabel(first), 'name'),
+      alternatives: sameName.slice(0, 5).map((r) => fromPostcode(r, placeLabel(r), 'name')),
     };
   }
 
@@ -142,6 +148,7 @@ export async function resolvePlace(
   const near = nearestPostcode(db, hit.lat, hit.lon);
   return {
     place: {
+      kind: 'search',
       // "Lausanne (VD)": the canton is shown separately.
       label: hit.label.replace(/\s*\([A-Z]{2}\)$/, ''),
       lat: hit.lat,

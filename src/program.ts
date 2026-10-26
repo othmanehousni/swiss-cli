@@ -14,6 +14,7 @@ import { registerSyncCommand } from './commands/sync.js';
 import { loadDotEnv, VERSION } from './config.js';
 import { registerPremiumsCommand } from './modules/premiums/command.js';
 import { registerTransportCommands } from './modules/transport/command.js';
+import { registerWeatherCommand } from './modules/weather/command.js';
 import { LANGS } from './providers/types.js';
 import { Output } from './ui/output.js';
 
@@ -35,6 +36,7 @@ Examples:
   $ swiss premiums 8001 --age 34               health insurance premiums of every insurer
   $ swiss train Lausanne "Zürich HB"           next connections, with delays and platforms
   $ swiss departures Bern                      departure board
+  $ swiss weather 3920                         MeteoSwiss forecast for Zermatt
 
 Places can be a postcode (8001), a municipality (Lausanne) or an address.
 Help for any command: swiss <command> --help`;
@@ -90,8 +92,8 @@ export function swissProgram(): Command {
     new Command()
       .name('swiss')
       .description(
-        'Swiss data from the command line: shop prices, health insurance premiums and public ' +
-          'transport. ' +
+        'Swiss data from the command line: shop prices, health insurance premiums, public ' +
+          'transport and weather. ' +
           'Only official and public sources, used politely.',
       ),
   ).addHelpText('after', SWISS_QUICK_START);
@@ -112,6 +114,7 @@ export function swissProgram(): Command {
 
   registerPremiumsCommand(program);
   registerTransportCommands(program);
+  registerWeatherCommand(program);
 
   registerStatusCommand(program);
   registerDoctorCommand(program);
