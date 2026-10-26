@@ -12,6 +12,7 @@ import { registerQueryCommands } from './commands/query.js';
 import { explainError, UserError } from './commands/shared.js';
 import { registerSyncCommand } from './commands/sync.js';
 import { loadDotEnv, VERSION } from './config.js';
+import { registerPremiumsCommand } from './modules/premiums/command.js';
 import { LANGS } from './providers/types.js';
 import { Output } from './ui/output.js';
 
@@ -25,21 +26,12 @@ Product names come in German unless you choose: for French, put SWISS_GROCERY_LA
 in your .env file (or add --lang fr), then search in French as above.
 Everything is stored on your computer (see where with: swiss-grocery status).
 Help for any command: swiss-grocery <command> --help
-Everything else Swiss (insurance premiums, trains, weather...): swiss --help`;
+More Swiss data (health insurance premiums...): swiss --help`;
 
 const SWISS_QUICK_START = `
 Examples:
   $ swiss grocery search lait                  compare shop prices (fetch a shop first)
-  $ swiss premiums 8001 --age 34               health insurance premiums 2027
-  $ swiss power 1003                           electricity prices in your municipality
-  $ swiss train Lausanne "Zürich HB"           next connections
-  $ swiss departures Bern                      departure board
-  $ swiss weather 3920                         MeteoSwiss forecast
-  $ swiss charge near "Lausanne gare"          EV charging stations, live availability
-  $ swiss sharing near Bern                    shared bikes, scooters and cars
-  $ swiss rivers aare                          river and lake temperatures
-  $ swiss quakes                               recent earthquakes
-  $ swiss snow Davos                           snow depth and avalanche danger
+  $ swiss premiums 8001 --age 34               health insurance premiums of every insurer
 
 Places can be a postcode (8001), a municipality (Lausanne) or an address.
 Help for any command: swiss <command> --help`;
@@ -95,16 +87,15 @@ export function swissProgram(): Command {
     new Command()
       .name('swiss')
       .description(
-        'Swiss data from the command line: shop prices, health insurance premiums, electricity ' +
-          'prices, public transport, weather, charging stations, shared mobility, rivers, ' +
-          'earthquakes and snow. Only official and public sources, used politely.',
+        'Swiss data from the command line: shop prices and health insurance premiums. ' +
+          'Only official and public sources, used politely.',
       ),
   ).addHelpText('after', SWISS_QUICK_START);
 
   const grocery = program
     .command('grocery')
     .alias('shops')
-    .summary('shop prices: Migros, Coop, Denner, Aldi, Lidl, IKEA, Volg, Landi')
+    .summary('shop prices: Migros, Coop, Denner, Aldi, Lidl')
     .description(
       'The shop price database: fetch the shops, then search, compare and export.\n' +
         'Same as the swiss-grocery command.',
@@ -114,6 +105,8 @@ export function swissProgram(): Command {
   registerStatusCommand(grocery);
   registerDoctorCommand(grocery);
   registerSyncCommand(grocery);
+
+  registerPremiumsCommand(program);
 
   registerStatusCommand(program);
   registerDoctorCommand(program);
