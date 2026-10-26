@@ -12,6 +12,7 @@ import { registerQueryCommands } from './commands/query.js';
 import { explainError, UserError } from './commands/shared.js';
 import { registerSyncCommand } from './commands/sync.js';
 import { loadDotEnv, VERSION } from './config.js';
+import { registerMobilityCommands } from './modules/mobility/command.js';
 import { registerPremiumsCommand } from './modules/premiums/command.js';
 import { registerTransportCommands } from './modules/transport/command.js';
 import { registerWeatherCommand } from './modules/weather/command.js';
@@ -37,6 +38,8 @@ Examples:
   $ swiss train Lausanne "Zürich HB"           next connections, with delays and platforms
   $ swiss departures Bern                      departure board
   $ swiss weather 3920                         MeteoSwiss forecast for Zermatt
+  $ swiss charge near "Lausanne gare"          EV charging stations, live availability
+  $ swiss sharing near Bern                    shared bikes, e-scooters and cars
 
 Places can be a postcode (8001), a municipality (Lausanne) or an address.
 Help for any command: swiss <command> --help`;
@@ -93,7 +96,7 @@ export function swissProgram(): Command {
       .name('swiss')
       .description(
         'Swiss data from the command line: shop prices, health insurance premiums, public ' +
-          'transport and weather. ' +
+          'transport, weather, charging stations and shared mobility. ' +
           'Only official and public sources, used politely.',
       ),
   ).addHelpText('after', SWISS_QUICK_START);
@@ -115,6 +118,7 @@ export function swissProgram(): Command {
   registerPremiumsCommand(program);
   registerTransportCommands(program);
   registerWeatherCommand(program);
+  registerMobilityCommands(program);
 
   registerStatusCommand(program);
   registerDoctorCommand(program);
