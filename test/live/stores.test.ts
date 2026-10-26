@@ -28,6 +28,8 @@ const stores: StoreId[] = [
   'lidl',
   'denner',
   'coop',
+  'volg',
+  'landi',
   ...(process.env.LIVE_MIGROS ? (['migros'] as const) : []),
 ];
 
