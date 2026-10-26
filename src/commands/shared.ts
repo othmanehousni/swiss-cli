@@ -16,6 +16,7 @@ import {
 } from '../crawler/errors.js';
 import { HttpClient } from '../crawler/http.js';
 import { RetryAfterTooLongError } from '../crawler/retry.js';
+import { PlaceNotFoundError } from '../modules/places/resolve.js';
 import { isStoreId, STORE_IDS, type StoreId } from '../normalization/types.js';
 import { getProvider } from '../providers/index.js';
 import { LANGS, type Lang, type Provider, type ProviderContext } from '../providers/types.js';
@@ -66,9 +67,11 @@ export class App {
   /**
    * The language to read a store in: --lang if given, else the store's own setting
    * (e.g. SWISS_GROCERY_MIGROS_LANG=fr), else SWISS_GROCERY_LANG, else German.
+   * Without a store: --lang, else SWISS_GROCERY_LANG, else German.
    */
-  langFor(store: StoreId): Lang {
+  langFor(store?: StoreId): Lang {
     if (this.options.lang) return this.options.lang;
+    if (!store) return defaultLang();
     const name = `SWISS_GROCERY_${store.toUpperCase()}_LANG`;
     const value = process.env[name]?.trim().toLowerCase();
     if (!value) return defaultLang();
@@ -183,6 +186,33 @@ export function parsePositiveNumber(value: string, name: string): number {
   return n;
 }
 
+/**
+ * An HTTP client for a public data source (MeteoSwiss, transport.opendata.ch, ...):
+ * robots.txt, a polite request rate, retries, and --verbose logging.
+ */
+export function sourceClient(
+  app: App,
+  source: string,
+  options: { requestsPerSecond?: number; timeoutMs?: number; signal?: AbortSignal } = {},
+): HttpClient {
+  return new HttpClient({
+    userAgent: userAgent(),
+    acceptLanguage: ACCEPT_LANGUAGE[app.langFor()],
+    requestsPerSecond: options.requestsPerSecond ?? 2,
+    ...(options.timeoutMs ? { timeoutMs: options.timeoutMs } : {}),
+    ...(options.signal ? { signal: options.signal } : {}),
+    onEvent: (event) => {
+      if (event.type === 'retry') {
+        app.out.debug(
+          `${source}: ${event.reason}, retrying in ${Math.ceil(event.delayMs / 1000)}s (attempt ${event.attempt + 1})`,
+        );
+      } else if (event.type === 'request') {
+        app.out.debug(`${source}: ${event.url}`);
+      }
+    },
+  });
+}
+
 export function providerContext(
   app: App,
   provider: Provider,
@@ -242,6 +272,14 @@ export function explainError(
   verbose = false,
 ): { message: string; hints: string[] } {
   if (error instanceof UserError) return { message: error.message, hints: error.hints };
+  if (error instanceof PlaceNotFoundError) {
+    return {
+      message: error.message,
+      hints: [
+        'Use a postcode (8001), a municipality or place (Lausanne, Davos Platz) or an address.',
+      ],
+    };
+  }
   if (error instanceof BlockedError) {
     return {
       message: error.message,

@@ -38,7 +38,15 @@ function nodeVersionOk(): boolean {
   );
 }
 
+/** All the commands about the stores, for `swiss-grocery`. */
 export function registerInfoCommands(program: Command): void {
+  registerStoreCommands(program);
+  registerStatusCommand(program);
+  registerDoctorCommand(program);
+}
+
+/** `stores` and `categories`. */
+export function registerStoreCommands(program: Command): void {
   program
     .command('stores')
     .summary('list supported stores and what each one publishes online')
@@ -190,7 +198,10 @@ export function registerInfoCommands(program: Command): void {
         app.close();
       }
     });
+}
 
+/** What is in the database: products per store, freshness, completeness. */
+export function registerStatusCommand(program: Command): void {
   program
     .command('status')
     .summary('what is in your database, how fresh and how complete it is')
@@ -276,7 +287,10 @@ export function registerInfoCommands(program: Command): void {
         app.close();
       }
     });
+}
 
+/** Checks the setup and tests each store (and data source) from this connection. */
+export function registerDoctorCommand(program: Command): void {
   program
     .command('doctor')
     .summary('check your setup and whether each store can be reached')

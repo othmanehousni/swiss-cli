@@ -24,6 +24,7 @@ export interface FetchResponse {
   status: number;
   headers: { get(name: string): string | null; has(name: string): boolean };
   text(): Promise<string>;
+  arrayBuffer?(): Promise<ArrayBuffer>;
 }
 
 export type FetchLike = (
@@ -36,6 +37,8 @@ export interface HttpResponse {
   status: number;
   headers: FetchResponse['headers'];
   body: string;
+  /** The raw bytes, for requests made with `binary` (the body is then empty). */
+  bytes?: Uint8Array;
 }
 
 export type HttpEvent =
@@ -66,6 +69,10 @@ export interface RequestOptions {
   headers?: Record<string, string>;
   body?: string;
   skipRobots?: boolean;
+  /** Read the answer as bytes (ZIP files, spreadsheets). */
+  binary?: boolean;
+  /** Overrides the client's timeout, e.g. for large downloads. */
+  timeoutMs?: number;
 }
 
 interface Robot {
@@ -171,6 +178,15 @@ export class HttpClient {
       .body;
   }
 
+  async getBytes(url: string, options: RequestOptions = {}): Promise<Uint8Array> {
+    const response = await this.request(url, {
+      ...options,
+      binary: true,
+      headers: { Accept: '*/*', ...options.headers },
+    });
+    return response.bytes ?? new Uint8Array();
+  }
+
   async request(url: string, options: RequestOptions = {}): Promise<HttpResponse> {
     if (!options.skipRobots && this.options.respectRobots !== false) await this.assertAllowed(url);
     const host = new URL(url).host;
@@ -187,12 +203,13 @@ export class HttpClient {
         this.stats.requests++;
         this.options.onEvent?.({ type: 'request', url, attempt });
 
-        const timeout = AbortSignal.timeout(this.options.timeoutMs ?? 30_000);
+        const timeout = AbortSignal.timeout(options.timeoutMs ?? this.options.timeoutMs ?? 30_000);
         const signal = this.options.signal
           ? AbortSignal.any([this.options.signal, timeout])
           : timeout;
         let response: FetchResponse;
-        let body: string;
+        let body = '';
+        let bytes: Uint8Array | undefined;
         try {
           response = await this.doFetch(url, {
             method: options.method ?? 'GET',
@@ -200,16 +217,29 @@ export class HttpClient {
             ...(options.body === undefined ? {} : { body: options.body }),
             signal,
           });
-          body = await response.text();
+          if (options.binary && response.arrayBuffer) {
+            bytes = new Uint8Array(await response.arrayBuffer());
+          } else {
+            body = await response.text();
+          }
         } catch (error) {
           if (this.options.signal?.aborted) throw error;
           throw new NetworkError(url, error);
         }
-        this.stats.bytes += body.length;
+        this.stats.bytes += bytes?.length ?? body.length;
 
         if (response.status >= 200 && response.status < 300) {
-          return { url, status: response.status, headers: response.headers, body };
+          if (options.binary && !bytes) bytes = new TextEncoder().encode(body);
+          return {
+            url,
+            status: response.status,
+            headers: response.headers,
+            body,
+            ...(bytes ? { bytes } : {}),
+          };
         }
+        // Error pages are text, also when bytes were asked for.
+        if (bytes) body = new TextDecoder().decode(bytes.subarray(0, 4000));
         const protection = detectBotProtection(response.status, response.headers, body);
         if (protection) throw new BlockedError(url, protection, response.status);
         if (response.status === 429) {

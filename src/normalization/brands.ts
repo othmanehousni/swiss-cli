@@ -6,7 +6,7 @@
  * the brand is recognised from the start of the name, using only brands the stores
  * themselves publish, so nothing is guessed from the words alone.
  */
-import { searchKey } from './text.js';
+import { looseKey, searchKey } from './text.js';
 
 /**
  * Lowercase, accent-free form of a brand: how brands are compared and filtered.
@@ -14,7 +14,7 @@ import { searchKey } from './text.js';
  * "Feldschlosschen" are one brand, however a store or a user types it.
  */
 export function brandKey(brand: string): string {
-  return searchKey(brand).replace(/ae/g, 'a').replace(/oe/g, 'o').replace(/ue/g, 'u');
+  return looseKey(brand);
 }
 
 /**

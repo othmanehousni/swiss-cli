@@ -114,6 +114,14 @@ export function searchKey(input: string): string {
     .trim();
 }
 
+/**
+ * A looser key for names people type in many ways: umlauts fold to their vowel, so
+ * "Zürich", "Zuerich" and "Zurich", or "Feldschlösschen" and "Feldschlosschen", match.
+ */
+export function looseKey(input: string): string {
+  return searchKey(input).replace(/ae/g, 'a').replace(/oe/g, 'o').replace(/ue/g, 'u');
+}
+
 /** Returns trimmed text, or null when empty. */
 export function nonEmpty(input: string | null | undefined): string | null {
   const text = input?.trim();

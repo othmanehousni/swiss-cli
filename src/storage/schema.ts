@@ -139,4 +139,40 @@ export const MIGRATIONS: string[] = [
   UPDATE products SET brand_source = 'store' WHERE brand IS NOT NULL;
   CREATE INDEX products_brand ON products (brand_key) WHERE brand_key IS NOT NULL;
   `,
+  /* 4: shared by the other Swiss data (premiums, electricity, weather, ...) */ `
+  -- Answers of public data services, kept a while so repeated commands spare them.
+  CREATE TABLE cache (
+    key        TEXT PRIMARY KEY,
+    body       TEXT NOT NULL,
+    fetched_at TEXT NOT NULL
+  );
+
+  -- What was downloaded when: 'postcodes', 'premiums:2027', 'power:2027:H4', ...
+  CREATE TABLE datasets (
+    name       TEXT PRIMARY KEY,
+    version    TEXT,                 -- the source's own date or year, when it has one
+    rows       INTEGER NOT NULL DEFAULT 0,
+    fetched_at TEXT NOT NULL
+  );
+
+  -- The official directory of Swiss postcodes (swisstopo): postcode -> place,
+  -- municipality (BFS number) and canton, with the centre of each place.
+  CREATE TABLE postcodes (
+    postcode         TEXT NOT NULL,
+    suffix           TEXT NOT NULL,     -- "Zusatzziffer": 1000 Lausanne 25, 26, ...
+    locality         TEXT NOT NULL,
+    locality_key     TEXT NOT NULL,     -- lowercase, accent-free, for matching names
+    municipality_id  INTEGER NOT NULL,
+    municipality     TEXT NOT NULL,
+    municipality_key TEXT NOT NULL,
+    canton           TEXT NOT NULL,
+    address_share    REAL,              -- share of the postcode's addresses in this place
+    lat              REAL,
+    lon              REAL,
+    language         TEXT,
+    PRIMARY KEY (postcode, suffix, municipality_id)
+  );
+  CREATE INDEX postcodes_locality ON postcodes (locality_key);
+  CREATE INDEX postcodes_municipality ON postcodes (municipality_key);
+  `,
 ];

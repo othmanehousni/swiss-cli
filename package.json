@@ -4,6 +4,7 @@
   "description": "Migros, Coop, Denner, Aldi Suisse and Lidl Suisse in one normalized command-line tool and price database.",
   "type": "module",
   "bin": {
+    "swiss": "dist/swiss.js",
     "swiss-grocery": "dist/cli.js"
   },
   "files": [
