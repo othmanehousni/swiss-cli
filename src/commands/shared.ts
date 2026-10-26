@@ -17,6 +17,7 @@ import {
 import { HttpClient } from '../crawler/http.js';
 import { RetryAfterTooLongError } from '../crawler/retry.js';
 import { PlaceNotFoundError } from '../modules/places/resolve.js';
+import { editDistance } from '../normalization/text.js';
 import { isStoreId, STORE_IDS, type StoreId } from '../normalization/types.js';
 import { getProvider } from '../providers/index.js';
 import { LANGS, type Lang, type Provider, type ProviderContext } from '../providers/types.js';
@@ -110,26 +111,6 @@ export class App {
   }
 }
 
-function distance(a: string, b: string): number {
-  const dp = Array.from({ length: a.length + 1 }, (_, i) => [
-    i,
-    ...Array<number>(b.length).fill(0),
-  ]);
-  for (let j = 1; j <= b.length; j++) (dp[0] as number[])[j] = j;
-  for (let i = 1; i <= a.length; i++) {
-    for (let j = 1; j <= b.length; j++) {
-      const row = dp[i] as number[];
-      const prev = dp[i - 1] as number[];
-      row[j] = Math.min(
-        (prev[j] as number) + 1,
-        (row[j - 1] as number) + 1,
-        (prev[j - 1] as number) + (a[i - 1] === b[j - 1] ? 0 : 1),
-      );
-    }
-  }
-  return (dp[a.length] as number[])[b.length] as number;
-}
-
 const STORE_ALIASES: Record<string, StoreId> = {
   'aldi-suisse': 'aldi',
   aldisuisse: 'aldi',
@@ -162,7 +143,9 @@ export function parseStores(values: string[], { allowAll = true } = {}): StoreId
     if (name === 'all' && allowAll) return [...STORE_IDS];
     const store = STORE_ALIASES[name] ?? name;
     if (!isStoreId(store)) {
-      const closest = [...STORE_IDS].sort((a, b) => distance(name, a) - distance(name, b))[0];
+      const closest = [...STORE_IDS].sort(
+        (a, b) => editDistance(name, a) - editDistance(name, b),
+      )[0];
       throw new UserError(`Unknown store "${name}".`, [
         `Did you mean "${closest}"?`,
         `Stores: ${STORE_IDS.join(', ')}${allowAll ? ', or "all"' : ''}. See: swiss-grocery stores`,

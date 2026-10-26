@@ -1,7 +1,7 @@
 import type { HttpClient } from '../../crawler/http.js';
-import { looseKey } from '../../normalization/text.js';
+import { editDistance, looseKey } from '../../normalization/text.js';
 import type { Database } from '../../storage/database.js';
-import { geocode } from './geocode.js';
+import { type GeocodeResult, geocode } from './geocode.js';
 import {
   ensurePostcodes,
   findPlaces,
@@ -60,6 +60,47 @@ function placeLabel(row: PostcodeRow): string {
 }
 
 /**
+ * How well a search result's label matches what was typed, lower is better; null when
+ * no word of the query is in it. The search also returns loose matches ("Atlantis"
+ * gives "Road Atlanta"), which must not be taken for the place asked for.
+ */
+export function matchScore(query: string, label: string): number | null {
+  const typed = looseKey(query).split(' ').filter(Boolean);
+  const wanted = typed.filter((w) => w.length >= 3 && !/^\d+$/.test(w));
+  const words = looseKey(label).split(' ').filter(Boolean);
+  let best: number | null = wanted.length === 0 ? 0 : null;
+  for (const w of wanted) {
+    for (const l of words) {
+      // The same word; an abbreviation ("Bahnhofstr"); one letter off ("Lausane").
+      const quality =
+        w === l
+          ? 0
+          : w.length >= 6 && l.startsWith(w)
+            ? 1
+            : w.length >= 5 && editDistance(w, l) <= 1
+              ? 2
+              : null;
+      if (quality !== null && (best === null || quality < best)) best = quality;
+    }
+  }
+  if (best === null) return null;
+  // Among equally good matches, the label with the fewest other words ("Lausanne (VD)"
+  // rather than "Belmont-sur-Lausanne (VD)").
+  const extra = words.filter((l) => !typed.includes(l)).length;
+  return best * 100 + extra;
+}
+
+/** The best search result for the query, or null when none really matches it. */
+export function bestMatch(query: string, results: GeocodeResult[]): GeocodeResult | null {
+  let best: { result: GeocodeResult; score: number } | null = null;
+  for (const result of results) {
+    const score = matchScore(query, result.label);
+    if (score !== null && (best === null || score < best.score)) best = { result, score };
+  }
+  return best?.result ?? null;
+}
+
+/**
  * Finds a place from what a user types: a postcode ("8001"), a place or
  * municipality ("Lausanne", "Davos Platz"), or anything swisstopo's search
  * knows (addresses, stations, mountains).
@@ -95,13 +136,14 @@ export async function resolvePlace(
     };
   }
 
-  const [hit] = await geocode(http, text, 1);
+  const hit = bestMatch(text, await geocode(http, text, 5));
   if (!hit) throw new PlaceNotFoundError(query);
   // The municipality of a street address or a station: the closest postcode's.
   const near = nearestPostcode(db, hit.lat, hit.lon);
   return {
     place: {
-      label: hit.label,
+      // "Lausanne (VD)": the canton is shown separately.
+      label: hit.label.replace(/\s*\([A-Z]{2}\)$/, ''),
       lat: hit.lat,
       lon: hit.lon,
       postcode: near?.postcode ?? null,

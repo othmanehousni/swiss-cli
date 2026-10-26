@@ -2,7 +2,12 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { HttpClient } from '../../src/crawler/http.js';
 import { contains, distanceKm, lv95ToWgs84 } from '../../src/modules/places/geo.js';
 import { POSTCODE_DIRECTORY, parsePostcodeDirectory } from '../../src/modules/places/postcodes.js';
-import { PlaceNotFoundError, resolvePlace } from '../../src/modules/places/resolve.js';
+import {
+  bestMatch,
+  matchScore,
+  PlaceNotFoundError,
+  resolvePlace,
+} from '../../src/modules/places/resolve.js';
 import { cached, datasetInfo } from '../../src/storage/cache.js';
 import { Database } from '../../src/storage/database.js';
 import { createFakeFetch } from '../helpers/fake-fetch.js';
@@ -164,6 +169,36 @@ describe('places', () => {
     }));
     await expect(resolvePlace(db, http, 'Atlantis')).rejects.toBeInstanceOf(PlaceNotFoundError);
     await expect(resolvePlace(db, http, '9999')).rejects.toThrow('No place in Switzerland');
+  });
+
+  it('takes the search result that matches what was typed, not a loose one', async () => {
+    const results: Record<string, { label: string; origin: string }[]> = {
+      Atlantis: [{ label: 'Ort Road Atlanta (LU) - Ruswil', origin: 'gazetteer' }],
+      Lausane: [
+        { label: 'Belmont-sur-Lausanne (VD)', origin: 'gg25' },
+        { label: '<b>Lausanne (VD)</b>', origin: 'gg25' },
+      ],
+    };
+    const { http } = client((url) => {
+      if (!url.includes('SearchServer')) return { body: '' };
+      const text = new URL(url).searchParams.get('searchText') ?? '';
+      const attrs = (results[text] ?? []).map((r) => ({ ...r, lat: 46.52, lon: 6.63 }));
+      return { body: { results: attrs.map((a) => ({ attrs: a })) } };
+    });
+    await expect(resolvePlace(db, http, 'Atlantis')).rejects.toBeInstanceOf(PlaceNotFoundError);
+    const lausanne = await resolvePlace(db, http, 'Lausane');
+    expect(lausanne.place).toMatchObject({ label: 'Lausanne', municipality: 'Lausanne' });
+  });
+
+  it('scores search results by the words typed', () => {
+    // Zürich matches exactly; two words of the label were not typed.
+    expect(matchScore('Bahnhofstr 1 Zürich', 'Bahnhofstrasse 1 8001 Zürich')).toBe(2);
+    expect(matchScore('Genf', 'Genf (GE)')).toBe(1);
+    expect(matchScore('Basle', 'Hauptgipfel Baslersch Chopf (GR) - Davos')).toBeNull();
+    const hit = (label: string) => ({ label, origin: 'gg25', lat: 0, lon: 0 });
+    expect(
+      bestMatch('Lausane', [hit('Belmont-sur-Lausanne (VD)'), hit('Lausanne (VD)')])?.label,
+    ).toBe('Lausanne (VD)');
   });
 });
 

@@ -133,3 +133,24 @@ export function cleanLabel(input: string | null | undefined): string | null {
   const text = nonEmpty(input);
   return text ? text.replace(/[\uFE6A\uFF05]/g, '%').replace(/\s+/g, ' ') : null;
 }
+
+/** Levenshtein distance: how many letters to add, remove or change to turn `a` into `b`. */
+export function editDistance(a: string, b: string): number {
+  const dp = Array.from({ length: a.length + 1 }, (_, i) => [
+    i,
+    ...Array<number>(b.length).fill(0),
+  ]);
+  for (let j = 1; j <= b.length; j++) (dp[0] as number[])[j] = j;
+  for (let i = 1; i <= a.length; i++) {
+    for (let j = 1; j <= b.length; j++) {
+      const row = dp[i] as number[];
+      const prev = dp[i - 1] as number[];
+      row[j] = Math.min(
+        (prev[j] as number) + 1,
+        (row[j - 1] as number) + 1,
+        (prev[j - 1] as number) + (a[i - 1] === b[j - 1] ? 0 : 1),
+      );
+    }
+  }
+  return (dp[a.length] as number[])[b.length] as number;
+}
