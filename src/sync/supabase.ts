@@ -102,8 +102,16 @@ function postgrestError(body: string): { code: string; message: string; hint: st
 /** Reading the newest columns also tells whether the tables are up to date. */
 const PROBE_COLUMNS = 'id,brand_source,brand_key';
 
+/** The command that gets the schema, straight onto the clipboard where the system can. */
+export function schemaCommand(platform: NodeJS.Platform = process.platform): string {
+  const command = 'swiss-grocery sync --print-schema';
+  if (platform === 'darwin') return `Copy the SQL with: ${command} | pbcopy`;
+  if (platform === 'win32') return `Copy the SQL with: ${command} | clip`;
+  return `Print the SQL with: ${command}`;
+}
+
 const SCHEMA_HINTS = [
-  'Print the SQL with: swiss-grocery sync --print-schema',
+  schemaCommand(),
   'Run it in Supabase: SQL Editor -> New query -> paste -> Run (safe to run again, it keeps your data).',
 ];
 

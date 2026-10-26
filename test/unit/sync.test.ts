@@ -6,6 +6,7 @@ import {
   checkSupabase,
   explainSupabaseError,
   keyProblem,
+  schemaCommand,
   schemaSql,
   syncToSupabase,
 } from '../../src/sync/supabase.js';
@@ -117,6 +118,16 @@ describe('explainSupabaseError', () => {
     );
     expect(diagnosis.hints.join(' ')).toContain('swiss-grocery sync --print-schema');
     expect(schemaSql()).toContain('add column if not exists brand_key text');
+  });
+
+  it('puts the schema on the clipboard where the system has a tool for it', () => {
+    expect(schemaCommand('darwin')).toBe(
+      'Copy the SQL with: swiss-grocery sync --print-schema | pbcopy',
+    );
+    expect(schemaCommand('win32')).toBe(
+      'Copy the SQL with: swiss-grocery sync --print-schema | clip',
+    );
+    expect(schemaCommand('linux')).toBe('Print the SQL with: swiss-grocery sync --print-schema');
   });
 
   it('passes on other Supabase errors with their code and hint', () => {

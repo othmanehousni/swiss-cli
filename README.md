@@ -433,7 +433,8 @@ only what changed.
 paste the schema and press *Run*. Print the schema with:
 
 ```console
-$ swiss-grocery sync --print-schema
+$ swiss-grocery sync --print-schema            # shows it
+$ swiss-grocery sync --print-schema | pbcopy   # Mac: copies it (Windows: | clip)
 ```
 
 The schema creates the tables and gives your secret key access to them: since 2026,

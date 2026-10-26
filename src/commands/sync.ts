@@ -22,7 +22,8 @@ import { App, type GlobalOptions, UserError } from './shared.js';
 const EXAMPLES = `
 Setup, Supabase (once):
   1. Create the tables: Supabase dashboard -> SQL Editor -> New query, paste the
-     output of \`swiss-grocery sync --print-schema\` and press Run.
+     output of \`swiss-grocery sync --print-schema\` and press Run
+     (on a Mac, \`swiss-grocery sync --print-schema | pbcopy\` copies it).
   2. In a .env file in the folder you run swiss-grocery from (see .env.example):
        SUPABASE_URL=https://<project>.supabase.co
        SUPABASE_SECRET_KEY=sb_secret_...
