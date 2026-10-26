@@ -1,9 +1,58 @@
-# swiss-grocery
+# swiss
 
-**Migros, Coop, Denner, Aldi Suisse and Lidl Suisse in one place.**
-`swiss-grocery` is a command-line tool that downloads the products and prices these
-Swiss supermarkets publish online, stores them in one normalized database on your
-computer, and lets you search, compare and export them.
+**Swiss data from the command line.** `swiss` brings together what Swiss companies and
+federal offices publish: shop prices, health insurance premiums, public transport,
+weather, charging stations, shared mobility, rivers and lakes, earthquakes, snow and
+avalanches. Every answer comes from an official or public source, asked politely.
+
+```console
+$ swiss premiums 8001 --age 34 -d 2500 -n 3
+
+  Health insurance 2027 · 8001 Zürich (ZH, premium region 1)
+  Adult (26+), born 1992 · deductible CHF 2500 · with accident cover · 128 plans from 27 insurers
+
+   #  Insurer   Plan          Model       CHF/month  CHF/year
+   1  Atupri    HMO           Doctor/HMO     406.80   4881.60
+   2  Sanitas   TelMed Basic  Telmed         412.50   4950.00
+   3  Assura    QualiMed      Flex           413.10   4957.20
+
+  Cheapest with free choice of doctor: SLKK Grundversicherung, CHF 504.70 a month.
+  To switch for 2027, your notice must reach your insurer by Monday 30 November 2026.
+
+$ swiss train Lausanne Zürich --at 7:30 --date tomorrow -n 1
+
+  Lausanne → Zürich HB
+  Tuesday 27 October 2026 · leaving from 07:30
+
+  07:34 → 09:56   2h 22m   direct   IC 5
+     07:34  Lausanne   platform 4   IC 5 → Rorschach
+     09:56  Zürich HB  platform 33
+
+$ swiss aare
+  Aare in Bern: 13.2 °C, 80 m³/s (Aare - Bern, Schönau, 21:20)
+```
+
+(Real output from 26 October 2026.)
+
+| Command | What it answers | Source |
+|---|---|---|
+| `swiss grocery …` | Prices of Migros, Coop, Denner, Aldi, Lidl, Volg and LANDI, compared and tracked | the shops' websites |
+| `swiss premiums <place>` | Health insurance premiums of every insurer and plan | priminfo.admin.ch (BAG) |
+| `swiss train <from> <to>` | Connections with delays and platforms | transport.opendata.ch |
+| `swiss departures <stop>` | A stop's departure board | transport.opendata.ch |
+| `swiss weather <place>` | 9-day forecast and the latest measurement nearby | MeteoSwiss |
+| `swiss charge near <place>` | EV charging stations, free right now | Swiss Federal Office of Energy |
+| `swiss sharing near <place>` | Shared bikes, e-scooters and cars | sharedmobility.ch |
+| `swiss rivers`, `swiss aare` | Water temperature, flow and flood danger | FOEN (hydrodaten.admin.ch) |
+| `swiss quakes` | Recent earthquakes | Swiss Seismological Service |
+| `swiss snow <place>`, `swiss avalanche` | Snow depth and the avalanche bulletin | SLF |
+
+Places can be written the way you like: a postcode (`8001`), a town (`Lausanne`, `Davos
+Platz`), an address (`"Bahnhofstrasse 1, Zürich"`) or a mountain (`Säntis`).
+
+The shop part is also available as its own command, **`swiss-grocery`**, exactly as before:
+it downloads the products and prices of the shops into a database on your computer, to
+search, compare, export and sync them.
 
 ```console
 $ swiss-grocery fetch coop aldi lidl
@@ -36,55 +85,30 @@ More about a product: swiss-grocery show aldi:202753
 - **Optional:** copy your data to [Supabase](https://supabase.com) (Postgres) or
   [Firebase](https://firebase.google.com) (Cloud Firestore), e.g. for a website.
 
-Your data stays on your computer. The tool is polite to the stores: it identifies
-itself, follows `robots.txt`, and sends about one or two requests per second.
+Your data stays on your computer. The tool is polite: it identifies itself, follows
+`robots.txt`, keeps answers for as long as the sources ask, and sends about one or two
+requests per second.
 
 ---
 
 ## Contents
 
-1. [What each store publishes](#what-each-store-publishes)
-2. [Install](#install)
-3. [Quick start](#quick-start)
-4. [Language](#language)
-5. [Everyday use](#everyday-use)
-6. [Reading the results](#reading-the-results)
-7. [All commands](#all-commands)
-8. [How it works](#how-it-works)
-9. [The data](#the-data)
-10. [Supabase (optional)](#supabase-optional)
-11. [Firebase (optional)](#firebase-optional)
-12. [Settings](#settings)
-13. [Troubleshooting](#troubleshooting)
-14. [Responsible use](#responsible-use)
-15. [For developers](#for-developers)
-
----
-
-## What each store publishes
-
-Stores do not all put the same things online. `swiss-grocery` can only collect what a
-store publishes, so coverage differs:
-
-| Store | What you get | Size | First download | Status |
-|---|---|---|---|---|
-| **Coop** | Full online supermarket: groceries and the wine shop | ~16,300 products | ~3 min | ready |
-| **Aldi Suisse** | Full regular assortment and current special buys | ~2,300 products | ~40 s | ready |
-| **Denner** | Current promotions and the wine shop (no full grocery list online) | ~800 products | ~5 s | ready |
-| **Lidl Suisse** | Current weekly offers and online-shop items (no permanent food list online) | ~750 products | ~10 s | ready |
-| **Migros** | Full assortment (110 categories) | not measured yet | ~2 s per 100 products | ready (see below) |
-
-*Times measured in October 2026 at the default polite speed.*
-
-**About Migros:** in 2026 Migros replaced the category list and the product listing of
-its website API. `swiss-grocery` follows the requests the migros.ch website makes for a
-category page: the category search (100 products per page) and the product cards (100 per
-request). It finds the categories through the sitemap that Migros publishes for crawlers,
-because the website's own category list is closed to tools by migros.ch's `robots.txt`.
-Verified in October 2026 from a home connection. migros.ch blocks many cloud and VPN
-networks; check yours with `swiss-grocery doctor migros`.
-
-Run `swiss-grocery stores` to see this list with what you have already downloaded.
+1. [Install](#install)
+2. [Quick start](#quick-start)
+3. [Everything else Swiss](#everything-else-swiss): premiums, trains, weather, charging,
+   sharing, rivers, earthquakes, snow
+4. [Shop prices](#shop-prices): [what each store publishes](#what-each-store-publishes),
+   [language](#language), [everyday use](#everyday-use),
+   [reading the results](#reading-the-results)
+5. [All commands](#all-commands)
+6. [How it works](#how-it-works)
+7. [The data](#the-data)
+8. [Supabase (optional)](#supabase-optional)
+9. [Firebase (optional)](#firebase-optional)
+10. [Settings](#settings)
+11. [Troubleshooting](#troubleshooting)
+12. [Responsible use](#responsible-use)
+13. [For developers](#for-developers)
 
 ---
 
@@ -92,7 +116,7 @@ Run `swiss-grocery stores` to see this list with what you have already downloade
 
 ### 1. Install Node.js (once)
 
-`swiss-grocery` runs on [Node.js](https://nodejs.org), version **22.13 or newer**.
+`swiss` runs on [Node.js](https://nodejs.org), version **22.13 or newer**.
 
 - **Windows / macOS:** download the "LTS" installer from <https://nodejs.org> and run it.
 - **Linux:** use your package manager or <https://nodejs.org/en/download>.
@@ -104,20 +128,24 @@ $ node --version
 v22.20.0
 ```
 
-### 2. Install swiss-grocery
+### 2. Install swiss
 
 ```console
 $ npm install -g github:othmanehousni/swiss-cli
 ```
 
-Then check it:
+This installs two commands: **`swiss`** (everything) and **`swiss-grocery`** (the shop
+prices on their own, as before). Check them:
 
 ```console
+$ swiss --version
 $ swiss-grocery --version
 ```
 
 > Prefer not to install it globally? From a copy of this repository:
-> `npm install && npm run build && node dist/cli.js --help` (or `npm link`).
+> `npm install && npm run build && node dist/swiss.js --help`, or `npm link` to get both
+> commands. **Already using `npm link`?** Run it again after updating, so that the new
+> `swiss` command is linked too.
 
 **Updating:** run the install command again, or in your copy of the repository
 `git pull && npm install` (it rebuilds the tool). Your database is kept and upgraded
@@ -127,22 +155,309 @@ automatically.
 
 ## Quick start
 
-Product names come in German unless you choose another language. The examples in this
-guide are in French; to get French names, first create a file named `.env` in the folder
-where you run `swiss-grocery`, containing `SWISS_GROCERY_LANG=fr` (more in
-[Language](#language)).
-
 ```console
-$ swiss-grocery fetch aldi          # 1. download Aldi Suisse's products (~40 seconds)
-$ swiss-grocery search "lait"       # 2. find products and compare prices
-$ swiss-grocery update              # 3. later on (e.g. every day): refresh prices
+$ swiss premiums 1003 --age 40 --deductible 2500   # health insurance in Lausanne
+$ swiss train Bern Genève --at 8:00                # connections
+$ swiss weather Davos                              # MeteoSwiss forecast
+$ swiss --help                                     # everything else
 ```
 
-That's it. Add more stores whenever you like (`swiss-grocery fetch coop lidl denner`), or
-everything at once with `swiss-grocery fetch all`.
+For shop prices, download a shop once, then search:
 
-Every command explains itself: `swiss-grocery --help` and `swiss-grocery <command> --help`
-show what it does, with examples.
+```console
+$ swiss grocery fetch aldi          # 1. download Aldi Suisse's products (~40 seconds)
+$ swiss grocery search "lait"       # 2. find products and compare prices
+$ swiss grocery update              # 3. later on (e.g. every day): refresh prices
+```
+
+`swiss grocery …` and `swiss-grocery …` are the same commands. Add more stores whenever
+you like (`swiss grocery fetch coop lidl denner`), or everything at once with
+`swiss grocery fetch all`.
+
+Product names come in German unless you choose another language. The examples in this
+guide are in French; to get French names, first create a file named `.env` in the folder
+where you run the tool, containing `SWISS_GROCERY_LANG=fr` (more in [Language](#language)).
+The same setting gives weather and avalanche texts in French; without it they are in
+English, like the rest of the tool.
+
+Every command explains itself: `swiss --help` and `swiss <command> --help` show what it
+does, with examples.
+
+---
+
+## Everything else Swiss
+
+These commands ask the source when you run them and keep the answer for a while (as
+long as the source asks: 30 seconds for timetables, a day for premiums), so repeating a
+question is instant and works offline. Nothing needs to be downloaded first.
+
+### Places
+
+Every command that takes a place understands:
+
+- a **postcode**: `8001`, `3920` (when a postcode covers several municipalities, the
+  biggest one is used, and the others are named under the answer);
+- a **town or village**: `Lausanne`, `Davos Platz`, `Genf` (German, French and Italian
+  names, accents and umlauts optional: `Zurich` finds Zürich);
+- an **address**, a **station** or a **mountain**: `"Bahnhofstrasse 1, Zürich"`,
+  `"Lausanne gare"`, `Säntis`.
+
+Places come from swisstopo: the official postcode directory (downloaded once, refreshed
+monthly) and its search service for anything else. A search that matches nothing real
+says so instead of guessing ("Atlantis" is not found, instead of a place called Atlanta).
+Names shared by several municipalities are listed: `swiss weather Wil` uses Wil ZH and
+tells you about `9500 Wil SG`.
+
+### Health insurance premiums: `swiss premiums`
+
+Every insurer's premium for the basic insurance (KVG/LAMal), for your municipality, age,
+deductible and accident cover, cheapest first, with the model of each plan.
+
+```console
+$ swiss premiums 8001 --age 34 --deductible 2500 --current css -n 5
+
+  Health insurance 2027 · 8001 Zürich (ZH, premium region 1)
+  Adult (26+), born 1992 · deductible CHF 2500 · with accident cover · 128 plans from 27 insurers
+
+  #  Insurer  Plan                             Model       CHF/month  CHF/year
+  1  Atupri   HMO                              Doctor/HMO     406.80   4881.60
+  2  Sanitas  TelMed Basic                     Telmed         412.50   4950.00
+  3  Assura   QualiMed                         Flex           413.10   4957.20
+  4  Avenir   SanaTel (Telemedizin)            Telmed         424.40   5092.80
+  5  KPT      KPTwin.smart - Hausarzt mit App  Telmed         428.50   5142.00
+  123 more: --limit 15 or --all
+
+  Cheapest with free choice of doctor: SLKK Grundversicherung, CHF 504.70 a month.
+  CSS: its cheapest plan here is Gesundheitspraxisversicherung at CHF 442.50 a month (#16). Switching to Atupri HMO saves CHF 428 a year.
+  With CSS's standard plan (CHF 589.70 a month), switching to the cheapest standard plan, SLKK, saves CHF 1,020 a year.
+  Bills are CHF 4.75 a month lower than the premium: the environmental levy refund, the same for everyone.
+  To switch for 2027, your notice must reach your insurer by Monday 30 November 2026 (send it by registered letter).
+```
+
+- `--age 34` or `--born 1992` (without either: an adult); `--deductible` (300 to 2500,
+  children 0 to 600); `--no-accident` if your employer insures you against accidents
+  (8+ hours a week for one employer).
+- `--model standard,doctor,telmed,flex,pharmacy`, `--insurer css,helsana`,
+  `--current <your insurer>` (what switching saves).
+- `--deductibles`: every plan at every deductible, and up to which medical bills the
+  highest deductible pays off for the cheapest plan.
+- `--history`: each insurer's standard premium since 2022, with its yearly increase.
+
+Source: [priminfo.admin.ch](https://www.priminfo.admin.ch), the premium calculator of
+the Federal Office of Public Health, one page per question. (The BAG's downloadable
+premium files are on a server whose `robots.txt` turns all robots away, so they are not
+used.)
+
+### Public transport: `swiss train` and `swiss departures`
+
+```console
+$ swiss train Lausanne Zürich --at 7:30 --date tomorrow
+
+  Lausanne → Zürich HB
+  Tuesday 27 October 2026 · leaving from 07:30
+
+  07:34 → 09:56   2h 22m   direct   IC 5
+     07:34  Lausanne   platform 4   IC 5 → Rorschach
+     09:56  Zürich HB  platform 33
+
+  07:40 → 09:58   2h 18m   1 change   IR 15, IC 8
+     07:40  Lausanne   platform 1   IR 15 → Luzern
+     08:56  Bern       platform 10  change: 6 min
+     09:02  Bern       platform 2   IC 8 → Romanshorn
+     09:58  Zürich HB  platform 34
+
+$ swiss departures Bern -n 4
+
+  Departures · Bern
+  Monday 26 October 2026 · from now
+
+  Time       Line   To          Platform
+  21:02      IC 8   Romanshorn  2
+  21:02      S 3    Belp        1A-D
+  21:04      IR 15  Lausanne    7
+  21:04 +1'  IC 61  Basel SBB   5
+```
+
+- From and to: stops, addresses or postcodes (`swiss train "Bahnhofstrasse 1, Zürich" 3920`
+  includes the walks).
+- `--at 7:30`, `--date tomorrow` (also a weekday in English, German, French or Italian,
+  `27.10.` or `2026-10-27`), `--arrive` (arrive by `--at`), `--via Bern` (twice for two),
+  `--type train,tram,bus,ship,cableway`, `-n`, `--json`.
+- Delays (`+3'`) and platform changes are shown when the operators report them.
+
+Source: [transport.opendata.ch](https://transport.opendata.ch). It asks clients to cache:
+answers are kept 30 seconds, stop searches a week.
+
+### Weather: `swiss weather`
+
+```console
+$ swiss weather 1003
+
+  Weather · 1003 Lausanne · VD · 488 m
+
+  Now  9.9 °C · humidity 81% · wind 6 km/h from NE · dry
+       at Pully (3 km away, 456 m), 21:00
+
+  Day         Weather                             Low  High  Rain
+  Mon 26.10.  variable clouds                      6°   11°     –
+  Tue 27.10.  sunny                                8°   14°     –
+  Wed 28.10.  overcast and dry                     9°   15°     –
+  Thu 29.10.  partly sunny, thick passing clouds   7°   12°     –
+  ...
+```
+
+- The forecast is MeteoSwiss's local forecast for your postcode (or for the station or
+  mountain spot MeteoSwiss names as you typed it: `swiss weather Säntis`), 9 days, updated
+  every hour; `--days 3` shows fewer.
+- "Now" is the latest measurement of the MeteoSwiss station closest in distance and
+  height (a valley town does not get a summit's temperature).
+
+Source: [MeteoSwiss open data](https://opendatadocs.meteoswiss.ch). The day's forecast files
+(about 1.3 MB each, for all of Switzerland) are downloaded at most every three hours and
+then answer every place.
+
+### Charging stations: `swiss charge`
+
+```console
+$ swiss charge 8001 --fast --plug ccs --available -n 4
+
+  Charging stations · 8001 Zürich
+  within 2 km · 50 kW and more · CCS or CCS1 · free now · availability at 21:19
+
+  #  Distance  Station                      Operator                             Power  Plugs  Free
+  1     280 m  ewz Uraniastrasse 2a Zürich  Elektrizitätswerk der Stadt Zürich   50 kW  CCS     1/1
+  2    1.1 km  ewz Ausstellungsstrasse 17   Elektrizitätswerk der Stadt Zürich   50 kW  CCS     2/2
+  3    1.7 km  Migros | Limmatplatz 1       M-Charge                            150 kW  CCS     4/4
+  4    1.7 km  ewz Forchstrasse 95          Elektrizitätswerk der Stadt Zürich   50 kW  CCS     1/1
+```
+
+`--radius <km>`, `--available`, `--fast` (50 kW and more), `--min-power`, `--plug type2,ccs,
+chademo,tesla,type1,socket`, `--private` (also stations for customers or guests only).
+
+Source: the Swiss Federal Office of Energy (the data behind ich-tanke-strom.ch). The list
+of stations (about 1 MB) is loaded at most once a day, availability every minute.
+
+### Shared mobility: `swiss sharing`
+
+```console
+$ swiss sharing near Bern
+
+  Distance  Provider  Vehicles                                      Where
+      30 m  Voi       7 e-scooters                                  parked nearby
+      30 m  Velospot  5 available (bikes, e-bikes, other vehicles)  Rossfeldstrasse - Bern
+      30 m  Velospot  17 bikes                                      parked nearby
+```
+
+`--type e-scooter,e-bike,bike,cargo,moped,car,e-car`, `--radius <metres>` (default 300).
+Source: [sharedmobility.ch](https://sharedmobility.ch), live.
+
+### Rivers and lakes: `swiss rivers` and `swiss aare`
+
+```console
+$ swiss rivers --near Thun -n 3
+
+  Distance  Station                           Water       24 h  Flow / level  Flood danger
+    2.7 km  Aare - Thun                     14.0 °C  13.8–14.0       67 m³/s
+    5.9 km  Thunersee - Spiez, Kraftwerk BKW        –                 557.82 m
+    9.3 km  Simme - Latterbach                      –                 1.4 m³/s
+```
+
+`swiss rivers aare` lists one river or lake, `swiss aare` the Aare with Bern first. Flood
+danger levels (2 moderate to 5 very high) appear where the FOEN publishes thresholds.
+Source: the Federal Office for the Environment ([hydrodaten.admin.ch](https://www.hydrodaten.admin.ch)),
+every 10 minutes.
+
+### Earthquakes: `swiss quakes`
+
+```console
+$ swiss quakes --near Basel --radius 40 --days 365 --min 2 -n 3
+
+  When          Mag.  Where            Depth  Distance
+  03.10. 15:36   2.8  Liestal BL       19 km     15 km
+  15.07. 13:10   2.5  Liestal BL       18 km     15 km
+  13.06. 14:35   2.1  Gelterkinden BL   7 km     27 km
+```
+
+`--days`, `--min <magnitude>`, `--near <place>` with `--radius <km>`, `--blasts` (also
+quarry blasts). Source: the Swiss Seismological Service at ETH Zürich.
+
+### Snow and avalanches: `swiss snow` and `swiss avalanche`
+
+```console
+$ swiss snow Davos
+
+  Station             Altitude  Distance   Snow   24 h     Air  Measured
+  Davos Stilli (SLF)    1563 m    2.9 km   0 cm   0 cm  2.7 °C  21:00
+  Hanengretji           2455 m    3.7 km   5 cm  -4 cm  2.0 °C  21:00
+  Weissfluhjoch         2536 m    4.1 km  10 cm  -1 cm  1.6 °C  21:00
+```
+
+`swiss snow <place>` shows the snow depth now and over 24 hours at the nearest SLF
+stations, and the avalanche danger of the place's warning region. `swiss avalanche
+[place]` shows the avalanche bulletin: the danger level, the avalanche problems with their
+elevations and aspects, or the whole country by danger level. The SLF publishes the
+bulletin every day in winter; out of season the command says so. Always read
+[slf.ch](https://www.slf.ch) before a tour.
+
+### Where the data comes from
+
+| Command | Source | Kept for |
+|---|---|---|
+| places | swisstopo: official postcode directory, search service | a month / a week |
+| `premiums` | priminfo.admin.ch (Federal Office of Public Health) | a day |
+| `train`, `departures` | transport.opendata.ch | 30 seconds (stops: a week) |
+| `weather` | MeteoSwiss open data (local forecast, SwissMetNet) | 3 hours / 10 minutes |
+| `charge` | Swiss Federal Office of Energy | a day (availability: a minute) |
+| `sharing` | sharedmobility.ch (Swiss Federal Office of Energy) | a minute |
+| `rivers`, `aare` | Federal Office for the Environment | 10 minutes |
+| `quakes` | Swiss Seismological Service (ETH Zürich) | 5 minutes |
+| `snow`, `avalanche` | WSL Institute for Snow and Avalanche Research SLF | 30 minutes |
+
+`swiss doctor` tests each of them from your connection; `swiss status` shows how many
+answers are kept and how much space they take (old ones are removed by themselves).
+
+**Not included, on purpose:** electricity prices per municipality (ElCom). ElCom
+publishes them only through LINDAS, the federal linked-data service, whose `robots.txt`
+turns all robots away (it is aimed at search engines, but this tool follows it). Health
+insurance premiums use the priminfo calculator for the same reason.
+
+---
+
+## Shop prices
+
+The shop part downloads what the shops publish online into a database on your computer,
+so you can search, compare, track and export prices. It is `swiss grocery …`, or
+`swiss-grocery …` on its own.
+
+### What each store publishes
+
+Stores do not all put the same things online. `swiss-grocery` can only collect what a
+store publishes, so coverage differs:
+
+| Store | What you get | Size | First download | Status |
+|---|---|---|---|---|
+| **Coop** | Full online supermarket: groceries and the wine shop | ~16,300 products | ~3 min | ready |
+| **Aldi Suisse** | Full regular assortment and current special buys | ~2,300 products | ~40 s | ready |
+| **Denner** | Current promotions and the wine shop (no full grocery list online) | ~800 products | ~5 s | ready |
+| **Lidl Suisse** | Current weekly offers and online-shop items (no permanent food list online) | ~750 products | ~10 s | ready |
+| **Migros** | Full assortment (110 categories) | not measured yet | ~2 s per 100 products | ready (see below) |
+| **Volg** | The offers of the week (no assortment online) | ~25 offers | ~2 s | ready |
+| **LANDI** | The online shop: garden, DIY, household, pets, clothing, food and drinks | thousands | ~15 min | ready |
+
+*Times measured in October 2026 at the default polite speed.*
+
+**About Migros:** in 2026 Migros replaced the category list and the product listing of
+its website API. `swiss-grocery` follows the requests the migros.ch website makes for a
+category page: the category search (100 products per page) and the product cards (100 per
+request). It finds the categories through the sitemap that Migros publishes for crawlers,
+because the website's own category list is closed to tools by migros.ch's `robots.txt`.
+Verified in October 2026 from a home connection. migros.ch blocks many cloud and VPN
+networks; check yours with `swiss-grocery doctor migros`.
+
+**IKEA** is not included: its product search only answers IKEA's own website, and the
+tool does not pretend to be it. **Spar** publishes no machine-readable prices.
+
+Run `swiss-grocery stores` to see this list with what you have already downloaded.
 
 ---
 
@@ -323,6 +638,24 @@ Sizes are normalized in every language, so that `6 x 1,5 l`, `75 cl`, `2,5 dl`,
 
 ## All commands
 
+**`swiss`** (each has `--help` with examples, and `--json` for scripts):
+
+| Command | What it does |
+|---|---|
+| `premiums <place>` | Health insurance premiums (`--age`/`--born`, `--deductible`, `--no-accident`, `--model`, `--insurer`, `--current`, `--deductibles`, `--history`) |
+| `train <from> <to>` | Connections (`--at`, `--date`, `--arrive`, `--via`, `--type`, `--limit`) |
+| `departures <stop>` | Departure board (`--at`, `--date`, `--type`, `--limit`) |
+| `weather <place>` | MeteoSwiss forecast and the latest measurement (`--days`) |
+| `charge [near] <place>` | Charging stations (`--radius`, `--available`, `--fast`, `--min-power`, `--plug`, `--private`) |
+| `sharing [near] <place>` | Shared bikes, e-scooters and cars (`--type`, `--radius`) |
+| `rivers [name]`, `aare` | Rivers and lakes (`--near`, `--all`) |
+| `quakes` | Earthquakes (`--days`, `--min`, `--near`, `--radius`, `--blasts`) |
+| `snow <place>`, `avalanche [place]` | Snow depth and the avalanche bulletin |
+| `grocery <command>` | The shop commands below (alias `shops`) |
+| `status`, `doctor`, `sync` | As below; `swiss doctor` also tests every data source |
+
+**`swiss-grocery`** (or `swiss grocery …`):
+
 | Command | What it does |
 |---|---|
 | `fetch <stores…>` | Download products and prices (`--category`, `--details`, `--limit`, `--fresh`, `--rate`) |
@@ -473,7 +806,7 @@ to Supabase.
 
 | Name | What it holds |
 |---|---|
-| `aldi_products`, `coop_products`, `denner_products`, `lidl_products`, `migros_products` | one per shop: its current products with their current price |
+| `aldi_products`, `coop_products`, `denner_products`, `landi_products`, `lidl_products`, `migros_products`, `volg_products` | one per shop: its current products with their current price |
 | `current_prices` | the same for every shop together, with a `store` column |
 | `products`, `prices`, `price_history` | the underlying tables (see [The data](#the-data)) |
 
@@ -486,6 +819,10 @@ Every product of a brand, in every shop:
 **Updating from an older version** (before brands had `brand_source` and `brand_key`):
 run the schema once more (step 1); it adds the new columns and keeps your data. The next
 `sync` then sends every product again, with its brand.
+
+**Syncing Volg or LANDI** with tables made before they were added: run the schema once
+more (step 1). It lets the tables take the new stores and adds `volg_products` and
+`landi_products`; your data is kept.
 
 ---
 
@@ -581,7 +918,7 @@ adding by itself in 2026. Run the schema again (`swiss-grocery sync --print-sche
 SQL Editor → Run). It keeps your data.
 
 **Supabase: "your Supabase tables are from an older version of swiss-grocery".** A newer
-version added columns (for example `brand_key`). Run the schema again
+version added columns (for example `brand_key`) or stores (Volg, LANDI). Run the schema again
 (`swiss-grocery sync --print-schema`, then SQL Editor → Run), then `swiss-grocery sync`.
 It keeps your data.
 
@@ -616,8 +953,11 @@ lists it for each store.
 
 ## Responsible use
 
-This tool reads public product pages and the public APIs behind them, slowly, as an
-identified client, and respects `robots.txt`. Prices and product information belong to
+This tool reads public product pages, the public APIs behind them and the open data of
+federal offices, slowly, as an identified client, and respects `robots.txt` (sources
+whose `robots.txt` turns robots away are not used, see
+[Where the data comes from](#where-the-data-comes-from)). Open data must name its
+source: the commands do, e.g. "Source: MeteoSwiss". Prices and product information belong to
 the stores; check each store's terms of use before using the data beyond personal price
 comparison, and do not republish it commercially without permission. Keep the default
 speed: the stores' websites serve real shoppers.
@@ -640,6 +980,10 @@ $ npm run test:live      # smoke tests against the real stores (network)
   in `test/fixtures`, so they check the real response shapes. The Supabase and Firebase
   syncs are tested against scripted answers; Firebase talks to Firestore's REST API with
   a signed service-account token, so it needs no extra dependency.
+- `swiss` modules live in `src/modules/<topic>/` (a client for the source, its parsers,
+  and `command.ts`); `src/modules/places/` turns what users type into a place, and
+  `src/storage/cache.ts` keeps answers for as long as each source asks. Register a new
+  command in `src/program.ts`, its data source in `src/modules/sources.ts` (for `doctor`).
 - **Adding a store:** create `src/providers/<store>.ts` implementing the `Provider`
   interface in `src/providers/types.ts` (`categories`, `sources`, `fetchPage`, and
   optionally `fetchDetails` / `isStillListed`), validate the store's responses with zod,
