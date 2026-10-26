@@ -4,7 +4,7 @@
  * downstream (storage, search, export, sync) only ever sees these types.
  */
 
-export const STORE_IDS = ['migros', 'coop', 'denner', 'aldi', 'lidl'] as const;
+export const STORE_IDS = ['migros', 'coop', 'denner', 'aldi', 'lidl', 'volg', 'landi'] as const;
 export type StoreId = (typeof STORE_IDS)[number];
 
 export function isStoreId(value: string): value is StoreId {

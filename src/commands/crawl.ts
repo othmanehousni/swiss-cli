@@ -73,7 +73,7 @@ function reportResult(app: App, name: string, result: CrawlResult): void {
   }
   out.success(
     `${formatCount(result.uniqueProducts)} products from ${name} in ${formatDuration(result.durationMs)} ` +
-      `(${formatCount(s.requests)} requests)${resumed}`,
+      `(${formatCount(s.requests)} request${s.requests === 1 ? '' : 's'})${resumed}`,
   );
   const changes = [
     `${formatCount(s.inserted)} new`,

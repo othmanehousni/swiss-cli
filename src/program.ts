@@ -109,7 +109,7 @@ export function swissProgram(): Command {
   const grocery = program
     .command('grocery')
     .alias('shops')
-    .summary('shop prices: Migros, Coop, Denner, Aldi, Lidl')
+    .summary('shop prices: Migros, Coop, Denner, Aldi, Lidl, Volg, LANDI')
     .description(
       'The shop price database: fetch the shops, then search, compare and export.\n' +
         'Same as the swiss-grocery command.',

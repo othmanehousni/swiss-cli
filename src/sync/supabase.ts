@@ -146,6 +146,14 @@ export function explainSupabaseError(error: unknown): Diagnosis {
         hints: ['The new columns are in the schema; adding them keeps your data.', ...SCHEMA_HINTS],
       };
     }
+    if (code === '23514' && /store/i.test(detail)) {
+      return {
+        ok: false,
+        message:
+          'your Supabase tables are from an older version of swiss-grocery and do not know this store yet',
+        hints: ['The schema adds the new stores; running it keeps your data.', ...SCHEMA_HINTS],
+      };
+    }
     if (code === 'PGRST106') {
       return {
         ok: false,
