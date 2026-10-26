@@ -60,8 +60,11 @@ function perMunicipality(rows: PostcodeRow[]): PostcodeRow[] {
 }
 
 function placeLabel(row: PostcodeRow): string {
+  // "Wil ZH" in the municipality "Wil (ZH)" is the same name.
   const name =
-    row.locality === row.municipality ? row.locality : `${row.locality} (${row.municipality})`;
+    looseKey(row.locality) === looseKey(row.municipality)
+      ? row.locality
+      : `${row.locality} (${row.municipality})`;
   return `${row.postcode} ${name}`;
 }
 
@@ -133,9 +136,16 @@ export async function resolvePlace(
   const named = perMunicipality(findPlaces(db, text));
   const [first, ...others] = named;
   if (first) {
-    // Only municipalities of the same name are real alternatives (Buchs AG, SG and ZH).
+    // Only municipalities of the same name are real alternatives: "Buchs (AG)", "Buchs (SG)"
+    // and "Buchs (ZH)" for "Buchs".
     const key = looseKey(text);
-    const sameName = others.filter((r) => looseKey(r.municipality) === key);
+    const sameName = others.filter((r) => {
+      const name = looseKey(r.municipality);
+      return (
+        name === key ||
+        (name.startsWith(`${key} `) && /^[a-z]{2}$/.test(name.slice(key.length + 1)))
+      );
+    });
     return {
       place: fromPostcode(first, placeLabel(first), 'name'),
       alternatives: sameName.slice(0, 5).map((r) => fromPostcode(r, placeLabel(r), 'name')),
@@ -160,4 +170,21 @@ export async function resolvePlace(
     },
     alternatives: [],
   };
+}
+
+/**
+ * A hint about the other places a search could have meant: other municipalities of a
+ * shared postcode, or of the same name ("Wil" is in St. Gallen and Zürich).
+ */
+export function otherPlacesHint(resolved: ResolvedPlace, command: string): string | null {
+  const [first] = resolved.alternatives;
+  if (!first) return null;
+  const names = resolved.alternatives
+    .slice(0, 3)
+    .map((a) => (resolved.place.kind === 'postcode' ? (a.municipality ?? a.label) : a.label));
+  const example =
+    resolved.place.kind === 'postcode' ? `"${first.municipality ?? first.label}"` : first.postcode;
+  return resolved.place.kind === 'postcode'
+    ? `${resolved.place.postcode} is also in ${names.join(', ')}: ${command} ${example}`
+    : `Other places of that name: ${names.join(', ')} (use the postcode: ${command} ${example})`;
 }

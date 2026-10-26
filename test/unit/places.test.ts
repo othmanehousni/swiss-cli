@@ -5,6 +5,7 @@ import { POSTCODE_DIRECTORY, parsePostcodeDirectory } from '../../src/modules/pl
 import {
   bestMatch,
   matchScore,
+  otherPlacesHint,
   PlaceNotFoundError,
   resolvePlace,
 } from '../../src/modules/places/resolve.js';
@@ -21,6 +22,8 @@ const DIRECTORY_CSV = [
   'Wallisellen;8304;00;5006;Wallisellen;69;ZH;98.9 %;8.5949;47.4148;de;2008-07-01',
   'Wallisellen;8304;00;5006;Dübendorf;191;ZH;1.1 %;8.6001;47.4122;de;2008-07-01',
   'Davos Platz;7270;00;3201;Davos;3851;GR;100 %;9.8240;46.7947;de;2008-07-01',
+  'Buchs AG;5033;00;3007;Buchs (AG);4003;AG;100 %;8.0816;47.3913;de;2008-07-01',
+  'Buchs SG;9470;00;3271;Buchs (SG);3271;SG;100 %;9.4727;47.1660;de;2008-07-01',
 ].join('\r\n');
 
 function directoryZip(): Uint8Array {
@@ -99,7 +102,7 @@ describe('places', () => {
 
   it('reads the official postcode directory', () => {
     const rows = parsePostcodeDirectory(directoryZip());
-    expect(rows).toHaveLength(6);
+    expect(rows).toHaveLength(8);
     expect(rows[0]).toEqual({
       postcode: '8001',
       suffix: '00',
@@ -160,7 +163,23 @@ describe('places', () => {
       lat: 47.3673,
     });
     expect(fake.calls.filter((c) => c.url === POSTCODE_DIRECTORY)).toHaveLength(1);
-    expect(datasetInfo(db, 'postcodes')?.rows).toBe(6);
+    expect(datasetInfo(db, 'postcodes')?.rows).toBe(8);
+  });
+
+  it('offers the other places of the same name', async () => {
+    const { http } = client(() => ({ body: '' }));
+    const buchs = await resolvePlace(db, http, 'Buchs');
+    // "Buchs AG" in the municipality "Buchs (AG)" is one name in the label.
+    expect(buchs.place.label).toBe('5033 Buchs AG');
+    expect(buchs.alternatives.map((p) => p.label)).toEqual(['9470 Buchs SG']);
+    expect(otherPlacesHint(buchs, 'swiss weather')).toBe(
+      'Other places of that name: 9470 Buchs SG (use the postcode: swiss weather 9470)',
+    );
+    const shared = await resolvePlace(db, http, '8304');
+    expect(otherPlacesHint(shared, 'swiss weather')).toBe(
+      '8304 is also in Dübendorf: swiss weather "Dübendorf"',
+    );
+    expect(otherPlacesHint(await resolvePlace(db, http, '8001'), 'swiss weather')).toBeNull();
   });
 
   it('says so when nothing matches', async () => {

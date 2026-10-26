@@ -10,7 +10,7 @@ import { looseKey } from '../../normalization/text.js';
 import { ProgressLine } from '../../ui/output.js';
 import { formatClock } from '../../util/when.js';
 import { compass, distanceKm } from '../places/geo.js';
-import { resolvePlace } from '../places/resolve.js';
+import { otherPlacesHint, type ResolvedPlace, resolvePlace } from '../places/resolve.js';
 import {
   type DayForecast,
   dailyForecast,
@@ -119,10 +119,12 @@ async function weather(
     station: ReturnType<typeof nearestStation>;
     now: Measurement | null;
   };
-  let place: Awaited<ReturnType<typeof resolvePlace>>['place'];
+  let resolved: ResolvedPlace;
+  let place: ResolvedPlace['place'];
   try {
     progress.update('Finding the place…');
-    ({ place } = await resolvePlace(db, http, text));
+    resolved = await resolvePlace(db, http, text);
+    place = resolved.place;
     progress.update('Loading the MeteoSwiss forecast…');
     const points = await loadForecastPoints(db, http);
     // A station or mountain spot MeteoSwiss names as typed ("Säntis", "Pilatus") beats
@@ -233,4 +235,6 @@ async function weather(
     ) / 1000,
   );
   out.info(out.c.dim(`  Source: MeteoSwiss (local forecast of ${runTime}, weather stations)`));
+  const hint = place.kind === 'search' ? null : otherPlacesHint(resolved, 'swiss weather');
+  if (hint) out.info(out.c.dim(`  ${hint}`));
 }

@@ -10,7 +10,7 @@ import type { HttpClient } from '../../crawler/http.js';
 import { looseKey } from '../../normalization/text.js';
 import { formatCount } from '../../ui/format.js';
 import { type Output, ProgressLine } from '../../ui/output.js';
-import { type Place, resolvePlace } from '../places/resolve.js';
+import { otherPlacesHint, type Place, resolvePlace } from '../places/resolve.js';
 import {
   AGE_GROUP_LABELS,
   type AgeGroup,
@@ -224,14 +224,11 @@ function personDetails(ctx: Context, assumed: boolean): string {
 }
 
 function printAlternatives(out: Output, ctx: Context): void {
-  if (ctx.alternatives.length === 0) return;
-  const names = ctx.alternatives.map((a) => a.municipality ?? a.label);
-  out.info(
-    out.c.dim(
-      `  ${ctx.place.postcode} also covers ${names.join(', ')}; premiums can differ there: ` +
-        `swiss premiums "${names[0]}"`,
-    ),
+  const hint = otherPlacesHint(
+    { place: ctx.place, alternatives: ctx.alternatives },
+    'swiss premiums',
   );
+  if (hint) out.info(out.c.dim(`  ${hint} (premiums differ between municipalities)`));
 }
 
 function printSource(out: Output, stale: boolean, fetchedAt: string): void {
