@@ -13,6 +13,7 @@ import { explainError, UserError } from './commands/shared.js';
 import { registerSyncCommand } from './commands/sync.js';
 import { loadDotEnv, VERSION } from './config.js';
 import { registerPremiumsCommand } from './modules/premiums/command.js';
+import { registerTransportCommands } from './modules/transport/command.js';
 import { LANGS } from './providers/types.js';
 import { Output } from './ui/output.js';
 
@@ -32,6 +33,8 @@ const SWISS_QUICK_START = `
 Examples:
   $ swiss grocery search lait                  compare shop prices (fetch a shop first)
   $ swiss premiums 8001 --age 34               health insurance premiums of every insurer
+  $ swiss train Lausanne "Zürich HB"           next connections, with delays and platforms
+  $ swiss departures Bern                      departure board
 
 Places can be a postcode (8001), a municipality (Lausanne) or an address.
 Help for any command: swiss <command> --help`;
@@ -87,7 +90,8 @@ export function swissProgram(): Command {
     new Command()
       .name('swiss')
       .description(
-        'Swiss data from the command line: shop prices and health insurance premiums. ' +
+        'Swiss data from the command line: shop prices, health insurance premiums and public ' +
+          'transport. ' +
           'Only official and public sources, used politely.',
       ),
   ).addHelpText('after', SWISS_QUICK_START);
@@ -107,6 +111,7 @@ export function swissProgram(): Command {
   registerSyncCommand(grocery);
 
   registerPremiumsCommand(program);
+  registerTransportCommands(program);
 
   registerStatusCommand(program);
   registerDoctorCommand(program);
