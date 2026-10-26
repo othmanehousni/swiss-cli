@@ -13,6 +13,7 @@ import { explainError, UserError } from './commands/shared.js';
 import { registerSyncCommand } from './commands/sync.js';
 import { loadDotEnv, VERSION } from './config.js';
 import { registerMobilityCommands } from './modules/mobility/command.js';
+import { registerNatureCommands } from './modules/nature/command.js';
 import { registerPremiumsCommand } from './modules/premiums/command.js';
 import { registerTransportCommands } from './modules/transport/command.js';
 import { registerWeatherCommand } from './modules/weather/command.js';
@@ -40,6 +41,10 @@ Examples:
   $ swiss weather 3920                         MeteoSwiss forecast for Zermatt
   $ swiss charge near "Lausanne gare"          EV charging stations, live availability
   $ swiss sharing near Bern                    shared bikes, e-scooters and cars
+  $ swiss aare                                 the Aare's temperature, Bern first
+  $ swiss rivers --near Thun                   river and lake temperatures
+  $ swiss quakes                               recent earthquakes
+  $ swiss snow Davos                           snow depth and avalanche danger
 
 Places can be a postcode (8001), a municipality (Lausanne) or an address.
 Help for any command: swiss <command> --help`;
@@ -96,7 +101,7 @@ export function swissProgram(): Command {
       .name('swiss')
       .description(
         'Swiss data from the command line: shop prices, health insurance premiums, public ' +
-          'transport, weather, charging stations and shared mobility. ' +
+          'transport, weather, charging stations, shared mobility, rivers, earthquakes and snow. ' +
           'Only official and public sources, used politely.',
       ),
   ).addHelpText('after', SWISS_QUICK_START);
@@ -119,6 +124,7 @@ export function swissProgram(): Command {
   registerTransportCommands(program);
   registerWeatherCommand(program);
   registerMobilityCommands(program);
+  registerNatureCommands(program);
 
   registerStatusCommand(program);
   registerDoctorCommand(program);
