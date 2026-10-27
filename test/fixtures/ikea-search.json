@@ -1,0 +1,603 @@
+{
+ "usergroup": "[]",
+ "results": [
+  {
+   "component": "PRIMARY_AREA",
+   "viewMode": "GRID",
+   "filters": [
+    {
+     "selected": false,
+     "id": "COLOR",
+     "name": "Farbe",
+     "type": "CLASS_FILTER",
+     "values": [
+      {
+       "name": "grau",
+       "id": "10028",
+       "count": 157
+      }
+     ]
+    },
+    {
+     "selected": false,
+     "id": "CATEGORIES",
+     "name": "Kategorie",
+     "type": "CLASS_FILTER",
+     "values": [
+      {
+       "name": "Küchen & Elektrogeräte",
+       "id": "ka001",
+       "count": 8638
+      },
+      {
+       "name": "Sofas & Sessel",
+       "id": "700640",
+       "count": 4100
+      },
+      {
+       "name": "Schwedische Lebensmittel & Schwedische Getränke",
+       "id": "fb001",
+       "count": 141
+      }
+     ]
+    }
+   ],
+   "items": [
+    {
+     "type": "PRODUCT",
+     "product": {
+      "name": "GLOSTAD",
+      "typeName": "3er-Sofa",
+      "itemMeasureReferenceText": "",
+      "mainImageUrl": "https://www.ikea.com/ch/de/images/products/glostad-3er-sofa-knisa-dunkelgrau__1234948_pe917261_s5.jpg",
+      "pipUrl": "https://www.ikea.com/ch/de/p/glostad-3er-sofa-knisa-dunkelgrau-40573285/",
+      "id": "40573285",
+      "itemNoGlobal": "40573285",
+      "onlineSellable": true,
+      "lastChance": false,
+      "tag": "FAMILY_PRICE",
+      "tagText": "IKEA Family Preis",
+      "ratingValue": 4.0,
+      "ratingCount": 1,
+      "itemNo": "40573285",
+      "itemType": "ART",
+      "salesPrice": {
+       "currencyCode": "CHF",
+       "numeral": 126.65,
+       "current": {
+        "prefix": "CHF",
+        "wholeNumber": "126",
+        "separator": ".",
+        "decimals": "65",
+        "suffix": "",
+        "isRegularCurrency": false,
+        "style": "SUPER"
+       },
+       "previous": {
+        "prefix": "CHF",
+        "wholeNumber": "149",
+        "separator": ".",
+        "decimals": "00",
+        "suffix": "",
+        "isRegularCurrency": false,
+        "style": "SUPER"
+       },
+       "isBreathTaking": false,
+       "discount": "",
+       "discountPercentage": 15.0,
+       "prevPriceLabel": "Normaler Preis",
+       "validFrom": "2026-10-12",
+       "validTo": "2026-11-01",
+       "availabilityDisclaimer": "Preis gültig von 12.10.2026 bis 01.11.2026",
+       "tag": "FAMILY_PRICE",
+       "tagText": "IKEA Family Preis",
+       "priceText": "Preis",
+       "tags": [
+        "FAMILY_PRICE"
+       ]
+      },
+      "categoryPath": [
+       {
+        "name": "Sofas & Sessel",
+        "key": "700640"
+       },
+       {
+        "name": "Sofas",
+        "key": "fu003"
+       },
+       {
+        "name": "3er-Sofas",
+        "key": "10670"
+       }
+      ],
+      "validDesignText": "Knisa dunkelgrau"
+     },
+     "metadata": "v1;1;PRODUCT;40573285;products_main;"
+    },
+    {
+     "type": "PRODUCT",
+     "product": {
+      "name": "KIVIK",
+      "typeName": "4er-Sofa mit Récamiere",
+      "itemMeasureReferenceText": "",
+      "mainImageUrl": "https://www.ikea.com/ch/de/images/products/kivik-4er-sofa-mit-recamiere-kelinge-grautuerkis__1577295_pe1033070_s5.jpg",
+      "pipUrl": "https://www.ikea.com/ch/de/p/kivik-4er-sofa-mit-recamiere-kelinge-grautuerkis-s29443059/",
+      "id": "s29443059",
+      "itemNoGlobal": "29443059",
+      "onlineSellable": true,
+      "lastChance": false,
+      "tag": "NEW_LOWER_PRICE",
+      "tagText": "Preis\nfür dich\ngesenkt",
+      "ratingValue": 5.0,
+      "ratingCount": 4,
+      "itemNo": "29443059",
+      "itemType": "SPR",
+      "salesPrice": {
+       "currencyCode": "CHF",
+       "numeral": 949.0,
+       "current": {
+        "prefix": "CHF",
+        "wholeNumber": "949",
+        "separator": ".",
+        "decimals": "00",
+        "suffix": "",
+        "isRegularCurrency": false,
+        "style": "SUPER"
+       },
+       "previous": {
+        "prefix": "CHF",
+        "wholeNumber": "1'099",
+        "separator": ".",
+        "decimals": "00",
+        "suffix": "",
+        "isRegularCurrency": false,
+        "style": "SUPER"
+       },
+       "isBreathTaking": false,
+       "discount": "",
+       "prevPriceLabel": "Preis vorher",
+       "validFrom": "2026-09-01",
+       "validTo": "2027-02-27",
+       "tag": "NEW_LOWER_PRICE",
+       "tagText": "Preis\nfür dich\ngesenkt",
+       "priceText": "Preis",
+       "tags": [
+        "NEW_LOWER_PRICE"
+       ]
+      },
+      "categoryPath": [
+       {
+        "name": "Sofas & Sessel",
+        "key": "700640"
+       },
+       {
+        "name": "Sofas",
+        "key": "fu003"
+       },
+       {
+        "name": "Sofas mit Récamiere",
+        "key": "47388"
+       }
+      ],
+      "validDesignText": "Kelinge grautürkis"
+     },
+     "metadata": "v1;1;PRODUCT;29443059;products_main;"
+    },
+    {
+     "type": "PRODUCT",
+     "product": {
+      "name": "GALANT",
+      "typeName": "Aktenschrank",
+      "itemMeasureReferenceText": "51x120 cm",
+      "mainImageUrl": "https://www.ikea.com/ch/de/images/products/galant-aktenschrank-weiss__0613268_pe686193_s5.jpg",
+      "pipUrl": "https://www.ikea.com/ch/de/p/galant-aktenschrank-weiss-80365185/",
+      "id": "80365185",
+      "itemNoGlobal": "80365185",
+      "onlineSellable": true,
+      "lastChance": true,
+      "lastChanceText": " Jetzt oder nie ",
+      "tag": "TIME_RESTRICTED_OFFER",
+      "ratingValue": 4.5,
+      "ratingCount": 2,
+      "itemNo": "80365185",
+      "itemType": "ART",
+      "salesPrice": {
+       "currencyCode": "CHF",
+       "numeral": 249.0,
+       "current": {
+        "prefix": "CHF",
+        "wholeNumber": "249",
+        "separator": ".",
+        "decimals": "00",
+        "suffix": "",
+        "isRegularCurrency": false,
+        "style": "SUPER"
+       },
+       "previous": {
+        "prefix": "CHF",
+        "wholeNumber": "349",
+        "separator": ".",
+        "decimals": "00",
+        "suffix": "",
+        "isRegularCurrency": false,
+        "style": "SUPER"
+       },
+       "isBreathTaking": false,
+       "discount": "",
+       "discountPercentage": 28.0,
+       "validFrom": "2026-10-01",
+       "validTo": "2026-10-31",
+       "availabilityDisclaimer": "Preis gültig von 01.10.2026 bis 31.10.2026",
+       "tag": "TIME_RESTRICTED_OFFER",
+       "priceText": "Preis",
+       "tags": [
+        "TIME_RESTRICTED_OFFER"
+       ]
+      },
+      "categoryPath": [
+       {
+        "name": "Aufbewahrungsmöbel",
+        "key": "st001"
+       },
+       {
+        "name": "Büroschränke & Rollcontainer",
+        "key": "10385"
+       },
+       {
+        "name": "Büroaufbewahrung & Schubladenelemente",
+        "key": "47084"
+       }
+      ],
+      "validDesignText": "weiß"
+     },
+     "metadata": "v1;1;PRODUCT;80365185;products_main;"
+    },
+    {
+     "type": "PRODUCT",
+     "product": {
+      "name": "KAFFEREP",
+      "typeName": "Keks",
+      "itemMeasureReferenceText": "176 g",
+      "mainImageUrl": "https://www.ikea.com/ch/de/images/products/kafferep-keks-mit-kakaocremefuellung-rainforest-alliance-certified__1121311_pe874185_s5.jpg",
+      "pipUrl": "https://www.ikea.com/ch/de/p/kafferep-keks-mit-kakaocremefuellung-rainforest-alliance-certified-00524211/",
+      "id": "00524211",
+      "itemNoGlobal": "00524211",
+      "onlineSellable": false,
+      "lastChance": false,
+      "tag": "NONE",
+      "ratingValue": 4.5,
+      "ratingCount": 64,
+      "itemNo": "00524211",
+      "itemType": "ART",
+      "salesPrice": {
+       "currencyCode": "CHF",
+       "numeral": 1.5,
+       "current": {
+        "prefix": "CHF",
+        "wholeNumber": "1",
+        "separator": ".",
+        "decimals": "50",
+        "suffix": "",
+        "isRegularCurrency": false,
+        "style": "SUPER"
+       },
+       "isBreathTaking": false,
+       "priceUnit": "0.176 kg",
+       "unitText": "kg",
+       "discount": "",
+       "tag": "NONE",
+       "priceText": "Preis",
+       "tags": []
+      },
+      "categoryPath": [
+       {
+        "name": "Schwedische Lebensmittel & Schwedische Getränke",
+        "key": "fb001"
+       },
+       {
+        "name": "Gebäck & Desserts",
+        "key": "25215"
+       }
+      ],
+      "validDesignText": "mit Kakaocremefüllung Rainforest Alliance Certified"
+     },
+     "metadata": "v1;1;PRODUCT;00524211;products_main;"
+    },
+    {
+     "type": "PRODUCT",
+     "product": {
+      "name": "HUVUDROLL",
+      "typeName": "Geflügelbällchen",
+      "itemMeasureReferenceText": "1000 g",
+      "mainImageUrl": "https://www.ikea.com/ch/de/images/products/huvudroll-gefluegelbaellchen-gefroren__0928071_pe789719_s5.jpg",
+      "pipUrl": "https://www.ikea.com/ch/de/p/huvudroll-gefluegelbaellchen-gefroren-90504529/",
+      "id": "90504529",
+      "itemNoGlobal": "90486455",
+      "onlineSellable": false,
+      "lastChance": false,
+      "tag": "NONE",
+      "ratingValue": 4.4,
+      "ratingCount": 76,
+      "itemNo": "90504529",
+      "itemType": "ART",
+      "salesPrice": {
+       "currencyCode": "CHF",
+       "numeral": 15.95,
+       "current": {
+        "prefix": "CHF",
+        "wholeNumber": "15",
+        "separator": ".",
+        "decimals": "95",
+        "suffix": "",
+        "isRegularCurrency": false,
+        "style": "SUPER"
+       },
+       "isBreathTaking": false,
+       "priceUnit": "kg",
+       "unitText": "kg",
+       "discount": "",
+       "tag": "NONE",
+       "priceText": "Preis",
+       "tags": []
+      },
+      "categoryPath": [
+       {
+        "name": "Schwedische Lebensmittel & Schwedische Getränke",
+        "key": "fb001"
+       },
+       {
+        "name": "Fleischgerichte",
+        "key": "25217"
+       }
+      ],
+      "validDesignText": "gefroren"
+     },
+     "metadata": "v1;1;PRODUCT;90504529;products_main;"
+    },
+    {
+     "type": "PRODUCT",
+     "product": {
+      "name": "SVALKA",
+      "typeName": "Weinglas",
+      "itemMeasureReferenceText": "44 cl",
+      "mainImageUrl": "https://www.ikea.com/ch/de/images/products/svalka-weinglas-klarglas__0913974_pe783804_s5.jpg",
+      "pipUrl": "https://www.ikea.com/ch/de/p/svalka-weinglas-klarglas-00473023/",
+      "id": "00473023",
+      "itemNoGlobal": "00473023",
+      "onlineSellable": true,
+      "lastChance": false,
+      "tag": "NONE",
+      "ratingValue": 4.5,
+      "ratingCount": 195,
+      "itemNo": "00473023",
+      "itemType": "ART",
+      "salesPrice": {
+       "currencyCode": "CHF",
+       "numeral": 9.95,
+       "current": {
+        "prefix": "CHF",
+        "wholeNumber": "9",
+        "separator": ".",
+        "decimals": "95",
+        "suffix": "",
+        "isRegularCurrency": false,
+        "style": "SUPER"
+       },
+       "isBreathTaking": false,
+       "priceUnit": "6 Stück",
+       "unitText": "Stück",
+       "discount": "",
+       "tag": "NONE",
+       "priceText": "Preis",
+       "tags": []
+      },
+      "categoryPath": [
+       {
+        "name": "Küchenzubehör & Geschirr",
+        "key": "kt001"
+       },
+       {
+        "name": "Gläser, Karaffen & Kannen",
+        "key": "18868"
+       },
+       {
+        "name": "Weingläser & Champagnergläser",
+        "key": "18870"
+       }
+      ],
+      "validDesignText": "Klarglas"
+     },
+     "metadata": "v1;1;PRODUCT;00473023;products_main;"
+    },
+    {
+     "type": "PRODUCT",
+     "product": {
+      "name": "HAVSGÄDDA",
+      "typeName": "Dessertteller",
+      "itemMeasureReferenceText": "21 cm",
+      "mainImageUrl": "https://www.ikea.com/ch/de/images/products/havsgaedda-dessertteller-streifen-grau__1429653_pe981949_s5.jpg",
+      "pipUrl": "https://www.ikea.com/ch/de/p/havsgaedda-dessertteller-streifen-grau-00607409/",
+      "id": "00607409",
+      "itemNoGlobal": "00607409",
+      "onlineSellable": true,
+      "lastChance": false,
+      "tag": "NONE",
+      "ratingValue": 4.5,
+      "ratingCount": 2,
+      "itemNo": "00607409",
+      "itemType": "ART",
+      "salesPrice": {
+       "currencyCode": "CHF",
+       "numeral": 2.5,
+       "current": {
+        "prefix": "CHF",
+        "wholeNumber": "2",
+        "separator": ".",
+        "decimals": "50",
+        "suffix": "",
+        "isRegularCurrency": false,
+        "style": "SUPER"
+       },
+       "isBreathTaking": false,
+       "priceUnit": "St.",
+       "unitText": "St.",
+       "discount": "",
+       "tag": "NONE",
+       "priceText": "Preis",
+       "tags": []
+      },
+      "categoryPath": [
+       {
+        "name": "Küchenzubehör & Geschirr",
+        "key": "kt001"
+       },
+       {
+        "name": "Essgeschirr",
+        "key": "18860"
+       },
+       {
+        "name": "Dessertteller",
+        "key": "18863"
+       }
+      ],
+      "validDesignText": "Streifen/grau"
+     },
+     "metadata": "v1;1;PRODUCT;00607409;products_main;"
+    },
+    {
+     "type": "PRODUCT",
+     "product": {
+      "name": "BLANKHÄLLAN",
+      "typeName": "Ablagetisch",
+      "itemMeasureReferenceText": "",
+      "mainImageUrl": "https://www.ikea.com/ch/de/images/products/blankhaellan-ablagetisch-beige-rosa__1470387_pe996868_s5.jpg",
+      "pipUrl": "https://www.ikea.com/ch/de/p/blankhaellan-ablagetisch-beige-rosa-50620998/",
+      "id": "50620998",
+      "itemNoGlobal": "50620998",
+      "onlineSellable": true,
+      "lastChance": false,
+      "badge": {
+       "type": "LIMITED_EDITION",
+       "text": "Limitierte Auflage"
+      },
+      "tag": "NONE",
+      "ratingValue": 4.5,
+      "ratingCount": 4,
+      "itemNo": "50620998",
+      "itemType": "ART",
+      "salesPrice": {
+       "currencyCode": "CHF",
+       "numeral": 49.95,
+       "current": {
+        "prefix": "CHF",
+        "wholeNumber": "49",
+        "separator": ".",
+        "decimals": "95",
+        "suffix": "",
+        "isRegularCurrency": false,
+        "style": "SUPER"
+       },
+       "isBreathTaking": false,
+       "priceUnit": "45 cm",
+       "unitText": "cm",
+       "discount": "",
+       "tag": "NONE",
+       "priceText": "Preis",
+       "tags": []
+      },
+      "categoryPath": [
+       {
+        "name": "Betten & Matratzen",
+        "key": "bm001"
+       },
+       {
+        "name": "Nachttische & Beistelltische",
+        "key": "20656"
+       }
+      ],
+      "validDesignText": "beige/rosa"
+     },
+     "metadata": "v1;1;PRODUCT;50620998;products_main;"
+    },
+    {
+     "type": "PRODUCT",
+     "product": {
+      "name": "DUMLE",
+      "typeName": "Schokotoffee",
+      "itemMeasureReferenceText": "295 g",
+      "mainImageUrl": "https://www.ikea.com/ch/de/images/products/dumle-schokotoffee-pfefferkuchenaroma__1564007_pe1026529_s5.jpg",
+      "pipUrl": "https://www.ikea.com/ch/de/p/dumle-schokotoffee-pfefferkuchenaroma-80645737/",
+      "id": "80645737",
+      "itemNoGlobal": "80645737",
+      "onlineSellable": false,
+      "lastChance": false,
+      "tag": "NEW_PRODUCT",
+      "tagText": "Neu",
+      "itemNo": "80645737",
+      "itemType": "ART",
+      "salesPrice": {
+       "currencyCode": "CHF",
+       "numeral": 4.95,
+       "current": {
+        "prefix": "CHF",
+        "wholeNumber": "4",
+        "separator": ".",
+        "decimals": "95",
+        "suffix": "",
+        "isRegularCurrency": false,
+        "style": "SUPER"
+       },
+       "isBreathTaking": false,
+       "priceUnit": "0.295 kg",
+       "unitText": "kg",
+       "discount": "",
+       "tag": "NEW_PRODUCT",
+       "tagText": "Neu",
+       "priceText": "Preis",
+       "tags": [
+        "NEW_PRODUCT"
+       ]
+      },
+      "categoryPath": [
+       {
+        "name": "Schwedische Lebensmittel & Schwedische Getränke",
+        "key": "fb001"
+       },
+       {
+        "name": "Snacks & Süssigkeiten",
+        "key": "46192"
+       }
+      ],
+      "validDesignText": "Pfefferkuchenaroma"
+     },
+     "metadata": "v1;1;PRODUCT;80645737;products_main;"
+    },
+    {
+     "type": "PRODUCT",
+     "product": {
+      "name": "BROKEN",
+      "typeName": "no item number",
+      "salesPrice": {
+       "numeral": 1.0
+      }
+     }
+    }
+   ],
+   "metadata": {
+    "start": 0,
+    "end": 10,
+    "max": 27478,
+    "itemsPerType": {
+     "PRODUCT": 27478
+    }
+   }
+  }
+ ],
+ "metadata": {
+  "categoryPage": {
+   "categoryName": "Produkte",
+   "categoryKey": "products",
+   "categoryParents": []
+  }
+ }
+}

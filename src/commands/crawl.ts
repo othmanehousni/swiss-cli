@@ -228,7 +228,13 @@ async function runCrawl(app: App, request: CrawlRequest): Promise<boolean> {
     out.info();
     out.info(out.c.dim(`Saved to ${app.dbPath}`));
     const [first] = request.stores;
-    const word = first ? SAMPLE_WORD[app.langFor(first)] : SAMPLE_WORD.de;
+    const examples = request.stores.map((store) => getProvider(store).info.searchExample);
+    const word =
+      examples.length > 0 && examples.every(Boolean)
+        ? (examples[0] as string)
+        : first
+          ? SAMPLE_WORD[app.langFor(first)]
+          : SAMPLE_WORD.de;
     out.info(
       `Next: ${out.c.cyan(`swiss-grocery search "${word}"`)}  ·  ${out.c.cyan('swiss-grocery status')}`,
     );

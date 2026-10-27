@@ -36,7 +36,7 @@ $ swiss aare
 
 | Command | What it answers | Source |
 |---|---|---|
-| `swiss grocery …` | Prices of Migros, Coop, Denner, Aldi, Lidl, Volg and LANDI, compared and tracked | the shops' websites |
+| `swiss grocery …` | Prices of Migros, Coop, Denner, Aldi, Lidl, Volg, LANDI and IKEA, compared and tracked | the shops' websites |
 | `swiss premiums <place>` | Health insurance premiums of every insurer and plan | priminfo.admin.ch (BAG) |
 | `swiss train <from> <to>` | Connections with delays and platforms | transport.opendata.ch |
 | `swiss departures <stop>` | A stop's departure board | transport.opendata.ch |
@@ -443,6 +443,7 @@ store publishes, so coverage differs:
 | **Migros** | Full assortment (110 categories) | not measured yet | ~2 s per 100 products | ready (see below) |
 | **Volg** | The offers of the week (no assortment online) | ~25 offers | ~2 s | ready |
 | **LANDI** | The online shop: garden, DIY, household, pets, clothing, food and drinks | thousands | ~15 min | ready |
+| **IKEA** | The whole range, every colour and size: furniture, kitchens, textiles, decoration and the Swedish food market | ~27,500 items | ~30 s | ready |
 
 *Times measured in October 2026 at the default polite speed.*
 
@@ -454,8 +455,14 @@ because the website's own category list is closed to tools by migros.ch's `robot
 Verified in October 2026 from a home connection. migros.ch blocks many cloud and VPN
 networks; check yours with `swiss-grocery doctor migros`.
 
-**IKEA** is not included: its product search only answers IKEA's own website, and the
-tool does not pretend to be it. **Spar** publishes no machine-readable prices.
+**About IKEA:** `swiss-grocery` asks the search service behind ikea.com/ch
+(`sik.search.blue.cdtapps.com`, whose `robots.txt` allows all robots) for one listing of
+the whole range, 1,000 items per request, with every colour and size as its own item. It
+does so as itself: no website client id, no browser disguise. IKEA Family prices are kept
+as the member price (`loyalty_price`, shown as "app"); the price is the normal price
+everyone pays. `--category food` fetches the Swedish food market only.
+
+**Spar** publishes no machine-readable prices.
 
 Run `swiss-grocery stores` to see this list with what you have already downloaded.
 
@@ -806,7 +813,7 @@ to Supabase.
 
 | Name | What it holds |
 |---|---|
-| `aldi_products`, `coop_products`, `denner_products`, `landi_products`, `lidl_products`, `migros_products`, `volg_products` | one per shop: its current products with their current price |
+| `aldi_products`, `coop_products`, `denner_products`, `ikea_products`, `landi_products`, `lidl_products`, `migros_products`, `volg_products` | one per shop: its current products with their current price |
 | `current_prices` | the same for every shop together, with a `store` column |
 | `products`, `prices`, `price_history` | the underlying tables (see [The data](#the-data)) |
 
@@ -820,9 +827,9 @@ Every product of a brand, in every shop:
 run the schema once more (step 1); it adds the new columns and keeps your data. The next
 `sync` then sends every product again, with its brand.
 
-**Syncing Volg or LANDI** with tables made before they were added: run the schema once
-more (step 1). It lets the tables take the new stores and adds `volg_products` and
-`landi_products`; your data is kept.
+**Syncing Volg, LANDI or IKEA** with tables made before they were added: run the schema
+once more (step 1). It lets the tables take the new stores and adds `volg_products`,
+`landi_products` and `ikea_products`; your data is kept.
 
 ---
 
@@ -918,7 +925,7 @@ adding by itself in 2026. Run the schema again (`swiss-grocery sync --print-sche
 SQL Editor → Run). It keeps your data.
 
 **Supabase: "your Supabase tables are from an older version of swiss-grocery".** A newer
-version added columns (for example `brand_key`) or stores (Volg, LANDI). Run the schema again
+version added columns (for example `brand_key`) or stores (Volg, LANDI, IKEA). Run the schema again
 (`swiss-grocery sync --print-schema`, then SQL Editor → Run), then `swiss-grocery sync`.
 It keeps your data.
 

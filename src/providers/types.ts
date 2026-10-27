@@ -51,6 +51,8 @@ export interface StoreInfo {
    * without a brand field get the published brand their name starts with.
    */
   brandInName?: boolean;
+  /** A word for the first search suggested after a fetch, when the store sells no milk. */
+  searchExample?: string;
   /** Set when the store is known not to work right now: why, in plain words. */
   unavailable?: string;
   /** Polite default request rate. */

@@ -1,7 +1,7 @@
 {
   "name": "swiss-grocery",
   "version": "0.1.0",
-  "description": "Swiss data from the command line: shop prices (Migros, Coop, Denner, Aldi, Lidl, Volg, LANDI), health insurance premiums, public transport, weather, charging stations, shared mobility, rivers, earthquakes and snow.",
+  "description": "Swiss data from the command line: shop prices (Migros, Coop, Denner, Aldi, Lidl, Volg, LANDI, IKEA), health insurance premiums, public transport, weather, charging stations, shared mobility, rivers, earthquakes and snow.",
   "type": "module",
   "bin": {
     "swiss": "dist/swiss.js",
@@ -35,6 +35,7 @@
     "lidl",
     "volg",
     "landi",
+    "ikea",
     "switzerland",
     "grocery",
     "prices",
