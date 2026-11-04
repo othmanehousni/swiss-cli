@@ -1,0 +1,50 @@
+{
+  "name": "swiss-grocery",
+  "version": "0.1.0",
+  "description": "Swiss data from the command line: shop prices (Migros, Coop, Denner, Aldi, Lidl, Volg, LANDI, IKEA), health insurance premiums, public transport, weather, charging stations, shared mobility, rivers, earthquakes and snow.",
+  "type": "module",
+  "bin": {
+    "swiss": "dist/swiss.js",
+    "swiss-grocery": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "supabase",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "keywords": [
+    "migros",
+    "coop",
+    "denner",
+    "aldi",
+    "lidl",
+    "volg",
+    "landi",
+    "ikea",
+    "switzerland",
+    "grocery",
+    "prices",
+    "cli",
+    "crawler",
+    "health-insurance",
+    "public-transport",
+    "weather",
+    "meteoswiss",
+    "open-data"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/othmanehousni/swiss-cli.git"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "commander": "^15.0.0",
+    "picocolors": "^1.1.1",
+    "robots-parser": "^3.0.1",
+    "undici": "^7.30.0",
+    "zod": "^4.6.5"
+  }
+}
