@@ -80,7 +80,7 @@ function postgrestError(body) {
     }
 }
 /** Reading the newest columns also tells whether the tables are up to date. */
-const PROBE_COLUMNS = 'id,brand_source,brand_key';
+const PROBE_COLUMNS = 'id,brand_source,brand_key,source_title,variant,version_text';
 /** The command that gets the schema, straight onto the clipboard where the system can. */
 export function schemaCommand(platform = process.platform) {
     const command = 'swiss-grocery sync --print-schema';
@@ -205,8 +205,8 @@ export async function syncToSupabase(db, config, options = {}) {
         })?.synced_at ?? null);
     const startedAt = new Date().toISOString();
     const products = db
-        .all(`SELECT id, store, store_product_id, name, brand, brand_source, brand_key, category_path,
-         size_text, quantity_amount,
+        .all(`SELECT id, store, store_product_id, name, brand, source_title, brand_source, brand_key,
+         category_path, size_text, variant, version_text, quantity_amount,
          quantity_unit, pack_count, labels, url, image_url, gtin, details, details_fetched_at,
          first_seen_at, last_seen_at, removed_at, updated_at
        FROM products WHERE $since IS NULL OR updated_at > $since`, { since })

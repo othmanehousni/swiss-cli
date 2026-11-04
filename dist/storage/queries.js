@@ -2,8 +2,9 @@ import { brandKey } from '../normalization/brands.js';
 import { searchKey } from '../normalization/text.js';
 import { STORE_IDS } from '../normalization/types.js';
 const PRODUCT_COLUMNS = `
-  p.id, p.store, p.store_product_id, p.name, p.brand, p.brand_source, p.category_path, p.size_text,
-  p.quantity_amount, p.quantity_unit, p.pack_count, p.labels, p.url, p.image_url, p.gtin,
+  p.id, p.store, p.store_product_id, p.name, p.brand, p.source_title, p.brand_source,
+  p.category_path, p.size_text, p.variant, p.version_text, p.quantity_amount, p.quantity_unit,
+  p.pack_count, p.labels, p.url, p.image_url, p.gtin,
   p.details, p.details_fetched_at, p.first_seen_at, p.last_seen_at, p.removed_at,
   pr.price, pr.regular_price, pr.loyalty_price, pr.promo_label, pr.valid_from,
   pr.valid_until, pr.unit_price, pr.unit_price_basis, pr.observed_at`;

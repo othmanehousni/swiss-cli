@@ -175,4 +175,11 @@ export const MIGRATIONS = [
   CREATE INDEX postcodes_locality ON postcodes (locality_key);
   CREATE INDEX postcodes_municipality ON postcodes (municipality_key);
   `,
+    /* 5: a product's variant, apart from its size */ `
+  ALTER TABLE products ADD COLUMN variant TEXT;      -- "doux", "001 noir extrême": only when certain
+  ALTER TABLE products ADD COLUMN version_text TEXT; -- the store's cleaned Migros "versioning" line
+  `,
+    /* 6: preserve a store's original product title separately from its canonical name */ `
+  ALTER TABLE products ADD COLUMN source_title TEXT;
+  `,
 ];

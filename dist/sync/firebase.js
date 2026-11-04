@@ -305,7 +305,7 @@ export async function syncToFirebase(db, config, options = {}) {
     const storesWritten = new Set();
     for (;;) {
         const rows = db.all(`SELECT p.id, p.store, p.store_product_id, p.name, p.brand, p.brand_source, p.brand_key,
-         p.category_path, p.size_text,
+         p.source_title, p.category_path, p.size_text, p.variant, p.version_text,
          p.quantity_amount, p.quantity_unit, p.pack_count, p.labels, p.url, p.image_url, p.gtin,
          p.details, p.details_fetched_at, p.first_seen_at, p.removed_at, p.updated_at,
          pr.price, pr.regular_price, pr.loyalty_price, pr.promo_label, pr.valid_from,
