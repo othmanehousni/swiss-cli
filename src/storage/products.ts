@@ -76,7 +76,7 @@ export function saveProducts(
       url: p.url,
       image: p.imageUrl,
       ref: JSON.stringify(p.sourceRef),
-      search: searchKey(`${p.brand ?? ''} ${p.name}`),
+      search: searchKey(`${p.brand ?? ''} ${p.name} ${p.sourceTitle ?? ''} ${p.variant ?? ''}`),
       hash,
       now,
     };

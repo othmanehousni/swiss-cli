@@ -38,26 +38,11 @@ export const FIELDS: Field[] = [
   { key: 'name', description: 'product name', value: (r) => r.name },
   { key: 'brand', description: 'brand', value: (r) => r.brand },
   {
-    key: 'source_title',
-    description: "the store's cleaned original product title, when separate from name",
-    value: (r) => r.source_title,
-  },
-  {
     key: 'brand_source',
     description: 'where the brand comes from: store (its brand field) or name (recognised in it)',
     value: (r) => r.brand_source,
   },
   { key: 'size', description: 'size as printed by the store', value: size },
-  {
-    key: 'variant',
-    description: 'variant, e.g. doux or 001 noir (only when certain)',
-    value: (r) => r.variant,
-  },
-  {
-    key: 'version_text',
-    description: "the store's cleaned variant or version line",
-    value: (r) => r.version_text,
-  },
   {
     key: 'price',
     description: 'price you pay today, CHF',
@@ -185,6 +170,21 @@ export const FIELDS: Field[] = [
     key: 'price_checked_at',
     description: 'when the price was last checked',
     value: (r) => r.observed_at,
+  },
+  {
+    key: 'source_title',
+    description: "the store's cleaned original product title",
+    value: (r) => r.source_title,
+  },
+  {
+    key: 'variant',
+    description: 'variant, e.g. doux or 001 noir (only when certain)',
+    value: (r) => r.variant,
+  },
+  {
+    key: 'version_text',
+    description: "the store's cleaned variant or version line",
+    value: (r) => r.version_text,
   },
 ];
 

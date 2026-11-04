@@ -548,8 +548,9 @@ $ swiss-grocery search café --fields brand,category,url
 ```
 
 Every word must match, accents are optional (`cafe` finds "Café", `creme` finds "Crème"),
-and brands are searched too. Search in the language the stores were downloaded in. Sort orders: `relevance` (default), `price`, `unit-price`,
-`discount`, `name`, `store`.
+and brands are searched too. Preserved Migros source titles and classified variants are searchable
+without replacing the canonical product name. Search in the language the stores were downloaded
+in. Sort orders: `relevance` (default), `price`, `unit-price`, `discount`, `name`, `store`.
 
 ### Brands
 
@@ -828,9 +829,11 @@ twice and they always show the latest sync. Comparing shops stays a simple query
 Every product of a brand, in every shop:
 `select store, name, brand_source from products where brand_key = 'feldschlosschen';`
 
-**Updating from an older version** (before brands had `brand_source` and `brand_key`):
-run the schema once more (step 1); it adds the new columns and keeps your data. The next
-`sync` then sends every product again, with its brand.
+**Updating from an older version** (before brands had `brand_source` and `brand_key`, or Migros
+metadata had `source_title`, `variant` and `version_text`): run the schema once more (step 1); it
+adds the new columns and keeps your data. The first Migros crawl after this upgrade rewrites each
+Migros product once because its preserved metadata changes the content hash, and the next `sync`
+re-sends those products. Product ids and prices are unchanged.
 
 **Syncing Volg, LANDI or IKEA** with tables made before they were added: run the schema
 once more (step 1). It lets the tables take the new stores and adds `volg_products`,

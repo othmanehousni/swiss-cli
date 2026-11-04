@@ -81,10 +81,17 @@ describe('classifyVersioning', () => {
     ['350 grammes', 'quantity'],
     ['1300 Tabl.', 'quantity'],
     ['le kg', 'quantity'],
+    ['kg', 'quantity'],
+    ['Stück', 'quantity'],
+    ['pièce', 'quantity'],
+    ['Bund', 'quantity'],
+    ['Paar', 'quantity'],
+    ['en vrac', 'quantity'],
     ['175', 'unclear'],
     ['8x100', 'unclear'],
     ['Ø 65cm', 'unclear'],
     ['dès 6 mois', 'unclear'],
+    ['570g570g570g', 'unclear'],
     ['Packungsgrösse\n60ml', 'unclear'],
     ['x'.repeat(61), 'unclear'],
   ])('%j is %s', (text, kind) => {
@@ -222,6 +229,16 @@ describe('Migros metadata storage', () => {
     } finally {
       db.close();
     }
+  });
+});
+
+describe('metadata export field order', () => {
+  it('appends the additive fields without shifting existing --fields all columns', () => {
+    expect(FIELDS.slice(-3).map((field) => field.key)).toEqual([
+      'source_title',
+      'variant',
+      'version_text',
+    ]);
   });
 });
 

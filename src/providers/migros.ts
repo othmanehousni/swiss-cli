@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { HttpError, UnexpectedResponseError } from '../crawler/errors.js';
 import { nextOffset } from '../crawler/pagination.js';
 import { computeUnitPrice, parseMoney, unitPriceFrom } from '../normalization/price.js';
-import { parseQuantity } from '../normalization/quantity.js';
+import { parseQuantity, UNIT_PATTERN } from '../normalization/quantity.js';
 import { cleanLabel, cleanText, nonEmpty } from '../normalization/text.js';
 import type { Category, NormalizedProduct, ProductDetails } from '../normalization/types.js';
 import { flattenTree, type TreeNode } from './categories.js';
@@ -221,6 +221,8 @@ export function migrosBrand(raw: RawProduct, name: string): string | null {
 /** Counts and sizes `parseQuantity` does not read: "24 pastilles", "350 grammes", "1300 Tabl.". */
 const COUNT_OR_SIZE =
   /^\d+(?:[.,]\d+)?\s*(?:x\s*\d+\s*)?(?:grammes?|kilos?|litres?|pastilles?|tabl\.?|comprimés?|gélules?|capsules?|sachets?|pièces?|pcs?|stk\.?)$/iu;
+const REPEATED_SIZE = new RegExp(`^(\\d+(?:[.,]\\d+)?\\s*(?:${UNIT_PATTERN}))\\1+$`, 'iu');
+const SOLD_LOOSE = /^(?:en vrac|lose|sfuso)$/iu;
 
 export type VersioningKind = 'variant' | 'quantity' | 'unclear';
 
@@ -233,7 +235,15 @@ export type VersioningKind = 'variant' | 'quantity' | 'unclear';
 export function classifyVersioning(text: string): VersioningKind {
   if (/[\r\n]/.test(text)) return 'unclear';
   const line = text.replace(/\s+/g, ' ').trim();
-  if (parseQuantity(line) || COUNT_OR_SIZE.test(line)) return 'quantity';
+  if (REPEATED_SIZE.test(line)) return 'unclear';
+  if (
+    parseQuantity(line) ||
+    parseQuantity(`1 ${line}`) ||
+    COUNT_OR_SIZE.test(line) ||
+    SOLD_LOOSE.test(line)
+  ) {
+    return 'quantity';
+  }
   if (line.length > 60 || !/\p{L}/u.test(line)) return 'unclear';
   if (!/\d/.test(line) || /^0\d{2} \p{L}/u.test(line) || /^\d+ (?:mois|ans)$/iu.test(line)) {
     return 'variant';

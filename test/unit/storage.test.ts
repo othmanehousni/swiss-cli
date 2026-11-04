@@ -223,6 +223,8 @@ describe('search', () => {
           storeProductId: '4',
           name: 'Gruyère Käse',
           brand: 'Le Superbe',
+          sourceTitle: 'Le Superbe Gruyère Réserve',
+          variant: 'affiné en grotte',
           price: 5.5,
           unitPrice: 27.5,
         }),
@@ -241,6 +243,7 @@ describe('search', () => {
     expect(searchProducts(db, { query: 'käse' }).total).toBe(1);
     expect(searchProducts(db, { query: 'kaese gruyere' }).total).toBe(1);
     expect(searchProducts(db, { query: 'superbe' }).total).toBe(1);
+    expect(searchProducts(db, { query: 'reserve grotte' }).total).toBe(1);
   });
 
   it('filters by store and promotions, and sorts by unit price', () => {
