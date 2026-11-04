@@ -1,0 +1,43 @@
+name: Release branch
+
+# After every push to main: check the code, build it, and commit the built package to the
+# `release` branch, which is what `npm install -g github:othmanehousni/swiss-cli#release`
+# installs. See scripts/update-release-branch.sh for why it is a separate branch.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# One update at a time, so that each commit on `release` builds on the previous one.
+concurrency:
+  group: release-branch
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install and build
+        run: npm ci
+
+      - name: Typecheck, lint and unit tests
+        run: npm run check
+
+      - name: Update the release branch
+        run: bash scripts/update-release-branch.sh
+        env:
+          GIT_AUTHOR_NAME: github-actions[bot]
+          GIT_AUTHOR_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+          GIT_COMMITTER_NAME: github-actions[bot]
+          GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com

@@ -131,8 +131,13 @@ v22.20.0
 ### 2. Install swiss
 
 ```console
-$ npm install -g github:othmanehousni/swiss-cli
+$ npm install -g github:othmanehousni/swiss-cli#release
 ```
+
+`#release` matters: the `release` branch holds the tool ready-built (it is updated
+automatically after every change), so nothing has to be compiled on your computer. Without
+it npm fails with "git dep preparation failed" (see
+[Troubleshooting](#troubleshooting)).
 
 This installs two commands: **`swiss`** (everything) and **`swiss-grocery`** (the shop
 prices on their own, as before). Check them:
@@ -147,8 +152,8 @@ $ swiss-grocery --version
 > commands. **Already using `npm link`?** Run it again after updating, so that the new
 > `swiss` command is linked too.
 
-**Updating:** run the install command again, or in your copy of the repository
-`git pull && npm install` (it rebuilds the tool). Your database is kept and upgraded
+**Updating:** run the install command again (with `#release`), or in your copy of the
+repository `git pull && npm install` (it rebuilds the tool). Your database is kept and upgraded
 automatically.
 
 ---
@@ -910,6 +915,17 @@ Default database location: `~/.local/share/swiss-grocery/` (Linux),
 
 ## Troubleshooting
 
+**Installing fails with "git dep preparation failed"** (often with `ENOTDIR` or
+`Cannot find type definition file for 'node'`). The install command is missing `#release`:
+npm cannot build this package itself during a global install from GitHub. Clear what the
+failed attempt left behind, then install the ready-built version:
+
+```console
+$ npm uninstall -g swiss-grocery
+$ rm -rf "$(npm root -g)"/.swiss-grocery-*
+$ npm install -g github:othmanehousni/swiss-cli#release
+```
+
 **"… blocked the request (… bot protection)".** Some stores block traffic that looks
 automated, especially from cloud servers, VPNs or after many requests. Wait a while and
 try again from a normal home or mobile connection. Progress is saved. `swiss-grocery`
@@ -980,6 +996,13 @@ $ npm run check          # typecheck + lint (Biome) + unit tests
 $ npm run test:live      # smoke tests against the real stores (network)
 ```
 
+- **Releases:** after every push to `main`, `.github/workflows/release.yml` runs the
+  checks, builds, and commits the package as npm would publish it (`dist/` built, no
+  `scripts` or `devDependencies`) to the `release` branch, via
+  `scripts/update-release-branch.sh`. That is what `npm install -g …#release` installs. It
+  exists because npm builds a package installed from git with its `-g` setting still on,
+  which fails; with no scripts there is nothing to build. Don't commit to `release` by hand.
+  If a run fails, the branch keeps the previous build.
 - TypeScript, Node.js ≥ 22.13, ES modules. Storage uses Node's built-in `node:sqlite`
   (nothing native to compile). Runtime dependencies: `commander`, `zod`, `undici`,
   `robots-parser`, `picocolors`.
