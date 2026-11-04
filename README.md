@@ -613,6 +613,11 @@ $ swiss-grocery export history.csv --history           # the whole price history
 The format follows the file name (`.csv`, `.json`, `.jsonl`). See every available field
 with `swiss-grocery fields`.
 
+Migros products also preserve the cleaned source `title` as `source_title` and the cleaned
+`versioning` line as `version_text`; `variant` contains that line only when it can be classified
+confidently as descriptive rather than a quantity. Request them explicitly with `--fields` (or
+`--fields all`). They are not part of the default export, and do not replace `name` or `size`.
+
 > **Excel tip:** if everything lands in one column, your Excel expects semicolons:
 > `swiss-grocery export products.csv --delimiter ";"`
 

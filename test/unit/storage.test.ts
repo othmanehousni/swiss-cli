@@ -1,3 +1,6 @@
+import { mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { Database } from '../../src/storage/database.js';
 import {
@@ -30,8 +33,41 @@ afterEach(() => db.close());
 
 describe('database', () => {
   it('applies migrations on open', () => {
-    expect(db.get<{ user_version: number }>('PRAGMA user_version')?.user_version).toBe(4);
+    expect(db.get<{ user_version: number }>('PRAGMA user_version')?.user_version).toBe(6);
     expect(db.upgradedFrom).toBeNull(); // a new database is not an upgrade
+  });
+
+  it('upgrades existing records additively and does not rerun migrations', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'swiss-grocery-metadata-migration-'));
+    const path = join(dir, 'legacy.db');
+    let legacy: Database | null = Database.open(path);
+    try {
+      saveProducts(legacy, [makeProduct()], T1);
+      legacy.exec('ALTER TABLE products DROP COLUMN source_title');
+      legacy.exec('ALTER TABLE products DROP COLUMN version_text');
+      legacy.exec('ALTER TABLE products DROP COLUMN variant');
+      legacy.exec('PRAGMA user_version = 4');
+      legacy.close();
+      legacy = null;
+
+      const upgraded = Database.open(path);
+      expect(upgraded.upgradedFrom).toBe(4);
+      expect(upgraded.get<{ user_version: number }>('PRAGMA user_version')?.user_version).toBe(6);
+      expect(findProducts(upgraded, 'aldi:288415')[0]).toMatchObject({
+        source_title: null,
+        variant: null,
+        version_text: null,
+      });
+      upgraded.close();
+
+      const reopened = Database.open(path);
+      expect(reopened.upgradedFrom).toBeNull();
+      expect(findProducts(reopened, 'aldi:288415')).toHaveLength(1);
+      reopened.close();
+    } finally {
+      legacy?.close();
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 
   it('rolls back a failed transaction', () => {

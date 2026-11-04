@@ -56,10 +56,16 @@ export interface NormalizedProduct {
   storeProductId: string;
   name: string;
   brand: string | null;
+  /** The store's cleaned original title, when it publishes one separately from `name`. */
+  sourceTitle?: string | null;
   /** Category names from the top level down, e.g. ["Milchprodukte & Eier", "Käse"]. */
   categoryPath: string[];
   /** Size as the store prints it, e.g. "6 x 1.5 l". */
   sizeText: string | null;
+  /** The product's variant as the store prints it ("doux", "001 noir extrême"), when certain. */
+  variant?: string | null;
+  /** The store's cleaned variant or version line, even when unclear (Migros "versioning"). */
+  versionText?: string | null;
   quantity: Quantity | null;
   /** CHF a regular customer pays today (promotions included). null if no price is published. */
   price: number | null;

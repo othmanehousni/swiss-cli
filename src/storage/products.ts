@@ -62,10 +62,13 @@ export function saveProducts(
       storeId: p.storeProductId,
       name: p.name,
       brand: p.brand,
+      sourceTitle: p.sourceTitle ?? null,
       brandSource: p.brand ? 'store' : null,
       brandKey: p.brand ? brandKey(p.brand) : null,
       category: p.categoryPath.length > 0 ? p.categoryPath.join(' > ') : null,
       size: p.sizeText,
+      variant: p.variant ?? null,
+      versionText: p.versionText ?? null,
       amount: p.quantity?.amount ?? null,
       unit: p.quantity?.unit ?? null,
       pack: p.quantity?.packCount ?? null,
@@ -80,11 +83,13 @@ export function saveProducts(
 
     if (!existing) {
       db.run(
-        `INSERT INTO products (id, store, store_product_id, name, brand, brand_source, brand_key,
-           category_path, size_text, quantity_amount, quantity_unit, pack_count, labels, url,
-           image_url, source_ref, search_text, content_hash, first_seen_at, last_seen_at, updated_at)
-         VALUES ($id, $store, $storeId, $name, $brand, $brandSource, $brandKey, $category, $size,
-           $amount, $unit, $pack, $labels, $url, $image, $ref, $search, $hash, $now, $now, $now)`,
+        `INSERT INTO products (id, store, store_product_id, name, brand, source_title, brand_source,
+           brand_key, category_path, size_text, variant, version_text, quantity_amount, quantity_unit,
+           pack_count, labels, url, image_url, source_ref, search_text, content_hash, first_seen_at,
+           last_seen_at, updated_at)
+         VALUES ($id, $store, $storeId, $name, $brand, $sourceTitle, $brandSource, $brandKey,
+           $category, $size, $variant, $versionText, $amount, $unit, $pack, $labels, $url, $image,
+           $ref, $search, $hash, $now, $now, $now)`,
         values,
       );
       result.inserted++;
@@ -92,12 +97,13 @@ export function saveProducts(
       const { store: _store, storeId: _storeId, ...changes } = values;
       // A brand recognised in the name stays until the brand pass looks at the product again.
       db.run(
-        `UPDATE products SET name = $name,
+        `UPDATE products SET name = $name, source_title = $sourceTitle,
            brand = CASE WHEN $brand IS NULL AND brand_source = 'name' THEN brand ELSE $brand END,
            brand_key = CASE WHEN $brand IS NULL AND brand_source = 'name' THEN brand_key ELSE $brandKey END,
            brand_source = CASE WHEN $brand IS NULL AND brand_source = 'name' THEN 'name' ELSE $brandSource END,
            category_path = $category,
-           size_text = $size, quantity_amount = $amount, quantity_unit = $unit, pack_count = $pack,
+           size_text = $size, variant = $variant, version_text = $versionText,
+           quantity_amount = $amount, quantity_unit = $unit, pack_count = $pack,
            labels = $labels, url = $url, image_url = $image, source_ref = $ref,
            search_text = $search, content_hash = $hash, last_seen_at = $now,
            removed_at = NULL, updated_at = $now
