@@ -10,10 +10,13 @@ export interface ProductRow {
   store_product_id: string;
   name: string;
   brand: string | null;
+  source_title: string | null;
   /** 'store': published by the store; 'name': recognised from the product name. */
   brand_source: 'store' | 'name' | null;
   category_path: string | null;
   size_text: string | null;
+  variant: string | null;
+  version_text: string | null;
   quantity_amount: number | null;
   quantity_unit: 'g' | 'ml' | 'piece' | null;
   pack_count: number | null;
@@ -38,8 +41,9 @@ export interface ProductRow {
 }
 
 const PRODUCT_COLUMNS = `
-  p.id, p.store, p.store_product_id, p.name, p.brand, p.brand_source, p.category_path, p.size_text,
-  p.quantity_amount, p.quantity_unit, p.pack_count, p.labels, p.url, p.image_url, p.gtin,
+  p.id, p.store, p.store_product_id, p.name, p.brand, p.source_title, p.brand_source,
+  p.category_path, p.size_text, p.variant, p.version_text, p.quantity_amount, p.quantity_unit,
+  p.pack_count, p.labels, p.url, p.image_url, p.gtin,
   p.details, p.details_fetched_at, p.first_seen_at, p.last_seen_at, p.removed_at,
   pr.price, pr.regular_price, pr.loyalty_price, pr.promo_label, pr.valid_from,
   pr.valid_until, pr.unit_price, pr.unit_price_basis, pr.observed_at`;

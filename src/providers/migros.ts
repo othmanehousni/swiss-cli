@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { HttpError, UnexpectedResponseError } from '../crawler/errors.js';
 import { nextOffset } from '../crawler/pagination.js';
 import { computeUnitPrice, parseMoney, unitPriceFrom } from '../normalization/price.js';
-import { parseQuantity } from '../normalization/quantity.js';
+import { parseQuantity, UNIT_PATTERN } from '../normalization/quantity.js';
 import { cleanLabel, cleanText, nonEmpty } from '../normalization/text.js';
 import type { Category, NormalizedProduct, ProductDetails } from '../normalization/types.js';
 import { flattenTree, type TreeNode } from './categories.js';
@@ -218,6 +218,39 @@ export function migrosBrand(raw: RawProduct, name: string): string | null {
   return null;
 }
 
+/** Counts and sizes `parseQuantity` does not read: "24 pastilles", "350 grammes", "1300 Tabl.". */
+const COUNT_OR_SIZE =
+  /^\d+(?:[.,]\d+)?\s*(?:x\s*\d+\s*)?(?:grammes?|kilos?|litres?|pastilles?|tabl\.?|comprimés?|gélules?|capsules?|sachets?|pièces?|pcs?|stk\.?)$/iu;
+const REPEATED_SIZE = new RegExp(`^(\\d+(?:[.,]\\d+)?\\s*(?:${UNIT_PATTERN}))\\1+$`, 'iu');
+const SOLD_LOOSE = /^(?:en vrac|lose|sfuso)$/iu;
+
+export type VersioningKind = 'variant' | 'quantity' | 'unclear';
+
+/**
+ * What the line Migros prints under a product name ("versioning") holds: a variant ("doux",
+ * "à la truffe", the shade "001 noir extrême", the age "24 mois"), a quantity ("100g",
+ * "24 pastilles") or something too unclear to call a variant ("175", "dès 6 mois", "Ø 65cm",
+ * "570g570g570g", text over several lines). Unclear lines are kept, never turned into variants.
+ */
+export function classifyVersioning(text: string): VersioningKind {
+  if (/[\r\n]/.test(text)) return 'unclear';
+  const line = text.replace(/\s+/g, ' ').trim();
+  if (REPEATED_SIZE.test(line)) return 'unclear';
+  if (
+    parseQuantity(line) ||
+    parseQuantity(`1 ${line}`) ||
+    COUNT_OR_SIZE.test(line) ||
+    SOLD_LOOSE.test(line)
+  ) {
+    return 'quantity';
+  }
+  if (line.length > 60 || !/\p{L}/u.test(line)) return 'unclear';
+  if (!/\d/.test(line) || /^0\d{2} \p{L}/u.test(line) || /^\d+ (?:mois|ans)$/iu.test(line)) {
+    return 'variant';
+  }
+  return 'unclear';
+}
+
 export function normalizeMigrosProduct(raw: RawProduct): NormalizedProduct | null {
   const id = raw.migrosId != null ? String(raw.migrosId) : raw.uid != null ? String(raw.uid) : null;
   const name = nonEmpty(raw.name) ?? nonEmpty(raw.title);
@@ -241,14 +274,20 @@ export function normalizeMigrosProduct(raw: RawProduct): NormalizedProduct | nul
       : null);
   const percent = offer?.badges?.find((b) => b.type === 'PERCENTAGE_PROMOTION')?.description;
   const info = raw.productInformation?.mainInformation;
+  const versioning = cleanText(raw.versioning);
+  const kind = versioning ? classifyVersioning(versioning) : null;
 
   return {
     store: 'migros',
     storeProductId: id,
     name,
     brand: migrosBrand(raw, name),
+    sourceTitle: cleanText(raw.title),
     categoryPath: uniqueStrings((raw.breadcrumb ?? []).map((b) => b.name)),
+    // Keep the legacy fallback even when versioning is also confidently classified as a variant.
     sizeText: nonEmpty(offer?.quantity) ?? nonEmpty(raw.versioning),
+    variant: kind === 'variant' ? versioning : null,
+    versionText: versioning,
     quantity,
     price,
     regularPrice,

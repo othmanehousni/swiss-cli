@@ -143,7 +143,14 @@ describe('syncToFirebase', () => {
   it('sends every product into an empty database, grouped by store', async () => {
     saveProducts(
       db,
-      [makeProduct(), makeProduct({ store: 'coop', storeProductId: '42', brand: 'Naturaplan' })],
+      [
+        makeProduct({
+          sourceTitle: 'Butter Original',
+          variant: 'mild',
+          versionText: 'mild',
+        }),
+        makeProduct({ store: 'coop', storeProductId: '42', brand: 'Naturaplan' }),
+      ],
       T1,
     );
     const { fake, commits } = firestore();
@@ -164,6 +171,9 @@ describe('syncToFirebase', () => {
     expect(butter.price).toEqual({ doubleValue: 3.85 });
     expect(butter.first_seen_at).toEqual({ timestampValue: T1 });
     expect(butter.brand).toEqual({ nullValue: null });
+    expect(butter.source_title).toEqual({ stringValue: 'Butter Original' });
+    expect(butter.variant).toEqual({ stringValue: 'mild' });
+    expect(butter.version_text).toEqual({ stringValue: 'mild' });
     const coop = commits[0]?.writes[3]?.update.fields as Record<string, Record<string, unknown>>;
     expect(coop.brand).toEqual({ stringValue: 'Naturaplan' });
     expect(coop.brand_source).toEqual({ stringValue: 'store' });

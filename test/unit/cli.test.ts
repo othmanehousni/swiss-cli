@@ -8,6 +8,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { DEFAULT_EXPORT_FIELDS } from '../../src/commands/fields.js';
 import { Database } from '../../src/storage/database.js';
 import { saveProducts } from '../../src/storage/products.js';
 import { makeProduct } from '../helpers/products.js';
@@ -45,7 +46,11 @@ beforeAll(() => {
   saveProducts(
     db,
     [
-      makeProduct(),
+      makeProduct({
+        sourceTitle: 'Butter Original',
+        variant: 'mild',
+        versionText: 'mild',
+      }),
       makeProduct({
         store: 'coop',
         storeProductId: '3393474',
@@ -186,7 +191,29 @@ describe('swiss-grocery (command line)', { timeout: 30_000 }, () => {
     expect(csv.startsWith('\uFEFF')).toBe(true);
     const lines = csv.slice(1).trim().split(/\r?\n/);
     expect(lines).toHaveLength(4);
-    expect(lines[0]).toContain(';');
+    expect(lines[0]).toBe(DEFAULT_EXPORT_FIELDS.join(';'));
+    expect(lines[0]).not.toMatch(/source_title|variant|version_text/);
+  });
+
+  it('exports preserved source metadata only when explicitly requested in CSV and JSONL', () => {
+    const fields = 'id,source_title,variant,version_text';
+    const csvFile = join(dir, 'metadata.csv');
+    expect(
+      cli(dbPath, 'export', csvFile, '--store', 'aldi', '--fields', fields, '--no-bom').code,
+    ).toBe(0);
+    expect(readFileSync(csvFile, 'utf-8').trim().split(/\r?\n/)).toEqual([
+      'id,source_title,variant,version_text',
+      'aldi:288415,Butter Original,mild,mild',
+    ]);
+
+    const jsonlFile = join(dir, 'metadata.jsonl');
+    expect(cli(dbPath, 'export', jsonlFile, '--store', 'aldi', '--fields', fields).code).toBe(0);
+    expect(JSON.parse(readFileSync(jsonlFile, 'utf-8').trim())).toEqual({
+      id: 'aldi:288415',
+      source_title: 'Butter Original',
+      variant: 'mild',
+      version_text: 'mild',
+    });
   });
 
   it('explains a mistyped store once and exits with code 2', () => {

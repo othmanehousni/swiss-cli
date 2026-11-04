@@ -18,7 +18,14 @@ beforeEach(() => {
   db = Database.open(':memory:');
   saveProducts(
     db,
-    [makeProduct(), makeProduct({ storeProductId: '2', name: 'Milch', brand: 'Emmi' })],
+    [
+      makeProduct({
+        sourceTitle: 'Butter Original',
+        variant: 'mild',
+        versionText: 'mild',
+      }),
+      makeProduct({ storeProductId: '2', name: 'Milch', brand: 'Emmi' }),
+    ],
     '2026-10-01T08:00:00.000Z',
   );
 });
@@ -48,11 +55,26 @@ describe('syncToSupabase', () => {
     expect(headers.Authorization).toBeUndefined(); // new-style keys are not JWTs
     expect(headers.Prefer).toBe('resolution=merge-duplicates,return=minimal');
     const [butter, milk] = JSON.parse(posts[0]?.body ?? '[]');
-    expect(butter).toMatchObject({ id: 'aldi:288415', labels: [], details: null, brand: null });
-    expect(milk).toMatchObject({ brand: 'Emmi', brand_source: 'store', brand_key: 'emmi' });
+    expect(butter).toMatchObject({
+      id: 'aldi:288415',
+      labels: [],
+      details: null,
+      brand: null,
+      source_title: 'Butter Original',
+      variant: 'mild',
+      version_text: 'mild',
+    });
+    expect(milk).toMatchObject({
+      brand: 'Emmi',
+      brand_source: 'store',
+      brand_key: 'emmi',
+      source_title: null,
+      variant: null,
+      version_text: null,
+    });
     // Reading the newest columns first tells whether the tables are up to date.
     expect(fake.calls[0]?.url).toBe(
-      'https://project.supabase.co/rest/v1/products?select=id,brand_source,brand_key&limit=1',
+      'https://project.supabase.co/rest/v1/products?select=id,brand_source,brand_key,source_title,variant,version_text&limit=1',
     );
   });
 
@@ -118,6 +140,9 @@ describe('explainSupabaseError', () => {
     );
     expect(diagnosis.hints.join(' ')).toContain('swiss-grocery sync --print-schema');
     expect(schemaSql()).toContain('add column if not exists brand_key text');
+    expect(schemaSql()).toContain('add column if not exists source_title text');
+    expect(schemaSql()).toContain('add column if not exists variant text');
+    expect(schemaSql()).toContain('add column if not exists version_text text');
   });
 
   it('puts the schema on the clipboard where the system has a tool for it', () => {

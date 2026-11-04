@@ -171,6 +171,21 @@ export const FIELDS: Field[] = [
     description: 'when the price was last checked',
     value: (r) => r.observed_at,
   },
+  {
+    key: 'source_title',
+    description: "the store's cleaned original product title",
+    value: (r) => r.source_title,
+  },
+  {
+    key: 'variant',
+    description: 'variant, e.g. doux or 001 noir (only when certain)',
+    value: (r) => r.variant,
+  },
+  {
+    key: 'version_text',
+    description: "the store's cleaned variant or version line",
+    value: (r) => r.version_text,
+  },
 ];
 
 export const DEFAULT_EXPORT_FIELDS = [
